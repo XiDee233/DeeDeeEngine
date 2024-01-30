@@ -11,3 +11,13 @@
     #error Dee only support Windows
 #endif // 
 
+#ifdef DEE_ENABLE_ASSERTS
+    #define DEE_ASSERT(x,...) {if(!(x)){DEE_ERROR("Assertion Failed: {0}",__VA_ARGS__);__debugbreak();}}
+    #define DEE_CORE_ASSERT(x,...) {if(!(x)){DEE_CORE_ERROR("Assertion Failed: {0}",__VA_ARGS__);__debugbreak();}}
+#else
+    #define DEE_ASSERT(x,...)
+    #define DEE_CORE_ASSERT(x,...)
+#endif
+
+#define BIT(X)(1<<X)
+

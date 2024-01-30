@@ -1,36 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="DeeDeeEngine">
+      <UniqueIdentifier>{3713BCBD-2376-4B62-CCFB-8318B83D17E5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="DeeDeeEngine\Events">
+      <UniqueIdentifier>{3B1BA3E2-A77C-80F0-30EA-C6A29C4AB7AF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="资源文件">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\DeeDeeEngine\Core.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClInclude Include="src\Dee.h" />
     <ClInclude Include="src\DeeDeeEngine\Application.h">
-      <Filter>头文件</Filter>
+      <Filter>DeeDeeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Dee.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\DeeDeeEngine\Core.h">
+      <Filter>DeeDeeEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\EntryPoint.h">
-      <Filter>头文件</Filter>
+      <Filter>DeeDeeEngine</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Events\ApplicationEvent.h">
+      <Filter>DeeDeeEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Events\Event.h">
+      <Filter>DeeDeeEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Events\KeyEvent.h">
+      <Filter>DeeDeeEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Events\MouseEvent.h">
+      <Filter>DeeDeeEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Log.h">
+      <Filter>DeeDeeEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Window.h">
+      <Filter>DeeDeeEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\deepch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Application.cpp">
-      <Filter>源文件</Filter>
+      <Filter>DeeDeeEngine</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Log.cpp">
+      <Filter>DeeDeeEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\deepch.cpp" />
   </ItemGroup>
 </Project>

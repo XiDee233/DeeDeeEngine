@@ -1,0 +1,6 @@
+[submodule "DeeDeeEngine/vendor/spdlog"]
+	path = DeeDeeEngine/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "DeeDeeEngine/vendor/GLFW"]
+	path = DeeDeeEngine/vendor/GLFW
+	url = https://github.com/TheCherno/glfw
