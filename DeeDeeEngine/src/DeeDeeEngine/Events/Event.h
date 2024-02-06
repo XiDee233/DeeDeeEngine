@@ -38,8 +38,8 @@ namespace DeeDeeEngine {
 			return GetCategoryFlags() & category;
 		}
 
-	protected:
-		bool m_Handled = false;
+	
+		bool Handled = false;
 	};
 
 	class EventDispatcher
@@ -56,7 +56,7 @@ namespace DeeDeeEngine {
 		bool Dispatch(EventFn<T> func) {
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);//*解引用，(T*)强转
+				m_Event.Handled = func(*(T*)&m_Event);//*解引用，(T*)强转
 				return true;
 			}
 			return false;

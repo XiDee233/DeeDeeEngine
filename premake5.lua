@@ -56,14 +56,17 @@ postbuildcommands{
 
 filter "configurations:Debug"
 defines "DEE_DEBUG"
+buildoptions "/MDd"
 symbols "On"
 
 filter "configurations:Release"
 defines "DEE_RELEASE"
+buildoptions "/MD"
 optimize "On"
 
 filter "configurations:Dist"
 defines "DEE_DIST"
+buildoptions "/MD"
 optimize "On"
 
 project "Sandbox"
@@ -100,12 +103,15 @@ filter "system:windows"
 
 filter "configurations:Debug"
 defines "DEE_DEBUG"
+buildoptions "/MDd"
 symbols "On"
 
 filter "configurations:Release"
 defines "DEE_RELEASE"
+buildoptions "/MD"
 optimize "On"
 
 filter "configurations:Dist"
 defines "DEE_DIST"
+buildoptions "/MD"
 optimize "On"
