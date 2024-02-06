@@ -9,8 +9,11 @@ workspace "DeeDeeEngine"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "DeeDeeEngine/vendor/GLFW/include"
+IncludeDir["GLAD"] = "DeeDeeEngine/vendor/GLAD/include"
+
 
 include "DeeDeeEngine/vendor/GLFW"
+include "DeeDeeEngine/vendor/GLAD"
 
 project "DeeDeeEngine"
     location "DeeDeeEngine"
@@ -31,12 +34,15 @@ includedirs
 {
     "DeeDeeEngine/vendor/spdlog/include",
     "DeeDeeEngine/src",
-    "%{IncludeDir.GLFW}"
+    "%{IncludeDir.GLFW}",
+    "%{IncludeDir.GLAD}"
+
 }
 
 links
 {
     "GLFW",
+    "GLAD",
     "opengl32.lib"
 }
 
@@ -48,6 +54,7 @@ filter "system:windows"
     defines {
     "DEE_PLATFORM_WINDOWS",
     "DEE_BUILD_DLL",
+    "GLFW_INCLUDE_NONE"
 }
 
 postbuildcommands{

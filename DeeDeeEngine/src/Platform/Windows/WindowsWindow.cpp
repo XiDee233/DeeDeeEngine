@@ -4,6 +4,7 @@
 #include <DeeDeeEngine/Events/ApplicationEvent.h>
 #include <DeeDeeEngine/Events/KeyEvent.h>
 #include <DeeDeeEngine/Events/MouseEvent.h>
+#include <glad/glad.h>
 
 namespace DeeDeeEngine {
 	static bool s_GLFWInitialized = false;
@@ -37,6 +38,8 @@ namespace DeeDeeEngine {
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);// 将窗口的OpenGL上下文设置为当前上下文
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);//加载opengl函数指针
+		DEE_CORE_ASSERT(status,"Faid to initialize Glad!")
 		glfwSetWindowUserPointer(m_Window, &m_Data);// 将用户定义的数据（m_Data）与窗口关联。
 		SetVSync(true);
 

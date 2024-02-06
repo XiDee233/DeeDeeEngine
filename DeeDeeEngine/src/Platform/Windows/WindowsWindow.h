@@ -1,6 +1,8 @@
 #pragma once
 #include "DeeDeeEngine/Window.h"
+
 #include <GLFW/glfw3.h>
+
 namespace DeeDeeEngine {
 	class WindowsWindow :public Window
 	{

@@ -5,7 +5,6 @@
 #include "Layer.h"
 #include "LayerStack.h"
 
-
 namespace DeeDeeEngine {
 	class DEE_API Application
 	{
