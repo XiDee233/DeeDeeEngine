@@ -18,6 +18,7 @@ class Sandbox :public DeeDeeEngine::Application {
 public:
 	Sandbox() {
 		PushLayer(new ExampleLayer());
+		PushOverlay(new DeeDeeEngine::ImGuiLayer());
 	}
 	~Sandbox() {
 

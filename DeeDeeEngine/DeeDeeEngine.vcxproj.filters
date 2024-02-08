@@ -7,8 +7,14 @@
     <Filter Include="DeeDeeEngine\Events">
       <UniqueIdentifier>{3B1BA3E2-A77C-80F0-30EA-C6A29C4AB7AF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DeeDeeEngine\ImGui">
+      <UniqueIdentifier>{A1D509AA-8DB9-CAFF-F619-C552E21CB581}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
@@ -37,6 +43,9 @@
     <ClInclude Include="src\DeeDeeEngine\Events\MouseEvent.h">
       <Filter>DeeDeeEngine\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\ImGui\ImGuiLayer.h">
+      <Filter>DeeDeeEngine\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Layer.h">
       <Filter>DeeDeeEngine</Filter>
     </ClInclude>
@@ -49,6 +58,9 @@
     <ClInclude Include="src\DeeDeeEngine\Window.h">
       <Filter>DeeDeeEngine</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\ImOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -58,6 +70,9 @@
     <ClCompile Include="src\DeeDeeEngine\Application.cpp">
       <Filter>DeeDeeEngine</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp">
+      <Filter>DeeDeeEngine\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Layer.cpp">
       <Filter>DeeDeeEngine</Filter>
     </ClCompile>
@@ -66,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Log.cpp">
       <Filter>DeeDeeEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\ImOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
