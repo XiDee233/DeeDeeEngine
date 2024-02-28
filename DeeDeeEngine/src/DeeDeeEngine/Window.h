@@ -30,6 +30,8 @@ namespace DeeDeeEngine {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
+		virtual void* GetNativeWindow() const = 0;
+
 		static Window* Create(const WindowProps& props = WindowProps());//该函数可以在不创建任何WindowProps对象的情况下调用，
 		//因为参数使用了默认参数WindowProps()。如果没有提供props参数，
 		//	将使用默认构造函数创建一个WindowProps对象。

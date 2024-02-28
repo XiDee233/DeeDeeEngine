@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "DeeDeeEngine/Log.h"
 #include "glad/glad.h"
+#include "input.h"
+#include "glm/glm.hpp"
 namespace DeeDeeEngine {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -48,6 +50,7 @@ namespace DeeDeeEngine {
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
+
 			m_Window->OnUpdate();
 		}
 	}

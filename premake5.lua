@@ -11,6 +11,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "DeeDeeEngine/vendor/GLFW/include"
 IncludeDir["GLAD"] = "DeeDeeEngine/vendor/GLAD/include"
 IncludeDir["ImGui"] = "DeeDeeEngine/vendor/imgui"
+IncludeDir["glm"] = "DeeDeeEngine/vendor/glm"
 
 
 include "DeeDeeEngine/vendor/GLFW"
@@ -30,6 +31,9 @@ pchsource "DeeDeeEngine/src/deepch.cpp"
 files {
     "%{prj.name}/src/**.h",
     "%{prj.name}/src/**.cpp",
+    "%{prj.name}/vendor/glm/glm/**.hpp",
+    "%{prj.name}/vendor/glm/glm/**.inl",
+
 }
 
 includedirs
@@ -38,7 +42,8 @@ includedirs
     "DeeDeeEngine/src",
     "%{IncludeDir.GLFW}",
     "%{IncludeDir.GLAD}",
-    "%{IncludeDir.ImGui}"
+    "%{IncludeDir.ImGui}",
+    "%{IncludeDir.glm}"
 
 
 }
@@ -97,7 +102,8 @@ files {
 includedirs
 {
     "DeeDeeEngine/vendor/spdlog/include",
-    "DeeDeeEngine/src"
+    "DeeDeeEngine/src",
+    "%{IncludeDir.glm}"
 }
 links{
     "DeeDeeEngine"

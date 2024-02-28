@@ -7,3 +7,6 @@
 [submodule "DeeDeeEngine/vendor/imgui"]
 	path = DeeDeeEngine/vendor/imgui
 	url = https://github.com/TheCherno/imgui.git
+[submodule "DeeDeeEngine/vendor/glm"]
+	path = DeeDeeEngine/vendor/glm
+	url = https://github.com/g-truc/glm.git

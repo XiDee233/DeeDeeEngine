@@ -1,0 +1,13 @@
+#pragma once
+#define DEE_MOUSE_BUTTON_1         0
+#define DEE_MOUSE_BUTTON_2         1
+#define DEE_MOUSE_BUTTON_3         2
+#define DEE_MOUSE_BUTTON_4         3
+#define DEE_MOUSE_BUTTON_5         4
+#define DEE_MOUSE_BUTTON_6         5
+#define DEE_MOUSE_BUTTON_7         6
+#define DEE_MOUSE_BUTTON_8         7
+#define DEE_MOUSE_BUTTON_LAST      DEE_MOUSE_BUTTON_8
+#define DEE_MOUSE_BUTTON_LEFT      DEE_MOUSE_BUTTON_1
+#define DEE_MOUSE_BUTTON_RIGHT     DEE_MOUSE_BUTTON_2
+#define DEE_MOUSE_BUTTON_MIDDLE    DEE_MOUSE_BUTTON_3
