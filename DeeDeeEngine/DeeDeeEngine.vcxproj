@@ -19,7 +19,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DeeDeeEngine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -79,7 +79,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>deepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>DEE_PLATFORM_WINDOWS;DEE_BUILD_DLL;GLFW_INCLUDE_NONE;DEE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMGUI_API=_declspec(dllexport);DEE_PLATFORM_WINDOWS;DEE_BUILD_DLL;GLFW_INCLUDE_NONE;DEE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\GLAD\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -168,7 +168,6 @@
     <ClInclude Include="src\DeeDeeEngine\input.h" />
     <ClInclude Include="src\DeeDeeEngine\keyCode.h" />
     <ClInclude Include="src\DeeDeeEngine\mouseButtonCode.h" />
-    <ClInclude Include="src\Platform\OpenGL\ImOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\deepch.h" />
@@ -591,11 +590,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Application.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Layer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\LayerStack.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Log.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\ImOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\deepch.cpp">

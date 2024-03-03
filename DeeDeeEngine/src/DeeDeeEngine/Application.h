@@ -4,6 +4,7 @@
 #include "DeeDeeEngine/Events/ApplicationEvent.h"
 #include "Layer.h"
 #include "LayerStack.h"
+#include "DeeDeeEngine/ImGui/ImGuiLayer.h"
 
 namespace DeeDeeEngine {
 	class DEE_API Application
@@ -25,6 +26,7 @@ namespace DeeDeeEngine {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

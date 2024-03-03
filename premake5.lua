@@ -103,6 +103,7 @@ includedirs
 {
     "DeeDeeEngine/vendor/spdlog/include",
     "DeeDeeEngine/src",
+    "DeeDeeEngine/vendor",
     "%{IncludeDir.glm}"
 }
 links{
