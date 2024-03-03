@@ -1,5 +1,6 @@
 workspace "DeeDeeEngine"
     architecture "x64"
+    startproject "Sandbox"
     configurations {
     "Debug",
     "Release",
@@ -20,8 +21,10 @@ include "DeeDeeEngine/vendor/ImGui"
 
 project "DeeDeeEngine"
     location "DeeDeeEngine"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -57,7 +60,6 @@ links
 }
 
 filter "system:windows"
-    cppdialect "C++17"
     staticruntime "On"
     systemversion "latest"
 
@@ -67,29 +69,28 @@ filter "system:windows"
     "GLFW_INCLUDE_NONE"
 }
 
-postbuildcommands{
-    ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-}
 
 filter "configurations:Debug"
 defines "DEE_DEBUG"
-buildoptions "/MDd"
-symbols "On"
+runtime "Debug"
+symbols "on"
 
 filter "configurations:Release"
 defines "DEE_RELEASE"
-buildoptions "/MD"
-optimize "On"
+runtime "Release"
+optimize "on"
 
 filter "configurations:Dist"
 defines "DEE_DIST"
-buildoptions "/MD"
-optimize "On"
+runtime "Release"
+optimize "on"
 
 project "Sandbox"
 location "Sandbox"
 kind "ConsoleApp"
 language "C++"
+cppdialect "C++17"
+staticruntime "on"
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -111,7 +112,6 @@ links{
 }
 
 filter "system:windows"
-    cppdialect "C++17"
     staticruntime "On"
     systemversion "latest"
 
@@ -122,15 +122,12 @@ filter "system:windows"
 
 filter "configurations:Debug"
 defines "DEE_DEBUG"
-buildoptions "/MDd"
-symbols "On"
+symbols "on"
 
 filter "configurations:Release"
 defines "DEE_RELEASE"
-buildoptions "/MD"
-optimize "On"
+optimize "on"
 
 filter "configurations:Dist"
 defines "DEE_DIST"
-buildoptions "/MD"
-optimize "On"
+optimize "on"

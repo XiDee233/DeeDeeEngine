@@ -1,12 +1,15 @@
 #pragma once
 
 #ifdef DEE_PLATFORM_WINDOWS
+#if DEE_DYNAMIC_LINKS
     #ifdef DEE_BUILD_DLL
         #define DEE_API __declspec(dllexport)
     #else
         #define DEE_API __declspec(dllimport)
     #endif // 
-
+#else
+    #define DEE_API
+#endif
 #else
     #error Dee only support Windows
 #endif // 
