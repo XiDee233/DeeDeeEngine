@@ -5,6 +5,7 @@
 #include "Layer.h"
 #include "LayerStack.h"
 #include "DeeDeeEngine/ImGui/ImGuiLayer.h"
+#include "DeeDeeEngine/Renderer/Shader.h"
 
 namespace DeeDeeEngine {
 	class DEE_API Application
@@ -29,6 +30,9 @@ namespace DeeDeeEngine {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+
+		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 	private:
 		static Application* s_Instance;
 	};

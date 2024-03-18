@@ -140,6 +140,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Dee.h" />
     <ClInclude Include="src\DeeDeeEngine\Application.h" />
     <ClInclude Include="src\DeeDeeEngine\Core.h" />
@@ -152,6 +155,7 @@
     <ClInclude Include="src\DeeDeeEngine\Layer.h" />
     <ClInclude Include="src\DeeDeeEngine\LayerStack.h" />
     <ClInclude Include="src\DeeDeeEngine\Log.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\DeeDeeEngine\Window.h" />
     <ClInclude Include="src\DeeDeeEngine\input.h" />
     <ClInclude Include="src\DeeDeeEngine\keyCode.h" />
@@ -577,6 +581,8 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Application.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp" />

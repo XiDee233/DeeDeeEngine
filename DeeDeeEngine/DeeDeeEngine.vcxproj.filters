@@ -1347,6 +1347,10 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Application.cpp">
@@ -1376,5 +1380,7 @@
     <ClCompile Include="src\deepch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp" />
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@
 #include <DeeDeeEngine/Events/ApplicationEvent.h>
 #include <DeeDeeEngine/Events/KeyEvent.h>
 #include <DeeDeeEngine/Events/MouseEvent.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 #include <glad/glad.h>
 
 namespace DeeDeeEngine {
@@ -27,6 +28,7 @@ namespace DeeDeeEngine {
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
+
 		DEE_CORE_INFO("Createing window {0} ({1},{2})", props.Title, props.Width, props.Height);
 
 		if (!s_GLFWInitialized) {
@@ -37,9 +39,10 @@ namespace DeeDeeEngine {
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);// 将窗口的OpenGL上下文设置为当前上下文
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);//加载opengl函数指针
-		DEE_CORE_ASSERT(status,"Faid to initialize Glad!")
+		m_Context = new OpenGLContext(m_Window);
+
+		m_Context->Init();
+	
 		glfwSetWindowUserPointer(m_Window, &m_Data);// 将用户定义的数据（m_Data）与窗口关联。
 		SetVSync(true);
 
@@ -127,9 +130,9 @@ namespace DeeDeeEngine {
 	}
 	void WindowsWindow::OnUpdate() {
 		glfwPollEvents();
+		m_Context->SwapBuffers();
 		//函数用于交换前后缓冲区。在双缓冲机制下，绘制的图像首先被渲染到后缓冲区，
 		// 然后通过调用该函数将后缓冲区的内容交换到前缓冲区，使其显示在窗口上。这样可以避免在渲染过程中出现可见的闪烁或撕裂现象。
-		glfwSwapBuffers(m_Window);
 	}
 
 	void WindowsWindow::SetVSync(bool enabled) {
