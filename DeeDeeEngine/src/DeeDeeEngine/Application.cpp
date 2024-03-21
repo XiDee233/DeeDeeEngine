@@ -44,7 +44,7 @@ namespace DeeDeeEngine {
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		//将顶点数据存储到VBO中。glBufferData函数将vertices数组的数据复制到VBO中。
 	// sizeof(vertices)用于获取数组的字节大小。GL_STATIC_DRAW表示这些数据将被静态地传递给OpenGL进行绘制。
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 		//glEnableVertexAttribArray启用顶点属性数组。(在OpenGL中，顶点属性是用来描述顶点数据的信息，
 		// 比如位置、颜色、法线等。每个顶点属性都有一个索引，用来标识不同的属性。
@@ -65,13 +65,14 @@ namespace DeeDeeEngine {
 		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
 		//OpenGL根据IBO(索引缓冲区对象)中的索引值来查找对应的顶点数据。例如，索引值为0表示顶点缓冲区中的第一个顶点，索引值为1表示第二个顶点，
 		// 以此类推。OpenGL根据索引值找到对应的顶点数据，并按照顺序连接起来形成图元（如三角形）
-		unsigned int indices[3] = { 0,1,2 };
+		uint32_t indices[3] = { 0,1,2 };
 		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
 
 		std::string vertexSrc = R"(
          #version 330 core
          layout(location = 0)in vec3 a_Position;
+layout(location =1) in vec4 a_Color;
 out vec3 v_Position;
          
          void main(){
