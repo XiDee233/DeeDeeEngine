@@ -40,6 +40,12 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{474d55a3-19ec-4c9a-879b-ab8714b1d921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\DeeDeeEngine\Renderer">
+      <UniqueIdentifier>{27f57c9b-e4dc-4b6b-90ec-d2b4ff70b211}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Dee.h">
@@ -1347,10 +1353,24 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h" />
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Application.cpp">
@@ -1380,7 +1400,20 @@
     <ClCompile Include="src\deepch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

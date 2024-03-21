@@ -1,7 +1,6 @@
 #pragma once
 #include "DeeDeeEngine/Window.h"
 #include "DeeDeeEngine/Renderer/GraphicsContext.h"
-
 #include <GLFW/glfw3.h>
 
 namespace DeeDeeEngine {

@@ -31,17 +31,17 @@ namespace DeeDeeEngine {
 		//使其成为当前操作的顶点数组对象。这样，后续对顶点缓冲区和顶点属性的设置和使用都会与这个绑定的顶点数组对象相关联。*/
 		glBindVertexArray(m_VertexArray);
 
-		//生成一个缓冲区对象，并将其标识符存储在变量m_VertexBuffer中。缓冲区对象用于存储顶点数据或其他OpenGL中需要使用的数据。
-		glGenBuffers(1, &m_VertexBuffer);
-		//将缓冲区对象绑定到OpenGL的当前上下文中，使其成为当前操作的缓冲区对象。在这里，GL_ARRAY_BUFFER表示我们将要操作的是顶点属性数组的缓冲区对象。
-		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
+		////生成一个缓冲区对象，并将其标识符存储在变量m_VertexBuffer中。缓冲区对象用于存储顶点数据或其他OpenGL中需要使用的数据。
+		//glGenBuffers(1, &m_VertexBuffer);
+		////将缓冲区对象绑定到OpenGL的当前上下文中，使其成为当前操作的缓冲区对象。在这里，GL_ARRAY_BUFFER表示我们将要操作的是顶点属性数组的缓冲区对象。
+		//glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 
 		float vertices[3 * 6] = {
 			-0.5f, -0.5f, 0.0f,  // 位置
 			0.5f, -0.5f, 0.0f,   // 位置
 			0.0f, 0.5f, 0.0f,    // 位置
 		};
-		VertexBuffer buffer = VertexBuffer::Create(sizeof(vertices), vertices);
+		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		//将顶点数据存储到VBO中。glBufferData函数将vertices数组的数据复制到VBO中。
 	// sizeof(vertices)用于获取数组的字节大小。GL_STATIC_DRAW表示这些数据将被静态地传递给OpenGL进行绘制。
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -61,12 +61,13 @@ namespace DeeDeeEngine {
 		//	第六个参数：指定顶点属性数据的起始位置或者缓冲区偏移量。在这里，nullptr表示数据是从当前绑定的顶点缓冲区的开头开始的。
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-		glGenBuffers(1, &m_IndexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+		//glGenBuffers(1, &m_IndexBuffer);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
 		//OpenGL根据IBO(索引缓冲区对象)中的索引值来查找对应的顶点数据。例如，索引值为0表示顶点缓冲区中的第一个顶点，索引值为1表示第二个顶点，
 		// 以此类推。OpenGL根据索引值找到对应的顶点数据，并按照顺序连接起来形成图元（如三角形）
 		unsigned int indices[3] = { 0,1,2 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)/sizeof(uint32_t)));
 
 		std::string vertexSrc = R"(
          #version 330 core
@@ -120,11 +121,11 @@ in vec3 v_Position;
 
 		while (m_Running)
 		{
-			glClearColor(0.2f, 0.2f, 0.2f, 1);//设置清空颜色为紫色
+			glClearColor(0.2f, 0.2f, 0.2f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);//使用当前清空颜色清空颜色缓冲区，即将窗口内容清空为之前设置的清空颜色。
 			m_Shader->Bind();
 			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
