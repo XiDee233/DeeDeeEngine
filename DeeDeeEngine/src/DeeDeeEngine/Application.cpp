@@ -60,14 +60,15 @@ namespace DeeDeeEngine {
 		};
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
-		BufferLayout layout = {
+		BufferLayout _layout = {
 			{ShaderDataType::Float3,"a_Position"},
 			{ShaderDataType::Float4,"a_Color"}
 
 		};
-		m_VertexBuffer->SetLayout(layout);
+		m_VertexBuffer->SetLayout(_layout);
 		uint32_t index = 0;
-		for (const auto& element : m_VertexBuffer->GetLayout()) {
+		const auto& layout = m_VertexBuffer->GetLayout();
+		for (const auto& element : layout) {
 			glEnableVertexAttribArray(index);
 			glVertexAttribPointer(index, element.GetComponentCount(), 
 				ShaderDataTypeToOpenGLBaseType(element.Type),
