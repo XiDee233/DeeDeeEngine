@@ -1,9 +1,9 @@
 #include "deepch.h"
 #include "Application.h"
 #include "DeeDeeEngine/Log.h"
-#include "glad/glad.h"
 #include "input.h"
 #include "glm/glm.hpp"
+#include "DeeDeeEngine\Renderer\Renderer.h"
 namespace DeeDeeEngine {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -164,15 +164,20 @@ in vec3 v_Position;
 
 		while (m_Running)
 		{
-			glClearColor(0.2f, 0.2f, 0.2f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);//使用当前清空颜色清空颜色缓冲区，即将窗口内容清空为之前设置的清空颜色。
+
+			RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
 
 			m_Shader2->Bind();
-			m_SquareVA->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_SquareVA);
+
 			m_Shader->Bind();
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_VertexArray);
+
+			Renderer::EndScene();
+
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
