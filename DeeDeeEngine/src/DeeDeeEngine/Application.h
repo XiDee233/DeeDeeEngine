@@ -6,7 +6,8 @@
 #include "LayerStack.h"
 #include "DeeDeeEngine/ImGui/ImGuiLayer.h"
 #include "DeeDeeEngine/Renderer/Shader.h"
-#include <Platform/OpenGL/OpenGLBuffer.h>
+#include "DeeDeeEngine\Renderer\Buffer.h"
+#include "Renderer/VertexArray.h"
 
 namespace DeeDeeEngine {
 	class DEE_API Application
@@ -32,10 +33,13 @@ namespace DeeDeeEngine {
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		unsigned int m_VertexArray/*, *//*m_VertexBuffer,*/ /*m_IndexBuffer*/;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_VertexArray;
+
+
+		std::shared_ptr<Shader> m_Shader2;
+		std::shared_ptr<VertexArray> m_SquareVA;
 	private:
 		static Application* s_Instance;
 	};

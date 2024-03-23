@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h" />
@@ -581,8 +582,10 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp" />
@@ -599,6 +602,7 @@
     <ClCompile Include="src\deepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
