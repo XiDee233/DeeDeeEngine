@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\RenderCommand.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -588,6 +589,7 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />

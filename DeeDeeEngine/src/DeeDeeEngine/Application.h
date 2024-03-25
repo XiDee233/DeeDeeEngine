@@ -9,6 +9,9 @@
 #include "DeeDeeEngine\Renderer\Buffer.h"
 #include "Renderer/VertexArray.h"
 
+#include "DeeDeeEngine\Renderer\OrthographicCamera.h"
+
+
 namespace DeeDeeEngine {
 	class DEE_API Application
 	{
@@ -40,6 +43,8 @@ namespace DeeDeeEngine {
 
 		std::shared_ptr<Shader> m_Shader2;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 	private:
 		static Application* s_Instance;
 	};

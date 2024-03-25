@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include <glad/glad.h>
 #include <DeeDeeEngine/Log.h>
+#include <glm/gtc/type_ptr.hpp>
 namespace DeeDeeEngine {
 	Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc) {
 	
@@ -126,4 +127,10 @@ namespace DeeDeeEngine {
 	void Shader::Unbind()const {
 		glUseProgram(0);
 	}
+    void Shader::UploadUniformMat4(const std::string& name,const glm::mat4& matrix)
+    {
+		const char* nameCString = name.c_str();
+		GLint location = glGetUniformLocation(m_RendererID, nameCString);
+		glUniformMatrix4fv(location,1,GL_FALSE,glm::value_ptr(matrix));
+    }
 }
