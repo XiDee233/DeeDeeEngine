@@ -8,4 +8,16 @@
 #include "DeeDeeEngine/Log.h"
 #include "DeeDeeEngine/ImGui/ImGuiLayer.h"
 
+//renderer
+
+#include "DeeDeeEngine\Renderer\Renderer.h"
+#include "DeeDeeEngine\Renderer\RenderCommand.h"
+
+#include "DeeDeeEngine\Renderer\Buffer.h"
+#include "DeeDeeEngine\Renderer\Shader.h"
+#include "DeeDeeEngine\Renderer\VertexArray.h"
+
+#include "DeeDeeEngine\Renderer\OrthographicCamera.h"
+
+
 #include "DeeDeeEngine/EntryPoint.h"
