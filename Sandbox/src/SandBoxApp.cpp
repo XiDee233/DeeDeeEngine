@@ -128,7 +128,8 @@ in vec3 v_Position;
 
 		m_Shader2.reset(new DeeDeeEngine::Shader(vertexSrc2, fragmentSrc2));
 	}
-	void ExampleLayer::OnUpdate() override {
+	void ExampleLayer::OnUpdate(DeeDeeEngine::Timestep ts) override {
+		DEE_TRACE(ts);
 		// 获取相机的旋转角度（假设你的相机旋转是绕Z轴进行的）
 		float radians = glm::radians(m_CameraRotation);
 
@@ -138,24 +139,24 @@ in vec3 v_Position;
 
 		// 处理按键输入
 		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_LEFT)) {
-			m_CameraPosition -= cameraRight * m_CameraSpeed;
+			m_CameraPosition -= cameraRight * (m_CameraSpeed * ts);
 		}
 		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_RIGHT)) {
-			m_CameraPosition += cameraRight * m_CameraSpeed;
+			m_CameraPosition += cameraRight * (m_CameraSpeed*ts);
 		}
 
 		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_DOWN)) {
-			m_CameraPosition -= cameraForward * m_CameraSpeed;
+			m_CameraPosition -= cameraForward * (m_CameraSpeed * ts);
 		}
 		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_UP)) {
-			m_CameraPosition += cameraForward * m_CameraSpeed;
+			m_CameraPosition += cameraForward * (m_CameraSpeed * ts);
 		}
 
 		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_Q)) {
-			m_CameraRotation += m_CameraRotateSpeed;
+			m_CameraRotation += m_CameraRotateSpeed*ts;
 		}
 		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_E)) {
-			m_CameraRotation -= m_CameraRotateSpeed;
+			m_CameraRotation -= m_CameraRotateSpeed*ts;
 		}
 
 		DeeDeeEngine::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
@@ -202,8 +203,8 @@ private:
 	DeeDeeEngine::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
 	float m_CameraRotation = 0.0f;
-	float m_CameraSpeed = 0.1f;
-	float m_CameraRotateSpeed = 1.0f;
+	float m_CameraSpeed = 1.0f;
+	float m_CameraRotateSpeed = 10.0f;
 
 };
 class Sandbox :public DeeDeeEngine::Application {

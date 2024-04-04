@@ -1,5 +1,6 @@
 #pragma once
 #include "DeeDeeEngine/Core.h"
+#include "DeeDeeEngine\Core\Timestep.h"
 #include "DeeDeeEngine/Events/Event.h"
 namespace DeeDeeEngine {
 	class DEE_API Layer
@@ -10,7 +11,7 @@ namespace DeeDeeEngine {
 
 		virtual void OnAttach(){}
 		virtual void OnDetach(){}
-		virtual void OnUpdate(){}
+		virtual void OnUpdate(Timestep ts){}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event){}
 
