@@ -18,7 +18,7 @@ glm::mat4 camera(float Translate, glm::vec2 const& Rotate)
 class ExampleLayer :public DeeDeeEngine::Layer {
 public:
 	ExampleLayer()
-		:Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+		:Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f),m_SquarePosition(0.0f)
 	{
 
 		m_VertexArray.reset(DeeDeeEngine::VertexArray::Create());
@@ -49,10 +49,10 @@ public:
 
 
 		float vertices2[3 * 4] = {
-			-0.75f, -0.75f, 0.0f,
-			 0.75f, -0.75f, 0.0f,
-			 0.75f,  0.75f, 0.0f,
-			-0.75f,  0.75f, 0.0f,
+			-0.5f, -0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			 0.5f,  0.5f, 0.0f,
+			-0.5f,  0.5f, 0.0f,
 
 		};
 		std::shared_ptr<DeeDeeEngine::VertexBuffer> squareVB;
@@ -75,6 +75,8 @@ public:
 layout(location =1) in vec4 a_Color;
 
  uniform mat4 u_ViewProjection;
+ uniform mat4 u_Transform;
+
 
 out vec3 v_Position;
 out vec4 v_Color;
@@ -82,7 +84,7 @@ out vec4 v_Color;
          void main(){
 v_Position = a_Position;
 v_Color =a_Color;
-             gl_Position =u_ViewProjection* vec4(a_Position,1.0);
+             gl_Position =u_ViewProjection*u_Transform* vec4(a_Position,1.0);
 }
          )";
 		std::string fragmentSrc = R"(
@@ -102,31 +104,33 @@ color = v_Color;
 
 		m_Shader.reset(new DeeDeeEngine::Shader(vertexSrc, fragmentSrc));
 
-		std::string vertexSrc2 = R"(
+		std::string flatColorShaderVertexSrc2 = R"(
          #version 330 core
          layout(location = 0)in vec3 a_Position;
 
  uniform mat4 u_ViewProjection;
+ uniform mat4 u_Transform;
 
 
 out vec3 v_Position;
          
          void main(){
 v_Position = a_Position;
-             gl_Position = u_ViewProjection * vec4(a_Position,1.0);
+             gl_Position = u_ViewProjection *u_Transform* vec4(a_Position,1.0);
 }
          )";
-		std::string fragmentSrc2 = R"(
+		std::string flatColorShaderFragmentSrc2 = R"(
   #version 330 core
          layout(location = 0)out vec4 color;
 in vec3 v_Position;
+uniform vec4 u_Color;
          
          void main(){
-             color = vec4(0.2,0.3,0.8,1.0);
+             color = u_Color;
 }           
          )";
 
-		m_Shader2.reset(new DeeDeeEngine::Shader(vertexSrc2, fragmentSrc2));
+		m_FlatColorShader.reset(new DeeDeeEngine::Shader(flatColorShaderVertexSrc2, flatColorShaderFragmentSrc2));
 	}
 	void ExampleLayer::OnUpdate(DeeDeeEngine::Timestep ts) override {
 		DEE_TRACE(ts);
@@ -158,6 +162,20 @@ in vec3 v_Position;
 		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_E)) {
 			m_CameraRotation -= m_CameraRotateSpeed*ts;
 		}
+		///////////////////////////
+		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_A)) {
+			m_SquarePosition -= cameraRight * (m_SquareSpeed * ts);
+		}
+		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_D)) {
+			m_SquarePosition += cameraRight * (m_SquareSpeed * ts);
+		}
+
+		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_S)) {
+			m_SquarePosition -= cameraForward * (m_SquareSpeed * ts);
+		}
+		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_W)) {
+			m_SquarePosition += cameraForward * (m_SquareSpeed * ts);
+		}
 
 		DeeDeeEngine::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		DeeDeeEngine::RenderCommand::Clear();
@@ -165,9 +183,36 @@ in vec3 v_Position;
 		m_Camera.SetPosition(m_CameraPosition);
 
 		DeeDeeEngine::Renderer::BeginScene(m_Camera);
+		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
+		glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
+		glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
 
-		DeeDeeEngine::Renderer::Submit(m_Shader2, m_SquareVA);
+	/*	DeeDeeEngine::MaterialRef material = new DeeDeeEngine::Material(m_FlatColorShader);
+		DeeDeeEngine::MaterialInstanceRef mi = new DeeDeeEngine::MaterialInstance(material);
+		mi->SetValue("u_Color", redColor);
+		mi->SetTexture("u_AlbedoMap", texture);
+		squareMesh->SetMaterial(mi);*/
+		
+
+		for (int y = 0; y < 20; y++) {
+			for (int x = 0; x < 20; x++) {
+				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+
+				if (x % 2 == 0) {
+					m_FlatColorShader->UploadUniformFloat4("u_Color",redColor);
+				}
+				else
+				{
+					m_FlatColorShader->UploadUniformFloat4("u_Color",blueColor);
+				}
+				DeeDeeEngine::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
+
+			}
+		}
+		//glm::mat4 transform = glm::translate(glm::mat4(1.0f),m_SquarePosition);
+
 
 		DeeDeeEngine::Renderer::Submit(m_Shader, m_VertexArray);
 
@@ -197,7 +242,7 @@ private:
 	std::shared_ptr<DeeDeeEngine::VertexArray> m_VertexArray;
 
 
-	std::shared_ptr<DeeDeeEngine::Shader> m_Shader2;
+	std::shared_ptr<DeeDeeEngine::Shader> m_FlatColorShader;
 	std::shared_ptr<DeeDeeEngine::VertexArray> m_SquareVA;
 
 	DeeDeeEngine::OrthographicCamera m_Camera;
@@ -206,6 +251,8 @@ private:
 	float m_CameraSpeed = 1.0f;
 	float m_CameraRotateSpeed = 10.0f;
 
+	glm::vec3 m_SquarePosition;
+	float m_SquareSpeed = 1.0f;
 };
 class Sandbox :public DeeDeeEngine::Application {
 public:

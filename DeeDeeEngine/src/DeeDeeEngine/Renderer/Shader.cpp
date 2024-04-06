@@ -127,7 +127,12 @@ namespace DeeDeeEngine {
 	void Shader::Unbind()const {
 		glUseProgram(0);
 	}
-    void Shader::UploadUniformMat4(const std::string& name,const glm::mat4& matrix)
+	void Shader::UploadUniformFloat4(const std::string& name, const glm::vec4& values)
+	{
+		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4f(location, values.x, values.y, values.z, values.w);
+	}
+	void Shader::UploadUniformMat4(const std::string& name,const glm::mat4& matrix)
     {
 		const char* nameCString = name.c_str();
 		GLint location = glGetUniformLocation(m_RendererID, nameCString);
