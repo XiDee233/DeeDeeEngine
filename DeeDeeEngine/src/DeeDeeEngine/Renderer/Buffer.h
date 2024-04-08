@@ -88,7 +88,7 @@ namespace DeeDeeEngine {
 	class IndexBuffer {
 	public:
 
-		virtual void Bind()const = 0;
+		virtual void Bind()const = 0;//= 0: 这表示函数是纯虚的，没有提供实现，并且强制要求派生类提供具体的实现。
 		virtual void Unbind() const = 0;
 		virtual uint32_t GetCount() const = 0;
 

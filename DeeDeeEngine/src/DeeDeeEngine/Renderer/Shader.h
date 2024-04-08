@@ -5,14 +5,13 @@
 namespace DeeDeeEngine {
 	class Shader {
 	public:
-		Shader(const std::string& vertexSrc, const std::string& fragmentSrc);
-		~Shader();
+		virtual ~Shader() = default;//当你有一个基类指针指向一个派生类对象时，如果删除该指针，虚析构函数确保调用正确的析构函数来销毁对象。
+		//如果基类的析构函数不是虚的，那么只有基类的析构函数会被调用，这可能导致派生类的资源没有被正确释放。
 
-		void Bind() const;
-		void Unbind() const;
+		virtual void Bind() const =0;
+		virtual void Unbind() const =0;
 
-		void UploadUniformFloat4(const std::string& name, const glm::vec4& values);
-		void UploadUniformMat4(const std::string& name,const glm::mat4& matrix);
+		static Shader* Create(const std::string& vertexSrc, const std::string& fragmentSrc);
 	private:
 		uint32_t m_RendererID;
 	};

@@ -5,6 +5,8 @@
 #include <glm/mat4x4.hpp> // glm::mat4
 #include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
 #include "imgui/imgui.h"
+#include <Platform\OpenGL\OpenGLShader.h>
+#include <glm/gtc/type_ptr.hpp>
 glm::mat4 camera(float Translate, glm::vec2 const& Rotate)
 {
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.f);
@@ -102,7 +104,7 @@ color = v_Color;
 }           
          )";
 
-		m_Shader.reset(new DeeDeeEngine::Shader(vertexSrc, fragmentSrc));
+		m_Shader.reset(DeeDeeEngine::Shader::Create(vertexSrc, fragmentSrc));
 
 		std::string flatColorShaderVertexSrc2 = R"(
          #version 330 core
@@ -123,14 +125,14 @@ v_Position = a_Position;
   #version 330 core
          layout(location = 0)out vec4 color;
 in vec3 v_Position;
-uniform vec4 u_Color;
+uniform vec3 u_Color;
          
          void main(){
-             color = u_Color;
+             color = vec4(u_Color,1.0);
 }           
          )";
 
-		m_FlatColorShader.reset(new DeeDeeEngine::Shader(flatColorShaderVertexSrc2, flatColorShaderFragmentSrc2));
+		m_FlatColorShader.reset(DeeDeeEngine::Shader::Create(flatColorShaderVertexSrc2, flatColorShaderFragmentSrc2));
 	}
 	void ExampleLayer::OnUpdate(DeeDeeEngine::Timestep ts) override {
 		DEE_TRACE(ts);
@@ -185,8 +187,7 @@ uniform vec4 u_Color;
 		DeeDeeEngine::Renderer::BeginScene(m_Camera);
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
-		glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
+
 
 	/*	DeeDeeEngine::MaterialRef material = new DeeDeeEngine::Material(m_FlatColorShader);
 		DeeDeeEngine::MaterialInstanceRef mi = new DeeDeeEngine::MaterialInstance(material);
@@ -194,19 +195,14 @@ uniform vec4 u_Color;
 		mi->SetTexture("u_AlbedoMap", texture);
 		squareMesh->SetMaterial(mi);*/
 		
-
+		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_FlatColorShader)->Bind();
+		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_SquareColor);
 		for (int y = 0; y < 20; y++) {
 			for (int x = 0; x < 20; x++) {
 				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
 
-				if (x % 2 == 0) {
-					m_FlatColorShader->UploadUniformFloat4("u_Color",redColor);
-				}
-				else
-				{
-					m_FlatColorShader->UploadUniformFloat4("u_Color",blueColor);
-				}
+				
 				DeeDeeEngine::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
 
 			}
@@ -234,7 +230,9 @@ uniform vec4 u_Color;
 		return false;
 	}
 	void ExampleLayer::OnImGuiRender() override {
-
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
+		ImGui::End();
 	}
 private:
 
@@ -253,6 +251,7 @@ private:
 
 	glm::vec3 m_SquarePosition;
 	float m_SquareSpeed = 1.0f;
+	glm::vec3 m_SquareColor = { 0.2f,0.3f,0.4f };
 };
 class Sandbox :public DeeDeeEngine::Application {
 public:

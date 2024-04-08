@@ -145,6 +145,7 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\RenderCommand.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
@@ -594,6 +595,7 @@
     <ClCompile Include="src\DeeDeeEngine\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp" />
