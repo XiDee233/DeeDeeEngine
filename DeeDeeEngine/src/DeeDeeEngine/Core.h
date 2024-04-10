@@ -1,5 +1,5 @@
 #pragma once
-
+#include <memory>
 #ifdef DEE_PLATFORM_WINDOWS
 #if DEE_DYNAMIC_LINKS
     #ifdef DEE_BUILD_DLL
@@ -25,3 +25,13 @@
 #define BIT(X)(1<<X)
 
 #define DEE_BIND_EVENT_FN(fn) std::bind(&fn,this,std::placeholders::_1)
+
+namespace DeeDeeEngine {
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+
+	
+
+}

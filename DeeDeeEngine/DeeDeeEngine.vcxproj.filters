@@ -7,14 +7,23 @@
     <Filter Include="src\DeeDeeEngine">
       <UniqueIdentifier>{AEB9DCD0-9AB2-FB22-C3E4-E0A7AF3CDB2E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DeeDeeEngine\Core">
+      <UniqueIdentifier>{C61A13DE-3287-CED8-FB7A-663667A6F040}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\DeeDeeEngine\Events">
       <UniqueIdentifier>{D2F566B4-3E2D-AF4B-4737-136FB3EDD544}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\DeeDeeEngine\ImGui">
       <UniqueIdentifier>{5839E1A0-4433-0AF3-2DA0-A0031939705F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DeeDeeEngine\Renderer">
+      <UniqueIdentifier>{14C1F660-8083-2AEB-C933-B977353503C9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
@@ -40,11 +49,8 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Platform\OpenGL">
-      <UniqueIdentifier>{474d55a3-19ec-4c9a-879b-ab8714b1d921}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\DeeDeeEngine\Renderer">
-      <UniqueIdentifier>{27f57c9b-e4dc-4b6b-90ec-d2b4ff70b211}</UniqueIdentifier>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Core.h">
       <Filter>src\DeeDeeEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\Timestep.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\EntryPoint.h">
       <Filter>src\DeeDeeEngine</Filter>
@@ -84,6 +93,33 @@
     <ClInclude Include="src\DeeDeeEngine\Log.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCamera.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\RenderCommand.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\RendererAPI.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Texture.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Window.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
@@ -95,6 +131,24 @@
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\mouseButtonCode.h">
       <Filter>src\DeeDeeEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>src\Platform\Windows</Filter>
@@ -1353,23 +1407,8 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h">
-      <Filter>src\DeeDeeEngine\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h">
-      <Filter>src\DeeDeeEngine\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer.h">
-      <Filter>src\DeeDeeEngine\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h">
-      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1391,6 +1430,48 @@
     <ClCompile Include="src\DeeDeeEngine\Log.cpp">
       <Filter>src\DeeDeeEngine</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCamera.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\RenderCommand.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\RendererAPI.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Texture.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\VertexArray.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1400,20 +1481,8 @@
     <ClCompile Include="src\deepch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp">
-      <Filter>src\DeeDeeEngine\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer.cpp">
-      <Filter>src\DeeDeeEngine\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp">
-      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
