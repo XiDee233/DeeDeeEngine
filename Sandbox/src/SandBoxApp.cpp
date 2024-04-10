@@ -168,6 +168,7 @@ uniform sampler2D u_Texture;
 
 		m_TextureShader.reset(DeeDeeEngine::Shader::Create(textureShaderVertexSrc2, textureShaderFragmentSrc2));
 		m_Texture=(DeeDeeEngine::Texture2D::Create("./assets/textures/cjy.png"));
+		m_DeeLogoTexture = (DeeDeeEngine::Texture2D::Create("./assets/textures/logo.png"));
 
 		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_TextureShader)->Bind();
 		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -249,7 +250,8 @@ uniform sampler2D u_Texture;
 
 		m_Texture->Bind();
 		DeeDeeEngine::Renderer::Submit(m_TextureShader, m_SquareVA, glm::translate(glm::mat4(1.0f), glm::vec3(-0.5, 0, 0)));
-
+		m_DeeLogoTexture->Bind();
+		DeeDeeEngine::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		DeeDeeEngine::Renderer::EndScene();
 	}
 	void ExampleLayer::OnEvent(DeeDeeEngine::Event& event)override {
@@ -281,7 +283,7 @@ private:
 	DeeDeeEngine::Ref<DeeDeeEngine::Shader> m_FlatColorShader, m_TextureShader;
 	DeeDeeEngine::Ref<DeeDeeEngine::VertexArray> m_SquareVA;
 
-	DeeDeeEngine::Ref<DeeDeeEngine::Texture2D> m_Texture;
+	DeeDeeEngine::Ref<DeeDeeEngine::Texture2D> m_Texture,m_DeeLogoTexture;
 
 	DeeDeeEngine::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;

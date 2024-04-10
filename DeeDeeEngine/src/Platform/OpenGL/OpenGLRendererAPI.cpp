@@ -3,6 +3,11 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 namespace DeeDeeEngine {
+	void OpenGLRendererAPI::Init()
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 	void DeeDeeEngine::OpenGLRendererAPI::SetClearColor(const glm::vec4& color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);
