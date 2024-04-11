@@ -7,6 +7,7 @@
 #include "imgui/imgui.h"
 #include <Platform\OpenGL\OpenGLShader.h>
 #include <glm/gtc/type_ptr.hpp>
+
 glm::mat4 camera(float Translate, glm::vec2 const& Rotate)
 {
 	glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.f);
@@ -105,7 +106,7 @@ color = v_Color;
 }           
          )";
 
-		m_Shader.reset(DeeDeeEngine::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader =(DeeDeeEngine::Shader::Create("Triangle",vertexSrc, fragmentSrc));
 
 		std::string flatShaderVertexSrc2 = R"(
          #version 330 core
@@ -133,15 +134,15 @@ uniform vec3 u_Color;
 }           
          )";
 
-		m_FlatColorShader.reset(DeeDeeEngine::Shader::Create(flatShaderVertexSrc2, flatShaderFragmentSrc2));
+		m_FlatColorShader=(DeeDeeEngine::Shader::Create("Flat",flatShaderVertexSrc2, flatShaderFragmentSrc2));
 
 	
-		m_TextureShader.reset(DeeDeeEngine::Shader::Create("assets/shaders/Texture.glsl"));
+		auto textureShader =m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 		m_Texture=(DeeDeeEngine::Texture2D::Create("./assets/textures/cjy.png"));
 		m_DeeLogoTexture = (DeeDeeEngine::Texture2D::Create("./assets/textures/logo.png"));
 
-		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 	void ExampleLayer::OnUpdate(DeeDeeEngine::Timestep ts) override {
 		
@@ -217,11 +218,11 @@ uniform vec3 u_Color;
 			}
 		}
 		//glm::mat4 transform = glm::translate(glm::mat4(1.0f),m_SquarePosition);
-
+		auto textureShader = m_ShaderLibrary.Get("Texture");
 		m_Texture->Bind();
-		DeeDeeEngine::Renderer::Submit(m_TextureShader, m_SquareVA, glm::translate(glm::mat4(1.0f), glm::vec3(-0.5, 0, 0)));
+		DeeDeeEngine::Renderer::Submit(textureShader, m_SquareVA, glm::translate(glm::mat4(1.0f), glm::vec3(-0.5, 0, 0)));
 		m_DeeLogoTexture->Bind();
-		DeeDeeEngine::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		DeeDeeEngine::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		DeeDeeEngine::Renderer::EndScene();
 	}
 	void ExampleLayer::OnEvent(DeeDeeEngine::Event& event)override {
@@ -246,11 +247,12 @@ uniform vec3 u_Color;
 	}
 private:
 
+	DeeDeeEngine::ShaderLibrary m_ShaderLibrary;
 	DeeDeeEngine::Ref<DeeDeeEngine::Shader> m_Shader;
 	DeeDeeEngine::Ref<DeeDeeEngine::VertexArray> m_VertexArray;
 
 
-	DeeDeeEngine::Ref<DeeDeeEngine::Shader> m_FlatColorShader, m_TextureShader;
+	DeeDeeEngine::Ref<DeeDeeEngine::Shader> m_FlatColorShader;
 	DeeDeeEngine::Ref<DeeDeeEngine::VertexArray> m_SquareVA;
 
 	DeeDeeEngine::Ref<DeeDeeEngine::Texture2D> m_Texture,m_DeeLogoTexture;

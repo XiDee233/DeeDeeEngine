@@ -20,8 +20,16 @@ namespace DeeDeeEngine {
 		std::string source = ReadFile(filepath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
+
+		// Extract name from filepath
+		auto lastSlash = filepath.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = filepath.rfind('.');
+		auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
+		m_Name = filepath.substr(lastSlash, count);
 	}
-	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc) {
+	OpenGLShader::OpenGLShader(const std::string& name,const std::string& vertexSrc, const std::string& fragmentSrc)
+	:m_Name(name){
 
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -36,7 +44,9 @@ namespace DeeDeeEngine {
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources) {
 
 		GLuint program = glCreateProgram();
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
+		DEE_CORE_ASSERT(shaderSources.size() <= 2, "We Only support 2 shaders for now!");
+		std::array<GLenum,2> glShaderIDs;
+		int glShaderIDIndex = 0;
 		for (auto& kv : shaderSources) {
 			GLenum type = kv.first;
 			const std::string& source = kv.second;
@@ -73,7 +83,7 @@ namespace DeeDeeEngine {
 				break;
 			}
 			glAttachShader(program, shader);
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIDIndex++] =shader;
 		}
 		 
 
@@ -157,23 +167,41 @@ namespace DeeDeeEngine {
 		GLint location = glGetUniformLocation(m_RendererID, nameCString);
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));//glm::value_ptr(matrix)用于获取矩阵数据的指针，这是因为OpenGL函数需要接收指向数据的指针。
 	}
+	// 定义OpenGLShader类的ReadFile函数，它接受一个文件路径作为参数并返回文件内容的字符串。
 	std::string OpenGLShader::ReadFile(const std::string& filepath)
 	{
-
+		// 创建一个用于存储文件内容的字符串。
 		std::string result;
-		std::ifstream in(filepath, std::ios::in, std::ios::binary);
+
+		// 打开文件：创建一个输入文件流'in'，以二进制读取模式打开路径为'filepath'的文件。
+		std::ifstream in(filepath, std::ios::in | std::ios::binary); // 注意：这里应该是位或运算符'|'，而不是逗号','。
+
+		// 检查文件是否成功打开。
 		if (in) {
+			// 将文件指针移动到文件末尾。
 			in.seekg(0, std::ios::end);
+
+			// 根据文件指针当前位置（即文件大小）调整结果字符串的大小。
 			result.resize(in.tellg());
+
+			// 将文件指针重新定位到文件的开始。
 			in.seekg(0, std::ios::beg);
+
+			// 从文件中读取内容到'result'字符串中，读取的大小为'result'的大小。
 			in.read(&result[0], result.size());
+
+			// 关闭文件流。
 			in.close();
 		}
 		else {
-			DEE_CORE_ERROR("Could not open file '{0}", filepath);
+			// 如果文件无法打开，记录错误信息。注意：这里的字符串格式化似乎不完整。
+			DEE_CORE_ERROR("Could not open file '{0}'", filepath);
 		}
+
+		// 返回文件内容。
 		return result;
 	}
+
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
 	{
