@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -26,19 +26,19 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -141,19 +141,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Dee.h" />
-    <ClInclude Include="src\DeeDeeEngine\Application.h" />
-    <ClInclude Include="src\DeeDeeEngine\Core.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\Application.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\Core.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Timestep.h" />
-    <ClInclude Include="src\DeeDeeEngine\EntryPoint.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\EntryPoint.h" />
     <ClInclude Include="src\DeeDeeEngine\Events\ApplicationEvent.h" />
     <ClInclude Include="src\DeeDeeEngine\Events\Event.h" />
     <ClInclude Include="src\DeeDeeEngine\Events\KeyEvent.h" />
     <ClInclude Include="src\DeeDeeEngine\Events\MouseEvent.h" />
     <ClInclude Include="src\DeeDeeEngine\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\DeeDeeEngine\Layer.h" />
-    <ClInclude Include="src\DeeDeeEngine\LayerStack.h" />
-    <ClInclude Include="src\DeeDeeEngine\Log.h" />
-    <ClInclude Include="src\DeeDeeEngine\OrthographicCameraController.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\Layer.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\LayerStack.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\Log.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCamera.h" />
@@ -163,10 +163,10 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Texture.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h" />
-    <ClInclude Include="src\DeeDeeEngine\Window.h" />
-    <ClInclude Include="src\DeeDeeEngine\input.h" />
-    <ClInclude Include="src\DeeDeeEngine\keyCode.h" />
-    <ClInclude Include="src\DeeDeeEngine\mouseButtonCode.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\Window.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\input.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\keyCode.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\mouseButtonCode.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
@@ -595,13 +595,13 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\DeeDeeEngine\Application.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\Layer.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\LayerStack.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\Log.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Core\Layer.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Core\LayerStack.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Core\Log.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\RenderCommand.cpp" />

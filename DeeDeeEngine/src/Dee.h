@@ -1,15 +1,15 @@
 #pragma once
 #include <stdio.h>
-#include "DeeDeeEngine/Application.h"
-#include "DeeDeeEngine/Layer.h"
+#include "DeeDeeEngine/Core/Application.h"
+#include "DeeDeeEngine/Core/Layer.h"
 
 #include "DeeDeeEngine\Core\Timestep.h"
 
-#include "DeeDeeEngine/input.h"
-#include "DeeDeeEngine/keyCode.h"
-#include "DeeDeeEngine/mouseButtonCode.h"
-#include "DeeDeeEngine\OrthographicCameraController.h"
-#include "DeeDeeEngine/Log.h"
+#include "DeeDeeEngine/Core/input.h"
+#include "DeeDeeEngine/Core/keyCode.h"
+#include "DeeDeeEngine/Core/mouseButtonCode.h"
+#include "DeeDeeEngine\Renderer\OrthographicCameraController.h"
+#include "DeeDeeEngine/Core/Log.h"
 #include "DeeDeeEngine/ImGui/ImGuiLayer.h"
 
 //renderer
@@ -25,4 +25,4 @@
 #include "DeeDeeEngine\Renderer\OrthographicCamera.h"
 
 
-#include "DeeDeeEngine/EntryPoint.h"
+#include "DeeDeeEngine/Core/EntryPoint.h"

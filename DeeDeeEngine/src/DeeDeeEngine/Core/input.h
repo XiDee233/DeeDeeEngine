@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DeeDeeEngine/Core.h"
+#include "DeeDeeEngine/Core/Core.h"
 
 namespace DeeDeeEngine {
 	class DEE_API Input {

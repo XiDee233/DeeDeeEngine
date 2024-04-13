@@ -1,7 +1,7 @@
 #include "deepch.h"
 #include "WindowsInput.h"
 
-#include "DeeDeeEngine/Application.h"
+#include "DeeDeeEngine/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace DeeDeeEngine {

@@ -1,6 +1,6 @@
 #pragma once
 #include "deepch.h"
-#include "DeeDeeEngine/Core.h"
+#include "DeeDeeEngine/Core/Core.h"
 #include "DeeDeeEngine/Events/Event.h"
 
 namespace DeeDeeEngine {

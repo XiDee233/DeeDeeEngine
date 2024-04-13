@@ -1,8 +1,8 @@
 #pragma once
-#include "Renderer\OrthographicCamera.h"
-#include "Core\Timestep.h"
-#include "Events\MouseEvent.h"
-#include "Events\ApplicationEvent.h"
+#include "DeeDeeEngine\Renderer\OrthographicCamera.h"
+#include "DeeDeeEngine\Core\Timestep.h"
+#include "DeeDeeEngine\Events\MouseEvent.h"
+#include "DeeDeeEngine\Events\ApplicationEvent.h"
 namespace DeeDeeEngine {
 	class OrthographicCameraController {
 	public:

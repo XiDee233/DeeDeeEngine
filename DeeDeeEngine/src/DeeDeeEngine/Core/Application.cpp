@@ -1,6 +1,6 @@
 #include "deepch.h"
 #include "Application.h"
-#include "DeeDeeEngine/Log.h"
+#include "DeeDeeEngine/Core/Log.h"
 #include "input.h"
 #include "glm/glm.hpp"
 #include "DeeDeeEngine\Renderer\Renderer.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "DeeDeeEngine/Window.h"
+#include "DeeDeeEngine/Core/Window.h"
 #include "DeeDeeEngine/Renderer/GraphicsContext.h"
 #include <GLFW/glfw3.h>
 

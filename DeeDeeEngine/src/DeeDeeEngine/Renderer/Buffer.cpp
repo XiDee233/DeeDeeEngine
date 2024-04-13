@@ -1,7 +1,7 @@
 #include "deepch.h"
 #include "Buffer.h"
 #include "Renderer.h"
-#include <DeeDeeEngine/Core.h>
+#include <DeeDeeEngine/Core/Core.h>
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 namespace DeeDeeEngine {

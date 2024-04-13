@@ -1,7 +1,7 @@
 #include "deepch.h"
 #include "OrthographicCameraController.h"
-#include "keyCode.h"
-#include "DeeDeeEngine\input.h"
+#include "DeeDeeEngine\Core\keyCode.h"
+#include "DeeDeeEngine/Core\input.h"
 namespace DeeDeeEngine {
 	DeeDeeEngine::OrthographicCameraController::OrthographicCameraController(float aspectRatio,bool rotation)
 		:m_AspectRatio(aspectRatio),m_Camera(-m_AspectRatio*m_ZoomLevel,m_AspectRatio* m_ZoomLevel,-m_ZoomLevel,m_ZoomLevel),m_Rotation(rotation)

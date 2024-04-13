@@ -57,16 +57,16 @@
     <ClInclude Include="src\Dee.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Application.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\Application.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\Core.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Core\Timestep.h">
       <Filter>src\DeeDeeEngine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\EntryPoint.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\EntryPoint.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Events\ApplicationEvent.h">
@@ -84,13 +84,16 @@
     <ClInclude Include="src\DeeDeeEngine\ImGui\ImGuiLayer.h">
       <Filter>src\DeeDeeEngine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Layer.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\Layer.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\LayerStack.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\LayerStack.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Log.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\Log.h">
+      <Filter>src\DeeDeeEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h">
@@ -120,16 +123,16 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Window.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\Window.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\input.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\input.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\keyCode.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\keyCode.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\mouseButtonCode.h">
+    <ClInclude Include="src\DeeDeeEngine\Core\mouseButtonCode.h">
       <Filter>src\DeeDeeEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
@@ -1410,10 +1413,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\OrthographicCameraController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\DeeDeeEngine\Application.cpp">
+    <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
       <Filter>src\DeeDeeEngine</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiBuild.cpp">
@@ -1422,13 +1424,16 @@
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp">
       <Filter>src\DeeDeeEngine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Layer.cpp">
+    <ClCompile Include="src\DeeDeeEngine\Core\Layer.cpp">
       <Filter>src\DeeDeeEngine</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\LayerStack.cpp">
+    <ClCompile Include="src\DeeDeeEngine\Core\LayerStack.cpp">
       <Filter>src\DeeDeeEngine</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Log.cpp">
+    <ClCompile Include="src\DeeDeeEngine\Core\Log.cpp">
+      <Filter>src\DeeDeeEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.cpp">
       <Filter>src\DeeDeeEngine</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp">
@@ -1485,6 +1490,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\OrthographicCameraController.cpp" />
   </ItemGroup>
 </Project>

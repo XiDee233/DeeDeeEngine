@@ -1,5 +1,5 @@
 #pragma once
-#include "DeeDeeEngine/Core.h"
+#include "DeeDeeEngine/Core/Core.h"
 #include "Layer.h"
 namespace DeeDeeEngine {
 	class DEE_API LayerStack

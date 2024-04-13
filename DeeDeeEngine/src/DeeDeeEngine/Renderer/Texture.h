@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "DeeDeeEngine\Core.h"
+#include "DeeDeeEngine\Core\Core.h"
 namespace DeeDeeEngine {
 	class Texture {
 	public:

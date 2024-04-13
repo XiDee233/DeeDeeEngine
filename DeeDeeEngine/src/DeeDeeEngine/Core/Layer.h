@@ -1,5 +1,5 @@
 #pragma once
-#include "DeeDeeEngine/Core.h"
+#include "DeeDeeEngine/Core/Core.h"
 #include "DeeDeeEngine\Core\Timestep.h"
 #include "DeeDeeEngine/Events/Event.h"
 namespace DeeDeeEngine {

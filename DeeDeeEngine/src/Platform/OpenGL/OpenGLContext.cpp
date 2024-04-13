@@ -2,7 +2,7 @@
 #include "OpenGLContext.h"
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
-#include <DeeDeeEngine/Log.h>
+#include <DeeDeeEngine/Core/Log.h>
 
 
 namespace DeeDeeEngine {

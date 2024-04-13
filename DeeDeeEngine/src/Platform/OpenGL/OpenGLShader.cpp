@@ -2,7 +2,7 @@
 #include "OpenGLShader.h"
 #include <glad/glad.h>
 #include <fstream>
-#include <DeeDeeEngine/Log.h>
+#include <DeeDeeEngine/Core/Log.h>
 #include <glm/gtc/type_ptr.hpp>
 namespace DeeDeeEngine {
 

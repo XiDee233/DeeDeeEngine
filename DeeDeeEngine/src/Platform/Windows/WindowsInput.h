@@ -1,5 +1,5 @@
 #pragma once
-#include "DeeDeeEngine/input.h"
+#include "DeeDeeEngine/Core/input.h"
 namespace DeeDeeEngine {
 	class WindowsInput :public Input {
 	protected:
