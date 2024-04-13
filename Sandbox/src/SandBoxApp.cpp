@@ -1,5 +1,5 @@
 #include <Dee.h>
-
+#include "DeeDeeEngine/Core/EntryPoint.h"
 #include <glm/vec3.hpp> // glm::vec3
 #include <glm/vec4.hpp> // glm::vec4
 #include <glm/mat4x4.hpp> // glm::mat4
@@ -7,6 +7,8 @@
 #include "imgui/imgui.h"
 #include <Platform\OpenGL\OpenGLShader.h>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "Sandbox2D.h"
 
 glm::mat4 camera(float Translate, glm::vec2 const& Rotate)
 {
@@ -24,31 +26,7 @@ public:
 		:Layer("Example"), m_CameraController(1270.0f/720.0f,true)
 	{
 
-		m_VertexArray.reset(DeeDeeEngine::VertexArray::Create());
-
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f,0.0f,1.0f,0.0f,1.0f,
-			0.5f, -0.5f, 0.0f, 0.0f,0.0f,1.0f,1.0f,
-			0.0f, 0.5f, 0.0f,  1.0f,0.0f,0.0f,1.0f,
-		};
-		DeeDeeEngine::Ref<DeeDeeEngine::VertexBuffer> triVB;
-		triVB.reset(DeeDeeEngine::VertexBuffer::Create(vertices, sizeof(vertices)));
-
-		DeeDeeEngine::BufferLayout _layout = {
-			{DeeDeeEngine::ShaderDataType::Float3,"a_Position"},
-			{DeeDeeEngine::ShaderDataType::Float4,"a_Color"}
-
-		};
-		triVB->SetLayout(_layout);
-
-		m_VertexArray->AddVertexBuffer(triVB);
-
-		uint32_t indices[3] = { 0,1,2 };
-		DeeDeeEngine::Ref<DeeDeeEngine::IndexBuffer> triIB;
-		triIB.reset(DeeDeeEngine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		m_VertexArray->SetIndexBuffer(triIB);
-
-		m_SquareVA.reset(DeeDeeEngine::VertexArray::Create());
+		m_SquareVA = (DeeDeeEngine::VertexArray::Create());
 
 
 		float vertices2[5 * 4] = {
@@ -70,7 +48,6 @@ public:
 
 		uint32_t indices2[6] = { 0,1,2,2,3,0 };
 		DeeDeeEngine::Ref<DeeDeeEngine::IndexBuffer> squareIB;
-		squareIB.reset(DeeDeeEngine::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		squareIB.reset(DeeDeeEngine::IndexBuffer::Create(indices2, sizeof(indices2) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 		std::string vertexSrc = R"(
@@ -203,9 +180,9 @@ uniform vec3 u_Color;
 		return false;
 	}
 	void ExampleLayer::OnImGuiRender() override {
-		ImGui::Begin("Settings");
+	/*	ImGui::Begin("Settings");
 		ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
-		ImGui::End();
+		ImGui::End();*/
 	}
 private:
 
@@ -229,6 +206,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 	~Sandbox() {
 

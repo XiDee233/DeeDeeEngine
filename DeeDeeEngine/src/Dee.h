@@ -25,4 +25,3 @@
 #include "DeeDeeEngine\Renderer\OrthographicCamera.h"
 
 
-#include "DeeDeeEngine/Core/EntryPoint.h"
