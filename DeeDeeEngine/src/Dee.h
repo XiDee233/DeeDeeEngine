@@ -15,6 +15,8 @@
 //renderer
 
 #include "DeeDeeEngine\Renderer\Renderer.h"
+#include "DeeDeeEngine\Renderer\Renderer2D.h"
+
 #include "DeeDeeEngine\Renderer\RenderCommand.h"
 
 #include "DeeDeeEngine\Renderer\Buffer.h"

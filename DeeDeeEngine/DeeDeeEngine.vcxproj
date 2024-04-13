@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Dee.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Application.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Core.h" />
@@ -595,6 +596,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp" />
