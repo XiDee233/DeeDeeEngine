@@ -8,6 +8,7 @@
 #include "DeeDeeEngine/input.h"
 #include "DeeDeeEngine/keyCode.h"
 #include "DeeDeeEngine/mouseButtonCode.h"
+#include "DeeDeeEngine\OrthographicCameraController.h"
 #include "DeeDeeEngine/Log.h"
 #include "DeeDeeEngine/ImGui/ImGuiLayer.h"
 

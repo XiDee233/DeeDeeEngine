@@ -21,7 +21,7 @@ glm::mat4 camera(float Translate, glm::vec2 const& Rotate)
 class ExampleLayer :public DeeDeeEngine::Layer {
 public:
 	ExampleLayer()
-		:Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f), m_SquarePosition(0.0f)
+		:Layer("Example"), m_CameraController(1270.0f/720.0f,true)
 	{
 
 		m_VertexArray.reset(DeeDeeEngine::VertexArray::Create());
@@ -146,55 +146,14 @@ uniform vec3 u_Color;
 	}
 	void ExampleLayer::OnUpdate(DeeDeeEngine::Timestep ts) override {
 		
-		// 获取相机的旋转角度（假设你的相机旋转是绕Z轴进行的）
-		float radians = glm::radians(m_CameraRotation);
-
-		// 计算相机的前向向量和右向量
-		glm::vec3 cameraRight = glm::vec3(cos(radians), sin(radians), 0.0f);
-		glm::vec3 cameraForward = glm::vec3(-sin(radians), cos(radians), 0.0f);
-
-		// 处理按键输入
-		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_LEFT)) {
-			m_CameraPosition -= cameraRight * (m_CameraSpeed * ts);
-		}
-		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_RIGHT)) {
-			m_CameraPosition += cameraRight * (m_CameraSpeed * ts);
-		}
-
-		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_DOWN)) {
-			m_CameraPosition -= cameraForward * (m_CameraSpeed * ts);
-		}
-		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_UP)) {
-			m_CameraPosition += cameraForward * (m_CameraSpeed * ts);
-		}
-
-		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_Q)) {
-			m_CameraRotation += m_CameraRotateSpeed * ts;
-		}
-		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_E)) {
-			m_CameraRotation -= m_CameraRotateSpeed * ts;
-		}
-		///////////////////////////
-		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_A)) {
-			m_SquarePosition -= cameraRight * (m_SquareSpeed * ts);
-		}
-		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_D)) {
-			m_SquarePosition += cameraRight * (m_SquareSpeed * ts);
-		}
-
-		if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_S)) {
-			m_SquarePosition -= cameraForward * (m_SquareSpeed * ts);
-		}
-		else if (DeeDeeEngine::Input::IsKeyPressed(DEE_KEY_W)) {
-			m_SquarePosition += cameraForward * (m_SquareSpeed * ts);
-		}
+		
+		m_CameraController.OnUpdate(ts);
 
 		DeeDeeEngine::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		DeeDeeEngine::RenderCommand::Clear();
-		m_Camera.SetRotation(m_CameraRotation);
-		m_Camera.SetPosition(m_CameraPosition);
+		
 
-		DeeDeeEngine::Renderer::BeginScene(m_Camera);
+		DeeDeeEngine::Renderer::BeginScene(m_CameraController.GetCamera());
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
 
@@ -231,6 +190,8 @@ uniform vec3 u_Color;
 				DeeDeeEngine::KeyPressedEvent& e = (DeeDeeEngine::KeyPressedEvent&)event;
 				DEE_TRACE("{0}", (char)e.GetKeyCode());
 			}*/
+
+		m_CameraController.OnEvent(event);
 		DeeDeeEngine::EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<DeeDeeEngine::KeyPressedEvent>(DEE_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
 
@@ -257,14 +218,9 @@ private:
 
 	DeeDeeEngine::Ref<DeeDeeEngine::Texture2D> m_Texture,m_DeeLogoTexture;
 
-	DeeDeeEngine::OrthographicCamera m_Camera;
-	glm::vec3 m_CameraPosition;
-	float m_CameraRotation = 0.0f;
-	float m_CameraSpeed = 1.0f;
-	float m_CameraRotateSpeed = 10.0f;
+	DeeDeeEngine::OrthographicCameraController m_CameraController;
 
 	glm::vec3 m_SquarePosition;
-	float m_SquareSpeed = 1.0f;
 	glm::vec3 m_SquareColor = { 0.2f,0.3f,0.4f };
 };
 class Sandbox :public DeeDeeEngine::Application {
