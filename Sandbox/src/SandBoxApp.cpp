@@ -192,6 +192,7 @@ uniform vec3 u_Color;
 			}*/
 
 		m_CameraController.OnEvent(event);
+
 		DeeDeeEngine::EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<DeeDeeEngine::KeyPressedEvent>(DEE_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
 
