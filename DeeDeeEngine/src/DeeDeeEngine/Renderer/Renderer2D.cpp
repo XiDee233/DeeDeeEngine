@@ -10,6 +10,7 @@ namespace DeeDeeEngine {
 	struct Renderer2DStorage {
 		Ref<VertexArray> QuadVertexArray;
 		Ref<Shader> FlatColorShader;
+		Ref<Shader> TextureShader;
 	};
 	static Renderer2DStorage* m_Data;
 	void Renderer2D::Init()
@@ -19,16 +20,18 @@ namespace DeeDeeEngine {
 
 
 		float vertices2[5 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+			-0.5f, -0.5f, 0.0f,	 0.0f,0.0f,
+			 0.5f, -0.5f, 0.0f,	 1.0f,0.0f,
+			 0.5f,  0.5f, 0.0f,	 1.0f,1.0f,
+			-0.5f,  0.5f, 0.0f,	 0.0f,1.0f
 
 		};
 		Ref<VertexBuffer> squareVB;
 		squareVB.reset(VertexBuffer::Create(vertices2, sizeof(vertices2)));
 		BufferLayout _layout2 = {
 			{ShaderDataType::Float3,"a_Position"},
+			{ShaderDataType::Float2,"a_TexCoord"}
+
 		};
 		squareVB->SetLayout(_layout2);
 
@@ -41,6 +44,9 @@ namespace DeeDeeEngine {
 
 
 		m_Data->FlatColorShader = Shader::Create("assets/shaders/FlatColor.glsl");
+		m_Data->TextureShader = Shader::Create("assets/shaders/Texture.glsl");
+		m_Data->TextureShader->Bind();
+		m_Data->TextureShader->SetInt("u_Texture", 0);
 	}
 	void Renderer2D::Shutdown()
 	{
@@ -49,8 +55,9 @@ namespace DeeDeeEngine {
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		m_Data->FlatColorShader->Bind();
-		m_Data->FlatColorShader->SetMat4("u_ViewProjection",camera.GetViewProjectionMartix());
-
+		m_Data->FlatColorShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMartix());
+		m_Data->TextureShader->Bind();
+		m_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMartix());
 	}
 	void Renderer2D::EndScene()
 	{
@@ -68,8 +75,25 @@ namespace DeeDeeEngine {
 		m_Data->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(m_Data->QuadVertexArray);
 	}
+
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		DrawQuad({ position.x,position.y,0.0f }, size, color);
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D> texture)
+	{
+		DrawQuad({ position.x,position.y,0.0f }, size, texture);
+	}
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D> texture)
+	{
+		m_Data->TextureShader->Bind();
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x,size.y,1.0f });
+		m_Data->TextureShader->SetMat4("u_Transform", transform);
+
+		texture->Bind();
+		m_Data->QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(m_Data->QuadVertexArray);
 	}
 }
