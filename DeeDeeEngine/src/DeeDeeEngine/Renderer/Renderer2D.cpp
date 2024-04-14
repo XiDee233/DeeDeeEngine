@@ -3,6 +3,8 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include <Platform\OpenGL\OpenGLShader.h>
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace DeeDeeEngine {
 
 	struct Renderer2DStorage {
@@ -46,24 +48,27 @@ namespace DeeDeeEngine {
 	}
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
-		std::dynamic_pointer_cast<OpenGLShader>(m_Data->FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(m_Data->FlatColorShader)->UploadUniformMat4("u_ViewProjection",camera.GetViewProjectionMartix());
-		std::dynamic_pointer_cast<OpenGLShader>(m_Data->FlatColorShader)->UploadUniformMat4("u_Transform", glm::mat4(1.0f));
+		m_Data->FlatColorShader->Bind();
+		m_Data->FlatColorShader->SetMat4("u_ViewProjection",camera.GetViewProjectionMartix());
 
 	}
 	void Renderer2D::EndScene()
 	{
 	}
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 
-		std::dynamic_pointer_cast<OpenGLShader>(m_Data->FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(m_Data->FlatColorShader)->UploadUniformFloat4("u_Color", color);
+		m_Data->FlatColorShader->Bind();
+		m_Data->FlatColorShader->SetFloat4("u_Color", color);
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x,size.y,1.0f });
+		m_Data->FlatColorShader->SetMat4("u_Transform", transform);
+
 
 		m_Data->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(m_Data->QuadVertexArray);
 	}
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		DrawQuad({ position.x,position.y,0.0f }, size, color);
 	}
