@@ -23,12 +23,19 @@ namespace DeeDeeEngine {
 	void Renderer::EndScene()
 	{
 	}
-	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4 transform )
+	// Renderer类的Submit方法，用于提交渲染命令
+	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4 transform)
 	{
-		shader->Bind();
+		shader->Bind(); // 绑定着色器，以便将其用于接下来的渲染操作
+
+		// 将着色器强制转换为OpenGLShader类型，并上传视图投影矩阵
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+
+		// 上传变换矩阵，这将决定物体在世界空间中的位置和方向
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
-		vertexArray->Bind();
-		RenderCommand::DrawIndexed(vertexArray);
+
+		vertexArray->Bind(); // 绑定顶点数组，以便OpenGL知道使用哪个数据进行渲染
+
+		RenderCommand::DrawIndexed(vertexArray); // 执行绘制命令，根据索引来渲染顶点数组
 	}
 }

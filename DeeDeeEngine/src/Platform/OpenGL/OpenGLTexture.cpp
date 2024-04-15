@@ -1,9 +1,29 @@
 #include "deepch.h"
 #include "OpenGLTexture.h"
-#include <glad/glad.h>
+
 #include "stb_image.h"
 namespace DeeDeeEngine {
+	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
+		:m_Width(width),m_Height(height)
+	{
 
+		m_InternalFormat = GL_RGBA8;
+		m_DataFormat = GL_RGBA;
+
+		// 创建一个OpenGL纹理对象
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+		// 为纹理对象分配存储空间
+		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
+
+		// 设置纹理过滤参数
+		//决定了当纹理被映射到一个比它大或者小的形状上时，OpenGL如何处理纹理的像素（也称为纹理元素或texels）。
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	}
 	// 构造函数，用于创建一个OpenGLTexture2D对象
 	DeeDeeEngine::OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 	{
@@ -27,6 +47,8 @@ namespace DeeDeeEngine {
 			internalFormat = GL_RGB8;
 			dataFormat = GL_RGB;
 		}
+		m_InternalFormat = internalFormat;
+		m_DataFormat = dataFormat;
 		DEE_CORE_ASSERT(internalFormat&dataFormat, "Failed to load image!");
 
 		// 创建一个OpenGL纹理对象
@@ -39,8 +61,8 @@ namespace DeeDeeEngine {
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		// 将图片数据上传到GPU
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
@@ -54,6 +76,13 @@ namespace DeeDeeEngine {
 	{
 		// 删除纹理
 		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void OpenGLTexture2D::SetData(void* data, uint32_t size)
+	{
+		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+		DEE_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 	}
 
 	// 绑定纹理到纹理单元
