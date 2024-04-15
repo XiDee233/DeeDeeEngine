@@ -80,9 +80,22 @@ namespace DeeDeeEngine {
 
 	void OpenGLTexture2D::SetData(void* data, uint32_t size)
 	{
-		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+		// 根据数据格式确定每像素的字节大小（bpp表示bytes per pixel）
+		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3; // 如果数据格式是GL_RGBA，则bpp为4，否则为3
+
+		// 断言确保提供的数据大小与纹理的预期大小相匹配
 		DEE_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
+
+		// 更新纹理的子图像，即将数据复制到GPU的纹理内存中
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
+		// 参数解释：
+		// m_RendererID - 纹理的唯一标识符
+		// 0 - Mipmap的级别，0表示基本级别
+		// 0, 0 - x和y的偏移量，这里从纹理的左下角开始更新
+		// m_Width, m_Height - 要更新的纹理的宽度和高度
+		// m_DataFormat - 纹理数据的格式
+		// GL_UNSIGNED_BYTE - 数据的类型，这里指定为无符号字节
+		// data - 指向数据的指针
 	}
 
 	// 绑定纹理到纹理单元
