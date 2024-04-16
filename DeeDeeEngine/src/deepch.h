@@ -13,6 +13,9 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "DeeDeeEngine/Core/Log.h"
+#include "DeeDeeEngine\Debug\Instrumentor.h"
+
 #ifdef  DEE_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif //  DEE_PLATFORM_WINDOWS

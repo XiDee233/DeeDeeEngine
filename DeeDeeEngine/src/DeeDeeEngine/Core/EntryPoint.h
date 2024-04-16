@@ -5,13 +5,17 @@ extern DeeDeeEngine::Application* DeeDeeEngine::CreateApplication();
 
 int main(int argc, char** argv) {
 	DeeDeeEngine::Log::Init();
-	DEE_CORE_WARN("Init Log!");
-	int a = 5;
-	DEE_INFO("Hello! Var={0}", a);
 	printf("DeeDeeEngine!\n");
+	DEE_PROFILE_BEGIN_SESSION("Startup", "DeeDeeProfile_Startup.json");
 	auto app = DeeDeeEngine::CreateApplication();
-	app->Run();
-	delete app;
+	DEE_PROFILE_END_SESSION();
 
+	DEE_PROFILE_BEGIN_SESSION("Startup", "DeeDeeProfile_Runtime.json");
+	app->Run();
+	DEE_PROFILE_END_SESSION();
+
+	DEE_PROFILE_BEGIN_SESSION("Startup", "DeeDeeProfile_Shutdown.json");
+	delete app;
+	DEE_PROFILE_END_SESSION();
 }
 #endif // 

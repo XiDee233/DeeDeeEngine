@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\DeeDeeEngine\Debug\Instrumentor.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Dee.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Application.h" />
