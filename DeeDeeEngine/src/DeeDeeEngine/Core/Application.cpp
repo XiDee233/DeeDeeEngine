@@ -14,6 +14,8 @@ namespace DeeDeeEngine {
 	
 	Application::Application()
 	{
+		DEE_PROFILE_FUNCTION();
+
 		DEE_CORE_ASSERT(!s_Instance, "Application already exists!")
 			s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
@@ -38,18 +40,26 @@ namespace DeeDeeEngine {
 
 	Application::~Application()
 	{
+		DEE_PROFILE_FUNCTION();
+
 	}
 
 	void Application::PushLayer(Layer* layer) {
+		DEE_PROFILE_FUNCTION();
+
 		m_LayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
 	void Application::PushOverlay(Layer* layer) {
+		DEE_PROFILE_FUNCTION();
+
 		m_LayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e) {
+		DEE_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
@@ -62,32 +72,46 @@ namespace DeeDeeEngine {
 	}
 
 	void Application::Run() {
+		DEE_PROFILE_FUNCTION();
 
 		while (m_Running)
 		{
+
 			float time = glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 			
 			if (!m_Minimized) {
-				for (Layer* layer : m_LayerStack)
-					layer->OnUpdate(timestep);
+				{
+					DEE_PROFILE_SCOPE("layer->OnUpdate");
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate(timestep);
+				}
+				m_ImGuiLayer->Begin();
+				{
+					DEE_PROFILE_SCOPE("layer->OnImGuiRender");
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnImGuiRender();
+				}
+				m_ImGuiLayer->End();
 			}
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-				layer->OnImGuiRender();
-			m_ImGuiLayer->End();
+			
 			m_Window->OnUpdate();
 		}
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
+		DEE_PROFILE_FUNCTION();
+
 		m_Running = false;
 		return true;
 	}
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
-		if (e.GetHeight() == 0 || e.GetHeight() == 0) {
+		DEE_PROFILE_FUNCTION();
+
+		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
 			m_Minimized = true;
 			return false;
 		}

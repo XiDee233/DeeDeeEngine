@@ -6,6 +6,7 @@ namespace DeeDeeEngine {
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 		:m_Width(width),m_Height(height)
 	{
+		DEE_PROFILE_FUNCTION();
 
 		m_InternalFormat = GL_RGBA8;
 		m_DataFormat = GL_RGBA;
@@ -27,11 +28,18 @@ namespace DeeDeeEngine {
 	// 构造函数，用于创建一个OpenGLTexture2D对象
 	DeeDeeEngine::OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		// 定义宽度、高度和通道数变量
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
-		// 加载图片数据
-		stbi_uc* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		stbi_uc* data = nullptr;
+		{
+			DEE_PROFILE_SCOPE("stbi_load -OpenGLTexture2D::OpenGLTexture2D(const std::string& path)");
+			// 加载图片数据
+			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		}
+		
 		// 断言，确保图片数据加载成功
 		DEE_CORE_ASSERT(data, "Failed to load image!");
 		// 设置纹理的宽度和高度
@@ -74,12 +82,16 @@ namespace DeeDeeEngine {
 	// 析构函数，用于删除OpenGL纹理对象
 	DeeDeeEngine::OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		DEE_PROFILE_FUNCTION();
+
 		// 删除纹理
 		glDeleteTextures(1, &m_RendererID);
 	}
 
 	void OpenGLTexture2D::SetData(void* data, uint32_t size)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		// 根据数据格式确定每像素的字节大小（bpp表示bytes per pixel）
 		uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3; // 如果数据格式是GL_RGBA，则bpp为4，否则为3
 
@@ -101,6 +113,8 @@ namespace DeeDeeEngine {
 	// 绑定纹理到纹理单元
 	void DeeDeeEngine::OpenGLTexture2D::Bind(uint32_t slot) const
 	{
+		DEE_PROFILE_FUNCTION();
+
 		// 绑定纹理到默认的纹理单元（0号）
 		glBindTextureUnit(slot, m_RendererID);
 	}

@@ -122,7 +122,7 @@ namespace DeeDeeEngine {
 	};
 }
 
-#define DEE_PROFILE 1
+#define DEE_PROFILE 0
 #if DEE_PROFILE
 #define DEE_PROFILE_BEGIN_SESSION(name, filepath) ::DeeDeeEngine::Instrumentor::Get().BeginSession(name, filepath)
 #define DEE_PROFILE_END_SESSION() ::DeeDeeEngine::Instrumentor::Get().EndSession()

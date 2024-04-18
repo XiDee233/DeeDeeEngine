@@ -13,6 +13,8 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	DEE_PROFILE_FUNCTION();
+
 	m_CheckerboardTexture = DeeDeeEngine::Texture2D::Create("assets/textures/cjy.png");
 	
 
@@ -38,8 +40,11 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 		DEE_PROFILE_SCOPE("DrawQuad")
 		DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f }, { 1.0f,1.0f }, { 0.8f,0.2f,0.3f,1.0f });
+		DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f }, { 1.0f,1.0f }, glm::radians(45.0f), { 0.8f,0.2f,0.3f,1.0f });
 		DeeDeeEngine::Renderer2D::DrawQuad({ 0.5f,-0.5f }, { 0.5f,0.75f }, { 0.2f,0.3f,0.8f,1.0f });
-		DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,-0.1f }, { 10.0f,10.0f }, m_CheckerboardTexture);
+		DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,-0.1f }, { 10.0f,10.0f }, m_CheckerboardTexture,10.f);
+		DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f,-0.05f }, { 10.0f,10.0f },glm::radians(45.0f), m_CheckerboardTexture, 10.f,glm::vec4(0.5f,0.1f,0.1f,1.0f));
+
 
 
 
@@ -55,6 +60,7 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 
 void Sandbox2D::OnImGuiRender()
 {
+
 	ImGui::Begin("Settings");
 
 	ImGui::End();
@@ -64,5 +70,6 @@ void Sandbox2D::OnImGuiRender()
 
 void Sandbox2D::OnEvent(DeeDeeEngine::Event& e)
 {
+
 	m_CameraController.OnEvent(e);
 }

@@ -17,6 +17,7 @@ namespace DeeDeeEngine {
 	}
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		DEE_PROFILE_FUNCTION();
 		Init(props);
 	}
 	WindowsWindow::~WindowsWindow() {
@@ -25,6 +26,8 @@ namespace DeeDeeEngine {
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+
+		DEE_PROFILE_FUNCTION();
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -126,9 +129,12 @@ namespace DeeDeeEngine {
 	}
 
 	void WindowsWindow::Shutdown() {
+		DEE_PROFILE_FUNCTION();
 		glfwDestroyWindow(m_Window);
 	}
 	void WindowsWindow::OnUpdate() {
+
+		DEE_PROFILE_FUNCTION();
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 		//函数用于交换前后缓冲区。在双缓冲机制下，绘制的图像首先被渲染到后缓冲区，
@@ -136,6 +142,8 @@ namespace DeeDeeEngine {
 	}
 
 	void WindowsWindow::SetVSync(bool enabled) {
+
+		DEE_PROFILE_FUNCTION();
 		if (enabled)
 			glfwSwapInterval(1);
 		else

@@ -17,6 +17,8 @@ namespace DeeDeeEngine {
 	}
 	void ImGuiLayer::OnAttach()
 	{
+		DEE_PROFILE_FUNCTION();
+
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -48,6 +50,8 @@ namespace DeeDeeEngine {
 	}
 	void ImGuiLayer::OnDetach()
 	{
+		DEE_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -77,6 +81,8 @@ namespace DeeDeeEngine {
 
 	void ImGuiLayer::Begin()
 	{
+		DEE_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -84,6 +90,7 @@ namespace DeeDeeEngine {
 
 	void ImGuiLayer::End()
 	{
+		DEE_PROFILE_FUNCTION();
 
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();

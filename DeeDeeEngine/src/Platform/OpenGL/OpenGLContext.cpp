@@ -10,6 +10,7 @@ namespace DeeDeeEngine {
 		DEE_CORE_ASSERT(windowHandle,"Window handle is null!")
 	}
 	void OpenGLContext::Init() {
+		DEE_PROFILE_FUNCTION();
 		glfwMakeContextCurrent(m_WindowHandle);// 将窗口的OpenGL上下文设置为当前上下文,win = current
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);//加载opengl函数指针
 		DEE_CORE_ASSERT(status, "Faid to initialize Glad!");

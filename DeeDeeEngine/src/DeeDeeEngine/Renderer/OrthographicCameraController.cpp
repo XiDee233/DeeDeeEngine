@@ -10,6 +10,8 @@ namespace DeeDeeEngine {
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		// 获取相机的旋转角度（假设你的相机旋转是绕Z轴进行的）
 		float radians = glm::radians(m_CameraRotation);
 
@@ -47,12 +49,16 @@ namespace DeeDeeEngine {
 	}
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(DEE_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
 		dispatcher.Dispatch<WindowResizeEvent>(DEE_BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
 	}
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		m_ZoomLevel -= e.GetYOffset()*0.1f;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.1f);
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -60,6 +66,8 @@ namespace DeeDeeEngine {
 	}
 	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;

@@ -17,6 +17,7 @@ namespace DeeDeeEngine {
 	}
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
+		DEE_PROFILE_FUNCTION();
 		std::string source = ReadFile(filepath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
@@ -30,6 +31,7 @@ namespace DeeDeeEngine {
 	}
 	OpenGLShader::OpenGLShader(const std::string& name,const std::string& vertexSrc, const std::string& fragmentSrc)
 	:m_Name(name){
+		DEE_PROFILE_FUNCTION();
 
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -38,10 +40,13 @@ namespace DeeDeeEngine {
 	}
 
 	OpenGLShader::~OpenGLShader() {
+		DEE_PROFILE_FUNCTION();
+
 		glDeleteProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources) {
+		DEE_PROFILE_FUNCTION();
 
 		GLuint program = glCreateProgram();
 		DEE_CORE_ASSERT(shaderSources.size() <= 2, "We Only support 2 shaders for now!");
@@ -125,60 +130,96 @@ namespace DeeDeeEngine {
 
 	}
 	void OpenGLShader::Bind()const {
+		DEE_PROFILE_FUNCTION();
+
 		glUseProgram(m_RendererID);
 	}
 	void OpenGLShader::Unbind()const {
+		DEE_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 	void OpenGLShader::SetInt(const std::string name, const int value)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		UploadUniformInt(name, value);
+	}
+	void OpenGLShader::SetFloat(const std::string& name, const float value)
+	{
+		DEE_PROFILE_FUNCTION();
+		UploadUniformFloat(name, value);
+	}
+	void OpenGLShader::SetFloat2(const std::string& name, const glm::vec2& value)
+	{
+		DEE_PROFILE_FUNCTION();
+		UploadUniformFloat2(name, value);
 	}
 	void OpenGLShader::SetFloat3(const std::string& name,const glm::vec3& value)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		UploadUniformFloat3(name, value);
 	}
 	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		UploadUniformFloat4(name, value);
 	}
 	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		UploadUniformMat4(name, value);
 	}
 	void OpenGLShader::UploadUniformInt(const std::string& name, int value)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(location, value);
 	}
 	void OpenGLShader::UploadUniformFloat(const std::string& name, float value)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1f(location, value);
 	}
 	void OpenGLShader::UploadUniformFloat2(const std::string& name, const glm::vec2& values)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform2f(location, values.x, values.y);
 	}
 	void OpenGLShader::UploadUniformFloat3(const std::string& name, const glm::vec3& values)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform3f(location, values.x, values.y, values.z);
 	}
 	void OpenGLShader::UploadUniformFloat4(const std::string& name, const glm::vec4& values)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(location, values.x, values.y, values.z, values.w);
 	}
 	void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& matrix)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		const char* nameCString = name.c_str();
 		GLint location = glGetUniformLocation(m_RendererID, nameCString);
 		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 	void OpenGLShader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		const char* nameCString = name.c_str();
 		GLint location = glGetUniformLocation(m_RendererID, nameCString);
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));//glm::value_ptr(matrix)用于获取矩阵数据的指针，这是因为OpenGL函数需要接收指向数据的指针。
@@ -186,6 +227,8 @@ namespace DeeDeeEngine {
 	// 定义OpenGLShader类的ReadFile函数，它接受一个文件路径作为参数并返回文件内容的字符串。
 	std::string OpenGLShader::ReadFile(const std::string& filepath)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		// 创建一个用于存储文件内容的字符串。
 		std::string result;
 
@@ -221,6 +264,8 @@ namespace DeeDeeEngine {
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
 	{
+		DEE_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 		const char* typeToken = "#type";
 		size_t typeTokenLength = strlen(typeToken);
