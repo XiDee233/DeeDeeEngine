@@ -19,14 +19,28 @@ namespace DeeDeeEngine {
 		DEE_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
-	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size) {
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size) {
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:
 			DEE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return new OpenGLVertexBuffer(vertices, size);
+			return CreateRef<OpenGLVertexBuffer>(vertices, size);
+
+		}
+		DEE_CORE_ASSERT(false, "Unknown RendererAPI!");
+		return nullptr;
+	}
+	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None:
+			DEE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!");
+			return nullptr;
+		case RendererAPI::API::OpenGL:
+			return CreateRef<OpenGLVertexBuffer>(size);
 
 		}
 		DEE_CORE_ASSERT(false, "Unknown RendererAPI!");

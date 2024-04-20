@@ -36,12 +36,20 @@ namespace DeeDeeEngine {
 	}
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size) {
-		DEE_PROFILE_FUNCTION();
+		DEE_PROFILE_FUNCTION(); 
 
-		glCreateBuffers(1, &m_RendererID);
-		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+		glCreateBuffers(1, &m_RendererID); // 创建一个新的缓冲区对象。
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID); // 将新创建的缓冲区绑定到GL_ARRAY_BUFFER目标。
+		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW); // 为缓冲区提供数据，指定为静态绘制用途。
 	}
+
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
+	{
+		glCreateBuffers(1, &m_RendererID); // 创建一个新的缓冲区对象。
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID); // 将新创建的缓冲区绑定到GL_ARRAY_BUFFER目标。
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW); // 分配内存，但不填充数据，指定为动态绘制用途。
+	}
+
 	OpenGLVertexBuffer::~OpenGLVertexBuffer() {
 		DEE_PROFILE_FUNCTION();
 
@@ -59,6 +67,12 @@ namespace DeeDeeEngine {
 		DEE_PROFILE_FUNCTION();
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0,size,data);
 	}
 
 
