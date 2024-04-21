@@ -16,7 +16,11 @@ void Sandbox2D::OnAttach()
 	DEE_PROFILE_FUNCTION();
 
 	m_CheckerboardTexture = DeeDeeEngine::Texture2D::Create("assets/textures/cjy.png");
-	
+	m_SpriteSheet = DeeDeeEngine::Texture2D::Create("assets/textures/rpg.png");
+
+	m_TextureStairs = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 7,6 }, { 128.0f,128.0f });
+	m_TextureBarrel = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 8,2 }, { 128.0f,128.0f }, {1,2});
+
 
 }
 
@@ -28,6 +32,7 @@ void Sandbox2D::OnDetach()
 
 void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 {
+
 	DEE_PROFILE_FUNCTION();
 	{
 		DEE_PROFILE_SCOPE("m_CameraController.OnUpdate")
@@ -36,7 +41,7 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 	DeeDeeEngine::Renderer2D::ResetStats();
 	DeeDeeEngine::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	DeeDeeEngine::RenderCommand::Clear();
-
+#if 1
 	{
 
 		static float rotation = 0.0f;
@@ -72,13 +77,21 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 			}
 		}
 		DeeDeeEngine::Renderer2D::EndScene();
-	}
+}
+
+#endif
+
+		DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,0.1f }, { 1.0f,1.0f }, m_TextureStairs);
+		DeeDeeEngine::Renderer2D::DrawQuad({ 1.0f,0.0f,0.1f }, { 1.0f,2.0f }, m_TextureBarrel);
+
+		DeeDeeEngine::Renderer2D::EndScene();
 }
 
 void Sandbox2D::OnImGuiRender()
 {
 
-	ImGui::Begin("Settings");
+	ImGui::Begin("Settings"); 
 	auto stats = DeeDeeEngine::Renderer2D::GetStats();
 	ImGui::Text("Renderer2D Stats:");
 	ImGui::Text("Draw Calls: %d", stats.DrawCalls);

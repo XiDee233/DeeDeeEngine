@@ -1415,6 +1415,7 @@
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer2D.h" />
     <ClInclude Include="src\DeeDeeEngine\Debug\Instrumentor.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\SubTexture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
@@ -1493,5 +1494,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Renderer\SubTexture2D.cpp" />
   </ItemGroup>
 </Project>

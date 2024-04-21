@@ -22,6 +22,7 @@
 #include "DeeDeeEngine\Renderer\Buffer.h"
 #include "DeeDeeEngine\Renderer\Shader.h"
 #include "DeeDeeEngine\Renderer\Texture.h"
+#include "DeeDeeEngine\Renderer\SubTexture2D.h"
 #include "DeeDeeEngine\Renderer\VertexArray.h"
 
 #include "DeeDeeEngine\Renderer\OrthographicCamera.h"

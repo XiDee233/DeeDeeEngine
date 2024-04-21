@@ -19,7 +19,9 @@ private:
 	DeeDeeEngine::Ref<DeeDeeEngine::Shader> m_FlatColorShader;
 
 	DeeDeeEngine::Ref<DeeDeeEngine::Texture2D> m_CheckerboardTexture;
-
+	DeeDeeEngine::Ref<DeeDeeEngine::Texture2D> m_SpriteSheet;
+	DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> m_TextureStairs;
+	DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> m_TextureBarrel;
 
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };

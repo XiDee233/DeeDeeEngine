@@ -163,6 +163,7 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\RendererAPI.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\SubTexture2D.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Texture.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Window.h" />
@@ -611,6 +612,7 @@
     <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Renderer\SubTexture2D.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Texture.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
