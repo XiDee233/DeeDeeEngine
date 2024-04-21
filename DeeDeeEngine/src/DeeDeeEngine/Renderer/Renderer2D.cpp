@@ -16,9 +16,9 @@ namespace DeeDeeEngine {
 	};
 	struct Renderer2DData {
 
-		const uint32_t MaxQuads = 10000;
-		const uint32_t MaxVertices = MaxQuads * 4;
-		const uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxQuads = 100;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices = MaxQuads * 6;
 		static const uint32_t MaxTextureSlots = 32;
 
 		Ref<VertexArray> QuadVertexArray;
@@ -33,6 +33,8 @@ namespace DeeDeeEngine {
 		uint32_t TextureSlotIndex = 1;
 
 		glm::vec4 QuadVertexPositions[4];
+
+		Renderer2D::Statistics Stats;
 	};
 	static Renderer2DData m_Data;
 
@@ -129,10 +131,22 @@ namespace DeeDeeEngine {
 			m_Data.TextureSlots[i]->Bind(i);
 		}
 		RenderCommand::DrawIndexed(m_Data.QuadVertexArray,m_Data.QuadIndexCount);
+		m_Data.Stats.DrawCalls++;
+	}
+
+	 void Renderer2D::FlushAndReset() {
+		 EndScene();
+		m_Data.QuadIndexCount = 0;
+		m_Data.QuadVertexBufferPtr = m_Data.QuadVertexBufferBase;
+
+		m_Data.TextureSlotIndex = 1;
 	}
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		DEE_PROFILE_FUNCTION();
+		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
 		const float texIndex = 0.0f;
 		const float tilingFactor = 1.0f;
 
@@ -165,6 +179,8 @@ namespace DeeDeeEngine {
 		m_Data.QuadVertexBufferPtr++;
 
 		m_Data.QuadIndexCount += 6;
+		m_Data.Stats.QuadCount++;
+
 		/*m_Data.TextureShader->SetFloat4("u_Color", color);
 		m_Data.WhiteTexture->Bind();
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x,size.y,1.0f });
@@ -192,6 +208,10 @@ namespace DeeDeeEngine {
 	{
 
 		DEE_PROFILE_FUNCTION();
+
+		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
 		constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
 		float textureIndex = 0.0f;
 
@@ -239,6 +259,8 @@ namespace DeeDeeEngine {
 		m_Data.QuadVertexBufferPtr++;
 
 		m_Data.QuadIndexCount += 6;
+		m_Data.Stats.QuadCount++;
+
 	}
 	void Renderer2D::DrawRotateQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
@@ -247,6 +269,10 @@ namespace DeeDeeEngine {
 	void Renderer2D::DrawRotateQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		DEE_PROFILE_FUNCTION();
+
+		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
 		const float textureIndex = 0.0f;
 		const float tilingFactor = 1.0f;
 
@@ -283,6 +309,8 @@ namespace DeeDeeEngine {
 		m_Data.QuadVertexBufferPtr++;
 
 		m_Data.QuadIndexCount += 6;
+		m_Data.Stats.QuadCount++;
+
 	}
 	void Renderer2D::DrawRotateQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D> texture, const float tilingFactor, glm::vec4& tintColor)
 	{
@@ -293,6 +321,10 @@ namespace DeeDeeEngine {
 	{
 
 		DEE_PROFILE_FUNCTION();
+
+		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
+			FlushAndReset();
+		}
 		constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
 		float textureIndex = 0.0f;
 
@@ -342,5 +374,14 @@ namespace DeeDeeEngine {
 		m_Data.QuadVertexBufferPtr++;
 
 		m_Data.QuadIndexCount += 6;
+		m_Data.Stats.QuadCount++;
+	}
+	Renderer2D::Statistics Renderer2D::GetStats()
+	{
+		return m_Data.Stats;
+	}
+	void Renderer2D::ResetStats()
+	{
+		memset(&m_Data.Stats, 0, sizeof(Statistics));
 	}
 }

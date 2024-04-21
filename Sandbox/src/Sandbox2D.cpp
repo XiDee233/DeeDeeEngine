@@ -33,6 +33,7 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 		DEE_PROFILE_SCOPE("m_CameraController.OnUpdate")
 			m_CameraController.OnUpdate(ts);
 	}
+	DeeDeeEngine::Renderer2D::ResetStats();
 	DeeDeeEngine::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	DeeDeeEngine::RenderCommand::Clear();
 
@@ -59,6 +60,17 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 
 		//
 		//DeeDeeEngine::Renderer::Submit(m_FlatColorShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		//DeeDeeEngine::Renderer2D::EndScene();
+
+		//DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		for (float y = -5.0f; y < 5.0f; y += 0.5f)
+		{
+			for (float x = -5.0f; x < 5.0f; x += 0.5f)
+			{
+				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
+				DeeDeeEngine::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
+			}
+		}
 		DeeDeeEngine::Renderer2D::EndScene();
 	}
 }
@@ -67,6 +79,12 @@ void Sandbox2D::OnImGuiRender()
 {
 
 	ImGui::Begin("Settings");
+	auto stats = DeeDeeEngine::Renderer2D::GetStats();
+	ImGui::Text("Renderer2D Stats:");
+	ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+	ImGui::Text("Quads: %d", stats.QuadCount);
+	ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
 	ImGui::End();
 	
