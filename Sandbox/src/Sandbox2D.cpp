@@ -37,15 +37,18 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 	DeeDeeEngine::RenderCommand::Clear();
 
 	{
+
+		static float rotation = 0.0f;
+		rotation += ts * 20.0f;
 		DEE_PROFILE_SCOPE("DrawQuad")
 		DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f }, { 1.0f,1.0f }, { 0.8f,0.2f,0.3f,1.0f });
-		//DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f }, { 1.0f,1.0f }, glm::radians(45.0f), { 0.8f,0.2f,0.3f,1.0f });
+		DeeDeeEngine::Renderer2D::DrawRotateQuad({ -2.0f,-2.0f }, { 1.0f,1.0f }, rotation*10.0f, { 0.8f,0.2f,0.3f,1.0f });
 		DeeDeeEngine::Renderer2D::DrawQuad({ 1.5f,-0.5f }, { 0.5f,0.75f }, { 0.2f,0.3f,0.8f,1.0f });
 		DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,-0.1f }, { 10.0f,10.0f }, m_CheckerboardTexture,10.0f);
 		DeeDeeEngine::Renderer2D::DrawQuad({ -3.0f,-3.0f,-0.1f }, { 2.0f,2.0f }, m_CheckerboardTexture, 10.0f);
 
-		//DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f,-0.05f }, { 10.0f,10.0f },glm::radians(45.0f), m_CheckerboardTexture, 10.f,glm::vec4(0.5f,0.1f,0.1f,1.0f));
+		DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f,-0.05f }, { 10.0f,10.0f }, rotation, m_CheckerboardTexture, 10.f,glm::vec4(0.5f,0.1f,0.1f,1.0f));
 
 
 
