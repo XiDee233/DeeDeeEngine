@@ -4,7 +4,20 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <chrono>
 
-
+static const uint32_t s_MapWidth = 23;
+static const char* s_MapTiles = 
+"wwwwwwwwwwwwwwwwwwwwwww"
+"wwwwwwwwwddwwwwwwwwwwww"
+"wwwwddddddddddddwwwwwww"
+"wwwwdddwwwddddddddwwwww"
+"wwwwdddwwwwdddddddwwwww"
+"wwwwdddddwddddddddwwwww"
+"wwwwddddddddddddddwwwww"
+"wwwwddddddddddddddwwwww"
+"wwwwwwwwdddwwwwwwwwwwww"
+"wwwwwwwwwwwwwwwwwwwwwww"
+"wwwwwwwwwwwwwwwwwwwwwww"
+;
 
 Sandbox2D::Sandbox2D()
 	:Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f)
@@ -18,9 +31,16 @@ void Sandbox2D::OnAttach()
 	m_CheckerboardTexture = DeeDeeEngine::Texture2D::Create("assets/textures/cjy.png");
 	m_SpriteSheet = DeeDeeEngine::Texture2D::Create("assets/textures/rpg.png");
 
+	m_MapWidth = s_MapWidth;
+	m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
+
 	m_TextureStairs = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 7,6 }, { 128.0f,128.0f });
 	m_TextureBarrel = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 8,2 }, { 128.0f,128.0f }, {1,2});
+	s_TextureMap['d'] = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, {6,11}, {128.0f,128.0f}, {1,1});
+	s_TextureMap['w'] = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 11,11 }, { 128.0f,128.0f }, { 1,1 });
 
+
+	m_CameraController.SetZoomLevel(5.5f);
 
 }
 
@@ -56,7 +76,22 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 
 		DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f,-0.05f }, { 10.0f,10.0f }, rotation, m_CheckerboardTexture, 10.f,glm::vec4(0.5f,0.1f,0.1f,1.0f));
 
+		for (uint32_t y = 0; y < m_MapHeight; y++)
+		{
+			for (uint32_t x = 0; x < m_MapWidth; x++) {
+				char tileType = s_MapTiles[x + y * m_MapWidth];
+				DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> texture;
+				if (s_TextureMap.find(tileType)!=s_TextureMap.end())
+				{
+					texture = s_TextureMap[tileType];
+				}
+				else {
+					texture = m_TextureBarrel;
+				}
+				DeeDeeEngine::Renderer2D::DrawQuad({ x,y,0.1f }, { 1.0f,1.0f }, texture);
 
+			}
+		}
 
 
 		//std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_FlatColorShader)->Bind();
@@ -100,6 +135,9 @@ void Sandbox2D::OnImGuiRender()
 	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
 	ImGui::End();
+
+	static bool show = true;
+	ImGui::ShowDemoWindow(&show);
 	
 
 }

@@ -23,7 +23,10 @@ private:
 	DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> m_TextureStairs;
 	DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> m_TextureBarrel;
 
+	uint32_t m_MapWidth, m_MapHeight;
+
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+	std::unordered_map<char, DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D>> s_TextureMap;
 };
 
