@@ -23,6 +23,8 @@ private:
 	DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> m_TextureStairs;
 	DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> m_TextureBarrel;
 
+	DeeDeeEngine::Ref<DeeDeeEngine::Framebuffer> m_Framebuffer;
+
 	uint32_t m_MapWidth, m_MapHeight;
 
 

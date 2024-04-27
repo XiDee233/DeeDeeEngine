@@ -1416,6 +1416,8 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer2D.h" />
     <ClInclude Include="src\DeeDeeEngine\Debug\Instrumentor.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\SubTexture2D.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Framebuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
@@ -1495,5 +1497,7 @@
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\SubTexture2D.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
   </ItemGroup>
 </Project>
