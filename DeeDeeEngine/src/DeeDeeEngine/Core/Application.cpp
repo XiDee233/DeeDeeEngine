@@ -101,7 +101,12 @@ namespace DeeDeeEngine {
 		}
 	}
 
-	bool Application::OnWindowClose(WindowCloseEvent& e) {
+    void Application::Close()
+    {
+		m_Running = false;
+    }
+
+    bool Application::OnWindowClose(WindowCloseEvent& e) {
 		DEE_PROFILE_FUNCTION();
 
 		m_Running = false;
