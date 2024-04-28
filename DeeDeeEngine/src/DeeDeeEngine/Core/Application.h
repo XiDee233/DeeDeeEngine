@@ -25,6 +25,8 @@ namespace DeeDeeEngine {
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
 		inline static Application& Get() {
 			return *s_Instance;
 		}

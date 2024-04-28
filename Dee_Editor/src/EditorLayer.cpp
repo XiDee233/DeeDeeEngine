@@ -63,7 +63,10 @@ namespace DeeDeeEngine {
 		DEE_PROFILE_FUNCTION();
 		{
 			DEE_PROFILE_SCOPE("m_CameraController.OnUpdate")
-				m_CameraController.OnUpdate(ts);
+				if (m_ViewportFocused)
+				{
+					m_CameraController.OnUpdate(ts);
+				}
 		}
 		DeeDeeEngine::Renderer2D::ResetStats();
 
@@ -212,6 +215,9 @@ namespace DeeDeeEngine {
 		
 
 		ImGui::Begin("Viewport");
+		m_ViewportFocused = ImGui::IsWindowFocused();
+		m_ViewportHovered = ImGui::IsWindowHovered();
+		Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewportFocused || !m_ViewportHovered);
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (m_ViewportSize != *(glm::vec2*)&viewportPanelSize) {
 			//DEE_WARN("{0},{1}", viewportPanelSize.x, viewportPanelSize.y);
