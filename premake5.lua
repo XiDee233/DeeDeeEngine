@@ -1,6 +1,6 @@
 workspace "DeeDeeEngine"
     architecture "x64"
-    startproject "Sandbox"
+    startproject "Dee_Editor"
     configurations {
     "Debug",
     "Release",
