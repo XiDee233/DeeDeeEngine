@@ -31,10 +31,7 @@ void Sandbox2D::OnAttach()
 	m_CheckerboardTexture = DeeDeeEngine::Texture2D::Create("assets/textures/cjy.png");
 	m_SpriteSheet = DeeDeeEngine::Texture2D::Create("assets/textures/rpg.png");
 
-	DeeDeeEngine::FramebufferSpecification fbSpec;
-	fbSpec.Width = 1280;
-	fbSpec.Height = 720;
-	m_Framebuffer = DeeDeeEngine::Framebuffer::Create(fbSpec);
+
 
 	m_MapWidth = s_MapWidth;
 	m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
@@ -65,7 +62,6 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 	}
 	DeeDeeEngine::Renderer2D::ResetStats();
 
-	m_Framebuffer->Bind();
 	DeeDeeEngine::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 	DeeDeeEngine::RenderCommand::Clear();
 
@@ -120,7 +116,7 @@ void Sandbox2D::OnUpdate(DeeDeeEngine::Timestep ts)
 			}
 		}
 		DeeDeeEngine::Renderer2D::EndScene();
-		m_Framebuffer->Unbind();
+	
 }
 
 #endif
@@ -205,9 +201,9 @@ void Sandbox2D::OnImGuiRender()
 	ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-	uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+	//uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 
-	ImGui::Image((void*)textureID, ImVec2(1280.0f, 720.0f));
+	//ImGui::Image((void*)textureID, ImVec2(1280.0f, 720.0f));
 
 
 	ImGui::End();

@@ -86,6 +86,54 @@ defines "DEE_DIST"
 runtime "Release"
 optimize "on"
 
+project "Dee_Editor"
+location "Dee_Editor"
+kind "ConsoleApp"
+language "C++"
+cppdialect "C++17"
+staticruntime "on"
+
+targetdir("bin/" .. outputdir .. "/%{prj.name}")
+objdir("bin-int/" .. outputdir .. "/%{prj.name}")
+
+files {
+    "%{prj.name}/src/**.h",
+    "%{prj.name}/src/**.cpp",
+}
+
+includedirs
+{
+    "DeeDeeEngine/vendor/spdlog/include",
+    "DeeDeeEngine/src",
+    "DeeDeeEngine/vendor",
+    "%{IncludeDir.glm}"
+}
+links{
+    "DeeDeeEngine"
+}
+
+filter "system:windows"
+    staticruntime "On"
+    systemversion "latest"
+
+    defines {
+    "DEE_PLATFORM_WINDOWS",
+}
+
+
+filter "configurations:Debug"
+defines "DEE_DEBUG"
+symbols "on"
+
+filter "configurations:Release"
+defines "DEE_RELEASE"
+optimize "on"
+
+filter "configurations:Dist"
+defines "DEE_DIST"
+optimize "on"
+
+
 project "Sandbox"
 location "Sandbox"
 kind "ConsoleApp"

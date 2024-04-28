@@ -10,6 +10,9 @@
     <Filter Include="src\DeeDeeEngine\Core">
       <UniqueIdentifier>{C61A13DE-3287-CED8-FB7A-663667A6F040}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DeeDeeEngine\Debug">
+      <UniqueIdentifier>{A4CE82A0-90C8-ABF2-7935-420365CE115F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\DeeDeeEngine\Events">
       <UniqueIdentifier>{D2F566B4-3E2D-AF4B-4737-136FB3EDD544}</UniqueIdentifier>
     </Filter>
@@ -58,16 +61,40 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Core\Application.h">
-      <Filter>src\DeeDeeEngine</Filter>
+      <Filter>src\DeeDeeEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Core\Core.h">
-      <Filter>src\DeeDeeEngine</Filter>
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\EntryPoint.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\Layer.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\LayerStack.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\Log.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Core\Timestep.h">
       <Filter>src\DeeDeeEngine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\EntryPoint.h">
-      <Filter>src\DeeDeeEngine</Filter>
+    <ClInclude Include="src\DeeDeeEngine\Core\Window.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\input.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\keyCode.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Core\mouseButtonCode.h">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Debug\Instrumentor.h">
+      <Filter>src\DeeDeeEngine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Events\ApplicationEvent.h">
       <Filter>src\DeeDeeEngine\Events</Filter>
@@ -84,19 +111,10 @@
     <ClInclude Include="src\DeeDeeEngine\ImGui\ImGuiLayer.h">
       <Filter>src\DeeDeeEngine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\Layer.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\LayerStack.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\Log.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Framebuffer.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h">
@@ -105,10 +123,16 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCamera.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\RenderCommand.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer2D.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\RendererAPI.h">
@@ -117,28 +141,22 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\Shader.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\SubTexture2D.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Texture.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\Window.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\input.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\keyCode.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Core\mouseButtonCode.h">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
@@ -1413,15 +1431,19 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Renderer2D.h" />
-    <ClInclude Include="src\DeeDeeEngine\Debug\Instrumentor.h" />
-    <ClInclude Include="src\DeeDeeEngine\Renderer\SubTexture2D.h" />
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Framebuffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
-      <Filter>src\DeeDeeEngine</Filter>
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Core\Layer.cpp">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Core\LayerStack.cpp">
+      <Filter>src\DeeDeeEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Core\Log.cpp">
+      <Filter>src\DeeDeeEngine\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiBuild.cpp">
       <Filter>src\DeeDeeEngine\ImGui</Filter>
@@ -1429,22 +1451,16 @@
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp">
       <Filter>src\DeeDeeEngine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Core\Layer.cpp">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Core\LayerStack.cpp">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Core\Log.cpp">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.cpp">
-      <Filter>src\DeeDeeEngine</Filter>
-    </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Framebuffer.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCamera.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\RenderCommand.cpp">
@@ -1453,10 +1469,16 @@
     <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer2D.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\RendererAPI.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Shader.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\SubTexture2D.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Texture.cpp">
@@ -1469,6 +1491,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
@@ -1495,9 +1520,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\Renderer\SubTexture2D.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\Renderer\Framebuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
   </ItemGroup>
 </Project>

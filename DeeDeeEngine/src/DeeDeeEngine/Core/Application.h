@@ -16,7 +16,7 @@ namespace DeeDeeEngine {
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name="DeeApp");
 		virtual ~Application();
 
 		void Run();
