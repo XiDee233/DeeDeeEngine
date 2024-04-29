@@ -46,7 +46,10 @@ namespace DeeDeeEngine {
 		s_TextureMap['d'] = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 6,11 }, { 128.0f,128.0f }, { 1,1 });
 		s_TextureMap['w'] = DeeDeeEngine::SubTexture2D::CreateFromCoords(m_SpriteSheet, { 11,11 }, { 128.0f,128.0f }, { 1,1 });
 
-
+		m_ActiveScene = CreateRef<Scene>();
+		m_SquareEntity = m_ActiveScene->CreateEntity();
+		m_ActiveScene->Reg().emplace<TransformComponent>(m_SquareEntity);
+		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(m_SquareEntity,glm::vec4{0.0f,1.0f,0.0f,1.0f});
 		m_CameraController.SetZoomLevel(5.5f);
 
 	}
@@ -81,30 +84,32 @@ namespace DeeDeeEngine {
 			rotation += ts * 20.0f;
 			DEE_PROFILE_SCOPE("DrawQuad")
 				DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
-			DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f }, { 1.0f,1.0f }, { 0.8f,0.2f,0.3f,1.0f });
-			DeeDeeEngine::Renderer2D::DrawRotateQuad({ -2.0f,-2.0f }, { 1.0f,1.0f }, rotation * 10.0f, { 0.8f,0.2f,0.3f,1.0f });
-			DeeDeeEngine::Renderer2D::DrawQuad({ 1.5f,-0.5f }, { 0.5f,0.75f }, { 0.2f,0.3f,0.8f,1.0f });
-			DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,-0.1f }, { 10.0f,10.0f }, m_CheckerboardTexture, 10.0f);
-			DeeDeeEngine::Renderer2D::DrawQuad({ -3.0f,-3.0f,-0.1f }, { 2.0f,2.0f }, m_CheckerboardTexture, 10.0f);
+			m_ActiveScene->OnUpdate(ts);
 
-			DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f,-0.05f }, { 10.0f,10.0f }, rotation, m_CheckerboardTexture, 10.f, glm::vec4(0.5f, 0.1f, 0.1f, 1.0f));
+			//DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f }, { 1.0f,1.0f }, { 0.8f,0.2f,0.3f,1.0f });
+			//DeeDeeEngine::Renderer2D::DrawRotateQuad({ -2.0f,-2.0f }, { 1.0f,1.0f }, rotation * 10.0f, { 0.8f,0.2f,0.3f,1.0f });
+			//DeeDeeEngine::Renderer2D::DrawQuad({ 1.5f,-0.5f }, { 0.5f,0.75f }, { 0.2f,0.3f,0.8f,1.0f });
+			//DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,-0.1f }, { 10.0f,10.0f }, m_CheckerboardTexture, 10.0f);
+			//DeeDeeEngine::Renderer2D::DrawQuad({ -3.0f,-3.0f,-0.1f }, { 2.0f,2.0f }, m_CheckerboardTexture, 10.0f);
 
-			for (uint32_t y = 0; y < m_MapHeight; y++)
-			{
-				for (uint32_t x = 0; x < m_MapWidth; x++) {
-					char tileType = s_MapTiles[x + y * m_MapWidth];
-					DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> texture;
-					if (s_TextureMap.find(tileType) != s_TextureMap.end())
-					{
-						texture = s_TextureMap[tileType];
-					}
-					else {
-						texture = m_TextureBarrel;
-					}
-					DeeDeeEngine::Renderer2D::DrawQuad({ x,y,0.1f }, { 1.0f,1.0f }, texture);
+			//DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f,-0.05f }, { 10.0f,10.0f }, rotation, m_CheckerboardTexture, 10.f, glm::vec4(0.5f, 0.1f, 0.1f, 1.0f));
 
-				}
-			}
+			//for (uint32_t y = 0; y < m_MapHeight; y++)
+			//{
+			//	for (uint32_t x = 0; x < m_MapWidth; x++) {
+			//		char tileType = s_MapTiles[x + y * m_MapWidth];
+			//		DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> texture;
+			//		if (s_TextureMap.find(tileType) != s_TextureMap.end())
+			//		{
+			//			texture = s_TextureMap[tileType];
+			//		}
+			//		else {
+			//			texture = m_TextureBarrel;
+			//		}
+			//		DeeDeeEngine::Renderer2D::DrawQuad({ x,y,0.1f }, { 1.0f,1.0f }, texture);
+
+			//	}
+			//}
 
 
 			//std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_FlatColorShader)->Bind();
@@ -209,6 +214,8 @@ namespace DeeDeeEngine {
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		auto& squareColor = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));

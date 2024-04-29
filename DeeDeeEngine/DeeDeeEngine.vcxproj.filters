@@ -22,6 +22,9 @@
     <Filter Include="src\DeeDeeEngine\Renderer">
       <UniqueIdentifier>{14C1F660-8083-2AEB-C933-B977353503C9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DeeDeeEngine\Scene">
+      <UniqueIdentifier>{4B3191A1-372B-BAF3-2098-50040C312060}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\Scene.h">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1428,6 +1434,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\Components.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
@@ -1483,6 +1490,9 @@
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\VertexArray.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Scene\Scene.cpp">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>

@@ -14,6 +14,8 @@
 
 //renderer
 
+#include "DeeDeeEngine\Scene\Scene.h"
+#include "DeeDeeEngine\Scene\Components.h"
 #include "DeeDeeEngine\Renderer\Renderer.h"
 #include "DeeDeeEngine\Renderer\Renderer2D.h"
 

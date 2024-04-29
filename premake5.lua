@@ -13,6 +13,7 @@ IncludeDir["GLFW"] = "DeeDeeEngine/vendor/GLFW/include"
 IncludeDir["GLAD"] = "DeeDeeEngine/vendor/GLAD/include"
 IncludeDir["ImGui"] = "DeeDeeEngine/vendor/imgui"
 IncludeDir["glm"] = "DeeDeeEngine/vendor/glm"
+IncludeDir["entt"] = "DeeDeeEngine/vendor/entt/include"
 IncludeDir["stb_image"] = "DeeDeeEngine/vendor/stb_image"
 
 include "DeeDeeEngine/vendor/GLFW"
@@ -49,7 +50,9 @@ includedirs
     "%{IncludeDir.GLAD}",
     "%{IncludeDir.ImGui}",
     "%{IncludeDir.glm}",
-    "%{IncludeDir.stb_image}"
+    "%{IncludeDir.stb_image}",
+    "%{IncludeDir.entt}"
+
 }
 
 links
@@ -106,7 +109,9 @@ includedirs
     "DeeDeeEngine/vendor/spdlog/include",
     "DeeDeeEngine/src",
     "DeeDeeEngine/vendor",
-    "%{IncludeDir.glm}"
+    "%{IncludeDir.glm}",
+    "%{IncludeDir.entt}"
+
 }
 links{
     "DeeDeeEngine"
@@ -154,7 +159,9 @@ includedirs
     "DeeDeeEngine/vendor/spdlog/include",
     "DeeDeeEngine/src",
     "DeeDeeEngine/vendor",
-    "%{IncludeDir.glm}"
+    "%{IncludeDir.glm}",
+    "%{IncludeDir.entt}"
+
 }
 links{
     "DeeDeeEngine"
