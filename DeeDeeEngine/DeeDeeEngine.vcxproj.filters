@@ -1435,6 +1435,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Scene\Components.h" />
+    <ClInclude Include="src\DeeDeeEngine\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
@@ -1527,5 +1528,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Scene\Entity.cpp" />
   </ItemGroup>
 </Project>
