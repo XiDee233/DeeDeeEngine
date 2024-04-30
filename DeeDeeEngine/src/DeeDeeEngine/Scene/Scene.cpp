@@ -37,19 +37,38 @@ namespace DeeDeeEngine {
 			auto& [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
 		}*/
 
-	
+
 	}
 
 	Scene::~Scene()
 	{
 	}
 	void Scene::OnUpdate(Timestep ts) {
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
+
+		Camera* mainCamera = nullptr;
+		glm::mat4* camTransform = nullptr;
+		auto group = m_Registry.view<CameraComponent,TransformComponent>();
+		for ( auto entity: group)
 		{
-			auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-			Renderer2D::DrawQuad(transform, sprite.Color);
+			auto& [transform,camera] = m_Registry.get<TransformComponent, CameraComponent>(entity);
+			if (camera.Primary) {
+				mainCamera = &camera.Camera;
+				camTransform = &transform.Transform;
+				break;
+			}
 		}
+		if (mainCamera)
+		{
+			Renderer2D::BeginScene(mainCamera->GetProjection(), *camTransform);
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto& [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				Renderer2D::DrawQuad(transform, sprite.Color);
+			}
+			Renderer2D::EndScene();
+		}
+		
 
 	}
 
@@ -59,6 +78,6 @@ namespace DeeDeeEngine {
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
 		return entity;
-}
+	}
 
 }

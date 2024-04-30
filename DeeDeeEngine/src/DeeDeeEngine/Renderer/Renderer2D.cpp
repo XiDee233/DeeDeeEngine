@@ -117,6 +117,19 @@ namespace DeeDeeEngine {
 
 		m_Data.TextureSlotIndex = 1;
 	}
+	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
+	{
+		DEE_PROFILE_FUNCTION();
+		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
+
+		m_Data.TextureShader->Bind();
+		m_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
+
+		m_Data.QuadIndexCount = 0;
+		m_Data.QuadVertexBufferPtr = m_Data.QuadVertexBufferBase;
+
+		m_Data.TextureSlotIndex = 1;
+	}
 	void Renderer2D::EndScene()
 	{
 		DEE_PROFILE_FUNCTION();

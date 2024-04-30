@@ -1436,6 +1436,7 @@
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Scene\Components.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\Entity.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">

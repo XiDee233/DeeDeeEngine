@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Dee.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Application.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Core.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\EntryPoint.h" />

@@ -50,7 +50,13 @@ namespace DeeDeeEngine {
 		Entity square = m_ActiveScene->CreateEntity("Hello Entity");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 		m_SquareEntity = square;
-		m_CameraController.SetZoomLevel(5.5f);
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("MainCamera");
+		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		m_SecondCamera = m_ActiveScene->CreateEntity("SecondCamera");
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		cc.Primary = false;
+		//m_CameraController.SetZoomLevel(5.5f);
 
 	}
 
@@ -62,6 +68,13 @@ namespace DeeDeeEngine {
 
 	void EditorLayer::OnUpdate(DeeDeeEngine::Timestep ts)
 	{
+		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+		{
+			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+		}
 
 		DEE_PROFILE_FUNCTION();
 		{
@@ -77,81 +90,22 @@ namespace DeeDeeEngine {
 		DeeDeeEngine::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		DeeDeeEngine::RenderCommand::Clear();
 
-#if 1
-		{
 
-			static float rotation = 0.0f;
-			rotation += ts * 20.0f;
-			DEE_PROFILE_SCOPE("DrawQuad")
-				DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
-			m_ActiveScene->OnUpdate(ts);
+		m_ActiveScene->OnUpdate(ts);
 
-			//DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f }, { 1.0f,1.0f }, { 0.8f,0.2f,0.3f,1.0f });
-			//DeeDeeEngine::Renderer2D::DrawRotateQuad({ -2.0f,-2.0f }, { 1.0f,1.0f }, rotation * 10.0f, { 0.8f,0.2f,0.3f,1.0f });
-			//DeeDeeEngine::Renderer2D::DrawQuad({ 1.5f,-0.5f }, { 0.5f,0.75f }, { 0.2f,0.3f,0.8f,1.0f });
-			//DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,-0.1f }, { 10.0f,10.0f }, m_CheckerboardTexture, 10.0f);
-			//DeeDeeEngine::Renderer2D::DrawQuad({ -3.0f,-3.0f,-0.1f }, { 2.0f,2.0f }, m_CheckerboardTexture, 10.0f);
-
-			//DeeDeeEngine::Renderer2D::DrawRotateQuad({ 1.0f,1.0f,-0.05f }, { 10.0f,10.0f }, rotation, m_CheckerboardTexture, 10.f, glm::vec4(0.5f, 0.1f, 0.1f, 1.0f));
-
-			//for (uint32_t y = 0; y < m_MapHeight; y++)
-			//{
-			//	for (uint32_t x = 0; x < m_MapWidth; x++) {
-			//		char tileType = s_MapTiles[x + y * m_MapWidth];
-			//		DeeDeeEngine::Ref<DeeDeeEngine::SubTexture2D> texture;
-			//		if (s_TextureMap.find(tileType) != s_TextureMap.end())
-			//		{
-			//			texture = s_TextureMap[tileType];
-			//		}
-			//		else {
-			//			texture = m_TextureBarrel;
-			//		}
-			//		DeeDeeEngine::Renderer2D::DrawQuad({ x,y,0.1f }, { 1.0f,1.0f }, texture);
-
-			//	}
-			//}
-
-
-			//std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_FlatColorShader)->Bind();
-			//std::dynamic_pointer_cast<DeeDeeEngine::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat4("u_Color", m_SquareColor);
-
-
-			//
-			//DeeDeeEngine::Renderer::Submit(m_FlatColorShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-			//DeeDeeEngine::Renderer2D::EndScene();
-
-			//DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
-			for (float y = -5.0f; y < 5.0f; y += 0.5f)
-			{
-				for (float x = -5.0f; x < 5.0f; x += 0.5f)
-				{
-					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-					DeeDeeEngine::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-				}
-			}
-			DeeDeeEngine::Renderer2D::EndScene();
-			m_Framebuffer->Unbind();
-		}
-
-#endif
-
-		DeeDeeEngine::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		DeeDeeEngine::Renderer2D::DrawQuad({ 0.0f,0.0f,0.1f }, { 1.0f,1.0f }, m_TextureStairs);
-		DeeDeeEngine::Renderer2D::DrawQuad({ 1.0f,0.0f,0.1f }, { 1.0f,2.0f }, m_TextureBarrel);
-
-		DeeDeeEngine::Renderer2D::EndScene();
+		m_Framebuffer->Unbind();
 	}
 
 	void EditorLayer::OnImGuiRender()
 	{
 
-		
+
 		static bool dockspaceOpen = true;
 		static bool opt_fullscreen = true;
 		static bool opt_padding = false;
 		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
-		
+
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 		if (opt_fullscreen)
 		{
@@ -197,13 +151,13 @@ namespace DeeDeeEngine {
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				
+
 
 				if (ImGui::MenuItem("Exit"))DeeDeeEngine::Application::Get().Close();
-				
+
 				ImGui::EndMenu();
 			}
-			
+
 			ImGui::EndMenuBar();
 		}
 		ImGui::Begin("Settings");
@@ -223,11 +177,15 @@ namespace DeeDeeEngine {
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 			ImGui::Separator();
 		}
-	
+		ImGui::DragFloat3("Camera Transform", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera)) {
+			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+		}
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		
+
 
 		ImGui::Begin("Viewport");
 		m_ViewportFocused = ImGui::IsWindowFocused();
@@ -244,7 +202,7 @@ namespace DeeDeeEngine {
 		}
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 
-		ImGui::Image((void*)textureID, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2{ 0,1 }, ImVec2{1,0});
+		ImGui::Image((void*)textureID, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2{ 0,1 }, ImVec2{ 1,0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 
