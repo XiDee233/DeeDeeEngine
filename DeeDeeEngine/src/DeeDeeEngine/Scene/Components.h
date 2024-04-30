@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <DeeDeeEngine\Renderer\Camera.h>
+#include "SceneCamera.h"
 
 namespace DeeDeeEngine {
 
@@ -41,11 +42,11 @@ namespace DeeDeeEngine {
 			: Color(color) {}
 	};
 	struct CameraComponent {
-		Camera Camera;
+		SceneCamera Camera;
 		bool Primary = true;
+		bool FiexedAspectRatio = false;
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const glm::mat4& projection)
-			: Camera(projection) {}
+		
 	};
 }

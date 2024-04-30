@@ -175,6 +175,7 @@
     <ClInclude Include="src\DeeDeeEngine\Scene\Components.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\Entity.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\Scene.h" />
+    <ClInclude Include="src\DeeDeeEngine\Scene\SceneCamera.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -623,6 +624,7 @@
     <ClCompile Include="src\DeeDeeEngine\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Scene\Entity.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Scene\Scene.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
