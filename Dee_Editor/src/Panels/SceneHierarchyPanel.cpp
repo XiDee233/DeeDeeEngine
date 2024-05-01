@@ -30,7 +30,7 @@ namespace DeeDeeEngine {
 			m_SelectionContext = {};
 
 		// Right-click on blank space
-		if (ImGui::BeginPopupContextWindow(0, 1))
+		if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
 		{
 			if (ImGui::MenuItem(u8"创建空实体"))
 				m_Context->CreateEntity(u8"空实体");
