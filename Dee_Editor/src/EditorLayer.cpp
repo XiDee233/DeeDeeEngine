@@ -63,8 +63,8 @@ namespace DeeDeeEngine {
 		class CameraController:public ScriptableEntity {
 		public:
 			void OnCreate() {
-				//GetComponent<TransformComponent>();
-				std::cout << "OnCreate!" << std::endl;
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				transform[3][0] = rand() % 10 - 5.0f;
 
 			}
 
@@ -87,6 +87,7 @@ namespace DeeDeeEngine {
 			}
 		};
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()
