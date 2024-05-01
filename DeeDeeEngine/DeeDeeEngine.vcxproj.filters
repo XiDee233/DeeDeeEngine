@@ -153,9 +153,6 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Scene\Scene.h">
-      <Filter>src\DeeDeeEngine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -1439,6 +1436,7 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\SceneCamera.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\DeeDeeEngine\Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">

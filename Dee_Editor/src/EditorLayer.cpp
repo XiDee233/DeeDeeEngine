@@ -186,11 +186,11 @@ namespace DeeDeeEngine {
 
 		if (ImGui::BeginMenuBar())
 		{
-			if (ImGui::BeginMenu("File"))
+			if (ImGui::BeginMenu(u8"文件"))
 			{
 
 
-				if (ImGui::MenuItem("Exit"))DeeDeeEngine::Application::Get().Close();
+				if (ImGui::MenuItem(u8"退出"))DeeDeeEngine::Application::Get().Close();
 
 				ImGui::EndMenu();
 			}
@@ -198,7 +198,7 @@ namespace DeeDeeEngine {
 			ImGui::EndMenuBar();
 		}
 		m_SceneHierarchyPanel.OnImGuiRender();
-		ImGui::Begin("Stats");
+		ImGui::Begin(u8"状态");
 
 		auto stats = DeeDeeEngine::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -212,7 +212,7 @@ namespace DeeDeeEngine {
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
 
-		ImGui::Begin("Viewport");
+		ImGui::Begin(u8"视口");
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
 		Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewportFocused || !m_ViewportHovered);

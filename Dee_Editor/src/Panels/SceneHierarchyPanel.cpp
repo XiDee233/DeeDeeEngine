@@ -1,4 +1,4 @@
-#include "SceneHierarchyPanel.h"
+﻿#include "SceneHierarchyPanel.h"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
@@ -9,7 +9,7 @@ namespace DeeDeeEngine {
 
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
-		SetContext(context);
+		SetContext(context);		
 	}
 
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
@@ -19,7 +19,7 @@ namespace DeeDeeEngine {
 
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
-		ImGui::Begin("Scene Hierarchy");
+		ImGui::Begin(u8"场景结构");
 
 		m_Context->m_Registry.each([&](auto entityID)
 			{
@@ -29,11 +29,39 @@ namespace DeeDeeEngine {
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 			m_SelectionContext = {};
 
+		// Right-click on blank space
+		if (ImGui::BeginPopupContextWindow(0, 1))
+		{
+			if (ImGui::MenuItem(u8"创建空实体"))
+				m_Context->CreateEntity(u8"空实体");
+
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
 
-		ImGui::Begin("Properties");
+		ImGui::Begin(u8"属性");
 		if (m_SelectionContext)
 			DrawComponents(m_SelectionContext);
+		if (ImGui::Button(u8"添加组件"))
+			ImGui::OpenPopup(u8"添加组件");
+
+		if (ImGui::BeginPopup(u8"添加组件"))
+		{
+			if (ImGui::MenuItem(u8"相机"))
+			{
+				m_SelectionContext.AddComponent<CameraComponent>();
+				ImGui::CloseCurrentPopup();
+			}
+
+			if (ImGui::MenuItem(u8"精灵图渲染器"))
+			{
+				m_SelectionContext.AddComponent<SpriteRendererComponent>();
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
 
 		ImGui::End();
 	}
@@ -108,10 +136,13 @@ namespace DeeDeeEngine {
 				tag = std::string(buffer);
 			}
 		}
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
 
 		if (entity.HasComponent<TransformComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+			bool open = ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), treeNodeFlags, "Transform");
+
+			if (open)
 			{
 				auto& tc = entity.GetComponent<TransformComponent>();
 				DrawVec3Control("Translation", tc.Translation);
@@ -125,14 +156,14 @@ namespace DeeDeeEngine {
 		}
 		if (entity.HasComponent<CameraComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Camera"))
+			if (ImGui::TreeNodeEx((void*)typeid(CameraComponent).hash_code(), treeNodeFlags, "Camera"))
 			{
 				auto& cameraComponent = entity.GetComponent<CameraComponent>();
 				auto& camera = cameraComponent.Camera;
 
-				ImGui::Checkbox("Primary", &cameraComponent.Primary);
+				ImGui::Checkbox(u8"主相机", &cameraComponent.Primary);
 
-				const char* projectionTypeStrings[] = { "Perspective", "Orthographic" };
+				const char* projectionTypeStrings[] = { u8"透视", u8"正交" };
 				const char* currentProjectionTypeString = projectionTypeStrings[(int)camera.GetProjectionType()];
 				if (ImGui::BeginCombo("Projection", currentProjectionTypeString))
 				{
@@ -181,7 +212,7 @@ namespace DeeDeeEngine {
 					if (ImGui::DragFloat("Far", &orthoFar))
 						camera.SetOrthographicFarClip(orthoFar);
 
-					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+					ImGui::Checkbox(u8"匹配视图比例", &cameraComponent.FixedAspectRatio);
 				}
 
 
@@ -190,14 +221,34 @@ namespace DeeDeeEngine {
 		}
 		if (entity.HasComponent<SpriteRendererComponent>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite Renderer"))
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+			bool open = ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), treeNodeFlags, u8"精灵图渲染器");
+			ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
+			if (ImGui::Button("+", ImVec2{ 20, 20 }))
+			{
+				ImGui::OpenPopup(u8"组件选项");
+			}
+			ImGui::PopStyleVar();
+
+			bool removeComponent = false;
+			if (ImGui::BeginPopup(u8"组件选项"))
+			{
+				if (ImGui::MenuItem(u8"移除组件"))
+					removeComponent = true;
+
+				ImGui::EndPopup();
+			}
+
+			if (open)
 			{
 				auto& src = entity.GetComponent<SpriteRendererComponent>();
 				ImGui::ColorEdit4("Color", glm::value_ptr(src.Color));
 				ImGui::TreePop();
 			}
+			if (removeComponent)
+				entity.RemoveComponent<SpriteRendererComponent>();
 		}
-	
+
 	}
 
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
@@ -211,6 +262,14 @@ namespace DeeDeeEngine {
 			m_SelectionContext = entity;
 		}
 
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem())
+		{
+			if (ImGui::MenuItem(u8"删除实体"))
+				entityDeleted = true;
+
+			ImGui::EndPopup();
+		}
 		if (opened)
 		{
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
@@ -218,6 +277,12 @@ namespace DeeDeeEngine {
 			if (opened)
 				ImGui::TreePop();
 			ImGui::TreePop();
+		}
+		if (entityDeleted)
+		{
+			m_Context->DestroyEntity(entity);
+			if (m_SelectionContext == entity)
+				m_SelectionContext = {};
 		}
 
 	}
