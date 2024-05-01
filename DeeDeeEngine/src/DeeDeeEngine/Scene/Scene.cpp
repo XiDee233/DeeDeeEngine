@@ -62,7 +62,7 @@ namespace DeeDeeEngine {
 		auto view = m_Registry.view<CameraComponent>();
 		for (auto entity : view) {
 			auto& cameraComponent = view.get<CameraComponent>(entity);
-			if (!cameraComponent.FiexedAspectRatio) {
+			if (!cameraComponent.FixedAspectRatio) {
 				cameraComponent.Camera.SetViewportSize(width, height);
 			}
 		}

@@ -45,7 +45,7 @@ namespace DeeDeeEngine {
 	struct CameraComponent {
 		SceneCamera Camera;
 		bool Primary = true;
-		bool FiexedAspectRatio = false;
+		bool FixedAspectRatio = false;
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 		
