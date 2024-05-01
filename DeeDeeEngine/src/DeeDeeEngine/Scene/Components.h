@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <DeeDeeEngine\Renderer\Camera.h>
 #include "SceneCamera.h"
+#include "ScriptableEntity.h"
 
 namespace DeeDeeEngine {
 
@@ -48,5 +49,27 @@ namespace DeeDeeEngine {
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
 		
+	};
+	//用于存储和管理脚本实例及其生命周期函数。
+	struct NativeScriptComponent {
+		ScriptableEntity* Instance = nullptr;
+
+		std::function<void()> InstantiateFunction;
+		std::function<void()> DestroyInstanceFunction;
+
+		std::function<void(ScriptableEntity*)> OnCreateFunction;
+		std::function<void(ScriptableEntity*)> OnDestroyFunction;
+		std::function<void(ScriptableEntity*, Timestep)> OnUpdateFunction;
+
+		template<typename T>
+		void Bind()
+		{
+			InstantiateFunction = [&]() { Instance = new T(); };
+			DestroyInstanceFunction = [&]() { delete (T*)Instance; Instance = nullptr; };
+			//将 instance 指针转换为指向类型 T 的指针
+			OnCreateFunction = [](ScriptableEntity* instance) { ((T*)instance)->OnCreate(); };
+			OnDestroyFunction = [](ScriptableEntity* instance) { ((T*)instance)->OnDestroy(); };
+			OnUpdateFunction = [](ScriptableEntity* instance, Timestep ts) { ((T*)instance)->OnUpdate(ts); };
+		}
 	};
 }

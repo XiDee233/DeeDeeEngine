@@ -45,12 +45,26 @@ namespace DeeDeeEngine {
 	}
 	void Scene::OnUpdate(Timestep ts) {
 
+		{
+			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) {
+				if (!nsc.Instance) {
+					nsc.InstantiateFunction();
+					nsc.Instance->m_Entity = Entity{ entity, this };
+
+					if (nsc.OnCreateFunction)
+						nsc.OnCreateFunction(nsc.Instance);
+				}
+				if (nsc.OnUpdateFunction)
+					nsc.OnUpdateFunction(nsc.Instance, ts);
+				});
+		}
+
 		Camera* mainCamera = nullptr;
 		glm::mat4* camTransform = nullptr;
-		auto view = m_Registry.view<TransformComponent,CameraComponent>();
-		for ( auto entity: view)
+		auto view = m_Registry.view<TransformComponent, CameraComponent>();
+		for (auto entity : view)
 		{
-			auto& [transform,camera] = view.get<TransformComponent, CameraComponent>(entity);
+			auto& [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 			if (camera.Primary) {
 				mainCamera = &camera.Camera;
 				camTransform = &transform.Transform;
@@ -68,7 +82,7 @@ namespace DeeDeeEngine {
 			}
 			Renderer2D::EndScene();
 		}
-		
+
 
 	}
 	void Scene::OnViewportResize(uint32_t width, uint32_t height) {

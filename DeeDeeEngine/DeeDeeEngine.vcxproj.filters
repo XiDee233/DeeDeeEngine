@@ -1438,6 +1438,7 @@
     <ClInclude Include="src\DeeDeeEngine\Scene\Entity.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\SceneCamera.h" />
+    <ClInclude Include="src\DeeDeeEngine\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">

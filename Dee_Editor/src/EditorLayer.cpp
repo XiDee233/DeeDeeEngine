@@ -4,6 +4,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <chrono>
 
+#include "DeeDeeEngine\Scene\ScriptableEntity.h"
+
 namespace DeeDeeEngine {
 
 	static const uint32_t s_MapWidth = 23;
@@ -58,6 +60,33 @@ namespace DeeDeeEngine {
 		cc.Primary = false;
 		//m_CameraController.SetZoomLevel(5.5f);
 
+		class CameraController:public ScriptableEntity {
+		public:
+			void OnCreate() {
+				//GetComponent<TransformComponent>();
+				std::cout << "OnCreate!" << std::endl;
+
+			}
+
+			void OnDestroy() {
+
+			}
+
+			void OnUpdate(Timestep ts) {
+				auto& transform = GetComponent<TransformComponent>().Transform;
+				float speed = 5.0f;
+
+				if (Input::IsKeyPressed(DEE_KEY_A))
+					transform[3][0] -= speed * ts;
+				if (Input::IsKeyPressed(DEE_KEY_D))
+					transform[3][0] += speed * ts;
+				if (Input::IsKeyPressed(DEE_KEY_W))
+					transform[3][1] += speed * ts;
+				if (Input::IsKeyPressed(DEE_KEY_S))
+					transform[3][1] -= speed * ts;
+			}
+		};
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 	}
 
 	void EditorLayer::OnDetach()
