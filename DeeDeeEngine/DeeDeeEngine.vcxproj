@@ -77,10 +77,10 @@
       <PrecompiledHeaderFile>deepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEE_PLATFORM_WINDOWS;DEE_BUILD_DLL;GLFW_INCLUDE_NONE;DEE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\GLAD\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\GLAD\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -97,13 +97,13 @@
       <PrecompiledHeaderFile>deepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEE_PLATFORM_WINDOWS;DEE_BUILD_DLL;GLFW_INCLUDE_NONE;DEE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\GLAD\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\GLAD\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -121,13 +121,13 @@
       <PrecompiledHeaderFile>deepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>DEE_PLATFORM_WINDOWS;DEE_BUILD_DLL;GLFW_INCLUDE_NONE;DEE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\GLAD\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;src;vendor\GLFW\include;vendor\GLAD\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Dee.h" />
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Application.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Core.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\EntryPoint.h" />
@@ -160,6 +159,7 @@
     <ClInclude Include="src\DeeDeeEngine\Events\MouseEvent.h" />
     <ClInclude Include="src\DeeDeeEngine\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Framebuffer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCamera.h" />
@@ -176,6 +176,7 @@
     <ClInclude Include="src\DeeDeeEngine\Scene\Entity.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\Scene.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\SceneCamera.h" />
+    <ClInclude Include="src\DeeDeeEngine\Scene\SceneSerializer.h" />
     <ClInclude Include="src\DeeDeeEngine\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
@@ -626,6 +627,7 @@
     <ClCompile Include="src\DeeDeeEngine\Scene\Entity.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Scene\Scene.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
@@ -649,6 +651,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\ImGui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

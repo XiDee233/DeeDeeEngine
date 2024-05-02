@@ -10,3 +10,6 @@
 [submodule "DeeDeeEngine/vendor/glm"]
 	path = DeeDeeEngine/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "DeeDeeEngine/vendor/yaml-cpp"]
+	path = DeeDeeEngine/vendor/yaml-cpp
+	url = https://github.com/TheCherno/yaml-cpp.git

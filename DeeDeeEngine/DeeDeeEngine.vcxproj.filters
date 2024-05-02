@@ -117,6 +117,9 @@
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Framebuffer.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
@@ -152,6 +155,24 @@
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\VertexArray.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\Components.h">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\Entity.h">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\Scene.h">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\SceneCamera.h">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\SceneSerializer.h">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Scene\ScriptableEntity.h">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1431,12 +1452,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Scene\Components.h" />
-    <ClInclude Include="src\DeeDeeEngine\Scene\Entity.h" />
-    <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
-    <ClInclude Include="src\DeeDeeEngine\Scene\SceneCamera.h" />
-    <ClInclude Include="src\DeeDeeEngine\Scene\ScriptableEntity.h" />
-    <ClInclude Include="src\DeeDeeEngine\Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
@@ -1493,7 +1508,16 @@
     <ClCompile Include="src\DeeDeeEngine\Renderer\VertexArray.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Scene\Entity.cpp">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Scene\Scene.cpp">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Scene\SceneCamera.cpp">
+      <Filter>src\DeeDeeEngine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Scene\SceneSerializer.cpp">
       <Filter>src\DeeDeeEngine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1529,7 +1553,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Scene\Entity.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

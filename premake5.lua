@@ -15,17 +15,19 @@ IncludeDir["ImGui"] = "DeeDeeEngine/vendor/imgui"
 IncludeDir["glm"] = "DeeDeeEngine/vendor/glm"
 IncludeDir["entt"] = "DeeDeeEngine/vendor/entt/include"
 IncludeDir["stb_image"] = "DeeDeeEngine/vendor/stb_image"
+IncludeDir["yaml_cpp"] ="DeeDeeEngine/vendor/yaml-cpp/include"
 
 include "DeeDeeEngine/vendor/GLFW"
 include "DeeDeeEngine/vendor/GLAD"
 include "DeeDeeEngine/vendor/ImGui"
+include "DeeDeeEngine/vendor/yaml-cpp"
 
 project "DeeDeeEngine"
     location "DeeDeeEngine"
     kind "StaticLib"
     language "C++"
     cppdialect "C++17"
-    staticruntime "on"
+    staticruntime "off"
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -51,7 +53,8 @@ includedirs
     "%{IncludeDir.ImGui}",
     "%{IncludeDir.glm}",
     "%{IncludeDir.stb_image}",
-    "%{IncludeDir.entt}"
+    "%{IncludeDir.entt}",
+    "%{IncludeDir.yaml_cpp}"
 
 }
 
@@ -60,11 +63,13 @@ links
     "GLFW",
     "GLAD",
     "ImGui",
+    "yaml-cpp",
     "opengl32.lib"
+    
 }
 
 filter "system:windows"
-    staticruntime "On"
+    staticruntime "off"
     systemversion "latest"
 
     defines {
@@ -94,7 +99,7 @@ location "Dee_Editor"
 kind "ConsoleApp"
 language "C++"
 cppdialect "C++17"
-staticruntime "on"
+staticruntime "off"
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -110,7 +115,8 @@ includedirs
     "DeeDeeEngine/src",
     "DeeDeeEngine/vendor",
     "%{IncludeDir.glm}",
-    "%{IncludeDir.entt}"
+    "%{IncludeDir.entt}",
+    "%{IncludeDir.yaml_cpp}"
 
 }
 links{
@@ -118,7 +124,7 @@ links{
 }
 
 filter "system:windows"
-    staticruntime "On"
+    staticruntime "off"
     systemversion "latest"
 
     defines {
@@ -144,7 +150,7 @@ location "Sandbox"
 kind "ConsoleApp"
 language "C++"
 cppdialect "C++17"
-staticruntime "on"
+staticruntime "off"
 
 targetdir("bin/" .. outputdir .. "/%{prj.name}")
 objdir("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -160,7 +166,8 @@ includedirs
     "DeeDeeEngine/src",
     "DeeDeeEngine/vendor",
     "%{IncludeDir.glm}",
-    "%{IncludeDir.entt}"
+    "%{IncludeDir.entt}",
+    "%{IncludeDir.yaml_cpp}"
 
 }
 links{
@@ -168,7 +175,7 @@ links{
 }
 
 filter "system:windows"
-    staticruntime "On"
+    staticruntime "off"
     systemversion "latest"
 
     defines {

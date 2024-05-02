@@ -5,6 +5,7 @@
 #include <chrono>
 
 #include "DeeDeeEngine\Scene\ScriptableEntity.h"
+#include "DeeDeeEngine\Scene\SceneSerializer.h"
 
 namespace DeeDeeEngine {
 
@@ -192,7 +193,17 @@ namespace DeeDeeEngine {
 		{
 			if (ImGui::BeginMenu(u8"文件"))
 			{
+				if (ImGui::MenuItem(u8"序列化"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Serialize("assets/scenes/Example.dee");
+				}
 
+				if (ImGui::MenuItem(u8"反序列化"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Deserialize("assets/scenes/Example.dee");
+				}
 
 				if (ImGui::MenuItem(u8"退出"))DeeDeeEngine::Application::Get().Close();
 
