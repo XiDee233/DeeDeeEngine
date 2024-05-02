@@ -16,6 +16,7 @@ IncludeDir["glm"] = "DeeDeeEngine/vendor/glm"
 IncludeDir["entt"] = "DeeDeeEngine/vendor/entt/include"
 IncludeDir["stb_image"] = "DeeDeeEngine/vendor/stb_image"
 IncludeDir["yaml_cpp"] ="DeeDeeEngine/vendor/yaml-cpp/include"
+IncludeDir["ImGuizmo"] = "DeeDeeEngine/vendor/imguizmo"
 
 include "DeeDeeEngine/vendor/GLFW"
 include "DeeDeeEngine/vendor/GLAD"
@@ -41,6 +42,8 @@ files {
     "%{prj.name}/vendor/stb_image/**.cpp",
     "%{prj.name}/vendor/glm/glm/**.hpp",
     "%{prj.name}/vendor/glm/glm/**.inl",
+    "%{prj.name}/vendor/imguizmo/ImGuizmo.h",
+	"%{prj.name}/vendor/imguizmo/ImGuizmo.cpp"
 
 }
 
@@ -54,7 +57,8 @@ includedirs
     "%{IncludeDir.glm}",
     "%{IncludeDir.stb_image}",
     "%{IncludeDir.entt}",
-    "%{IncludeDir.yaml_cpp}"
+    "%{IncludeDir.yaml_cpp}",
+    "%{IncludeDir.ImGuizmo}"
 
 }
 
@@ -94,6 +98,9 @@ defines "DEE_DIST"
 runtime "Release"
 optimize "on"
 
+filter "files:DeeDeeEngine/vendor/imguizmo/**.cpp"
+flags { "NoPCH" }
+
 project "Dee_Editor"
 location "Dee_Editor"
 kind "ConsoleApp"
@@ -116,7 +123,8 @@ includedirs
     "DeeDeeEngine/vendor",
     "%{IncludeDir.glm}",
     "%{IncludeDir.entt}",
-    "%{IncludeDir.yaml_cpp}"
+    "%{IncludeDir.yaml_cpp}",
+    "%{IncludeDir.ImGuizmo}"
 
 }
 links{
