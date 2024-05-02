@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "SubTexture2D.h"
 #include"DeeDeeEngine/Renderer/Camera.h"
+#include "EditorCamera.h"
 namespace DeeDeeEngine {
 	class Renderer2D
 	{
@@ -11,6 +12,7 @@ namespace DeeDeeEngine {
 		static void Init();
 		static void Shutdown();
 		static void BeginScene(const OrthographicCamera& camera);
+		static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(const Camera& camera,const glm::mat4& transform);
 		static void EndScene();
 		static void Flush();
@@ -48,5 +50,9 @@ namespace DeeDeeEngine {
 
 	private:
 		static void FlushAndReset();
+
+	private:
+		static void StartBatch();
+		static void NextBatch();
 	};
 }

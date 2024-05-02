@@ -1,5 +1,5 @@
 #pragma once
-
+#include "DeeDeeEngine/Renderer/EditorCamera.h"
 #include "entt.hpp"
 #include "DeeDeeEngine/Core/Timestep.h"
 namespace DeeDeeEngine {
@@ -15,7 +15,8 @@ namespace DeeDeeEngine {
 		void DestroyEntity(Entity entity);
 
 		void OnViewportResize(uint32_t width, uint32_t height);
-		void OnUpdate(Timestep ts);
+		void OnUpdateRuntime(Timestep ts);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 
 		Entity GetPrimaryCameraEntity();
 	private:

@@ -116,6 +116,18 @@ namespace DeeDeeEngine {
 		m_Data.QuadVertexBufferPtr = m_Data.QuadVertexBufferBase;
 
 		m_Data.TextureSlotIndex = 1;
+		StartBatch();
+	}
+	void Renderer2D::BeginScene(const EditorCamera& camera)
+	{
+		DEE_PROFILE_FUNCTION();
+
+		glm::mat4 viewProj = camera.GetViewProjection();
+
+		m_Data.TextureShader->Bind();
+		m_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
+
+		StartBatch();
 	}
 	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
 	{
@@ -129,22 +141,13 @@ namespace DeeDeeEngine {
 		m_Data.QuadVertexBufferPtr = m_Data.QuadVertexBufferBase;
 
 		m_Data.TextureSlotIndex = 1;
+		StartBatch();
 	}
 	void Renderer2D::EndScene()
 	{
 		DEE_PROFILE_FUNCTION();
-		uint32_t dataSize = (uint8_t*)m_Data.QuadVertexBufferPtr - (uint8_t*)m_Data.QuadVertexBufferBase;
-		m_Data.QuadVertexBuffer->SetData(m_Data.QuadVertexBufferBase,dataSize);
-		Flush();
-	}
-	void Renderer2D::Flush()
-	{
 
-		for (uint32_t i = 0; i < m_Data.TextureSlotIndex; i++) {
-			m_Data.TextureSlots[i]->Bind(i);
-		}
-		RenderCommand::DrawIndexed(m_Data.QuadVertexArray,m_Data.QuadIndexCount);
-		m_Data.Stats.DrawCalls++;
+		Flush();
 	}
 
 	 void Renderer2D::FlushAndReset() {
@@ -154,6 +157,33 @@ namespace DeeDeeEngine {
 
 		m_Data.TextureSlotIndex = 1;
 	}
+	 void Renderer2D::StartBatch()
+	 {
+		 m_Data.QuadIndexCount = 0;
+		 m_Data.QuadVertexBufferPtr = m_Data.QuadVertexBufferBase;
+		 m_Data.TextureSlotIndex = 1;
+	 }
+
+	 void Renderer2D::NextBatch()
+	 {
+		 Flush();
+		 StartBatch();
+	 }
+
+	 void Renderer2D::Flush()
+	 {
+		 if (m_Data.QuadIndexCount == 0)
+			 return; // Nothing to draw
+		 uint32_t dataSize = (uint32_t)((uint8_t*)m_Data.QuadVertexBufferPtr - (uint8_t*)m_Data.QuadVertexBufferBase);
+		 m_Data.QuadVertexBuffer->SetData(m_Data.QuadVertexBufferBase, dataSize);
+
+		 // Bind textures
+		 for (uint32_t i = 0; i < m_Data.TextureSlotIndex; i++)
+			 m_Data.TextureSlots[i]->Bind(i);
+
+		 RenderCommand::DrawIndexed(m_Data.QuadVertexArray, m_Data.QuadIndexCount);
+		 m_Data.Stats.DrawCalls++;
+	 }
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		DEE_PROFILE_FUNCTION();
@@ -197,7 +227,7 @@ namespace DeeDeeEngine {
 		DEE_PROFILE_FUNCTION();
 
 		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
+			NextBatch();
 		}
 		constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
 		float textureIndex = 0.0f;
@@ -239,7 +269,7 @@ namespace DeeDeeEngine {
 	{
 		DEE_PROFILE_FUNCTION();
 		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
+			NextBatch();
 		}
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = {
@@ -279,7 +309,7 @@ namespace DeeDeeEngine {
 		};
 
 		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
+			NextBatch();
 		}
 
 
@@ -319,7 +349,7 @@ namespace DeeDeeEngine {
 		DEE_PROFILE_FUNCTION();
 
 		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
+			NextBatch();
 		}
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = {
@@ -360,7 +390,7 @@ namespace DeeDeeEngine {
 		DEE_PROFILE_FUNCTION();
 
 		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
+			NextBatch();
 		}
 		constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
 		float textureIndex = 0.0f;
@@ -415,7 +445,7 @@ namespace DeeDeeEngine {
 		DEE_PROFILE_FUNCTION();
 
 		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
-			FlushAndReset();
+			NextBatch();
 		}
 		constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
 		float textureIndex = 0.0f;

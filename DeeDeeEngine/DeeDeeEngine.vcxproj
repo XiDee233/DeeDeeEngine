@@ -161,6 +161,7 @@
     <ClInclude Include="src\DeeDeeEngine\Math\Math.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h" />
+    <ClInclude Include="src\DeeDeeEngine\Renderer\EditorCamera.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\Framebuffer.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\DeeDeeEngine\Renderer\OrthographicCamera.h" />
@@ -617,6 +618,7 @@
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Math\Math.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Renderer\OrthographicCameraController.cpp" />

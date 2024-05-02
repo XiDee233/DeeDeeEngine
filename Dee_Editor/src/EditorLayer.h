@@ -2,6 +2,7 @@
 
 #include "Dee.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "DeeDeeEngine\Renderer\EditorCamera.h"
 namespace DeeDeeEngine {
 	class EditorLayer :public Layer
 	{
@@ -43,6 +44,7 @@ namespace DeeDeeEngine {
 		Entity m_SecondCamera;
 
 		bool m_PrimaryCamera = true;
+		EditorCamera m_EditorCamera;
 
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 		std::unordered_map<char, Ref<SubTexture2D>> s_TextureMap;
