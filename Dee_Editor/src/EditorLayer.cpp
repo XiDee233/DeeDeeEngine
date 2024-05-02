@@ -6,6 +6,7 @@
 
 #include "DeeDeeEngine\Scene\ScriptableEntity.h"
 #include "DeeDeeEngine\Scene\SceneSerializer.h"
+#include "DeeDeeEngine\Utils\PlatformUtils.h"
 
 namespace DeeDeeEngine {
 
@@ -193,17 +194,14 @@ namespace DeeDeeEngine {
 		{
 			if (ImGui::BeginMenu(u8"文件"))
 			{
-				if (ImGui::MenuItem(u8"序列化"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Serialize("assets/scenes/Example.dee");
-				}
+				if (ImGui::MenuItem(u8"新建", "Ctrl+N"))
+					NewScene();
 
-				if (ImGui::MenuItem(u8"反序列化"))
-				{
-					SceneSerializer serializer(m_ActiveScene);
-					serializer.Deserialize("assets/scenes/Example.dee");
-				}
+				if (ImGui::MenuItem(u8"打开...", "Ctrl+O"))
+					OpenScene();
+
+				if (ImGui::MenuItem(u8"保存...", "Ctrl+Shift+S"))
+					SaveSceneAs();
 
 				if (ImGui::MenuItem(u8"退出"))DeeDeeEngine::Application::Get().Close();
 
@@ -250,5 +248,72 @@ namespace DeeDeeEngine {
 	{
 
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(DEE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		if (e.IsRepeat())
+			return false;
+
+		bool control = Input::IsKeyPressed(DEE_KEY_LEFT_CONTROL) || Input::IsKeyPressed(DEE_KEY_RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed(DEE_KEY_LEFT_SHIFT) || Input::IsKeyPressed(DEE_KEY_RIGHT_SHIFT);
+		switch (e.GetKeyCode())
+		{
+		case DEE_KEY_N:
+		{
+			if (control)
+				NewScene();
+
+			break;
+		}
+		case DEE_KEY_O:
+		{
+			if (control)
+				OpenScene();
+
+			break;
+		}
+		case DEE_KEY_S:
+		{
+			if (control && shift)
+				SaveSceneAs();
+
+			break;
+		}
+		}
+	}
+
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Dee Scene (*.dee)\0*.dee\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("Dee Scene (*.dee)\0*.dee\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath);
+		}
 	}
 }
