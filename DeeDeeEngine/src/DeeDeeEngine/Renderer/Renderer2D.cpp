@@ -13,6 +13,9 @@ namespace DeeDeeEngine {
 		glm::vec2 TexCoord;
 		float TexIndex;
 		float TilingFactor;
+
+		// Editor-only
+		int EntityID;
 	};
 	struct Renderer2DData {
 
@@ -47,12 +50,12 @@ namespace DeeDeeEngine {
 
 		m_Data.QuadVertexBuffer = VertexBuffer::Create(m_Data.MaxVertices*sizeof(QuadVertex));
 		BufferLayout _layout2 = {
-			{ShaderDataType::Float3,"a_Position"},
-			{ShaderDataType::Float4,"a_Color"},
-			{ShaderDataType::Float2,"a_TexCoord"},
-			{ShaderDataType::Float,"a_TexIndex"},
-			{ShaderDataType::Float,"a_TilingFactor"},
-
+			{ ShaderDataType::Float3, "a_Position"     },
+			{ ShaderDataType::Float4, "a_Color"        },
+			{ ShaderDataType::Float2, "a_TexCoord"     },
+			{ ShaderDataType::Float,  "a_TexIndex"     },
+			{ ShaderDataType::Float,  "a_TilingFactor" },
+			{ ShaderDataType::Int,    "a_EntityID"     }
 
 		};
 		m_Data.QuadVertexBuffer->SetLayout(_layout2);
@@ -103,6 +106,8 @@ namespace DeeDeeEngine {
 	void Renderer2D::Shutdown()
 	{
 		DEE_PROFILE_FUNCTION();
+
+		delete[] m_Data.QuadVertexBufferBase;
 
 	}
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
@@ -265,7 +270,7 @@ namespace DeeDeeEngine {
 		m_Data.QuadIndexCount += 6;
 		m_Data.Stats.QuadCount++;
 	}
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int entityID)
 	{
 		DEE_PROFILE_FUNCTION();
 		if (m_Data.QuadIndexCount >= Renderer2DData::MaxIndices) {
@@ -288,6 +293,7 @@ namespace DeeDeeEngine {
 			m_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			m_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			m_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			m_Data.QuadVertexBufferPtr->EntityID = entityID;
 			m_Data.QuadVertexBufferPtr++;
 		}
 
@@ -295,7 +301,7 @@ namespace DeeDeeEngine {
 		m_Data.QuadIndexCount += 6;
 		m_Data.Stats.QuadCount++;
 	}
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D> texture, const float tilingFactor, const glm::vec4& tintColor)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor, int entityID)
 	{
 		DEE_PROFILE_FUNCTION();
 		constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
@@ -333,6 +339,7 @@ namespace DeeDeeEngine {
 			m_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			m_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			m_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			m_Data.QuadVertexBufferPtr->EntityID = entityID;
 			m_Data.QuadVertexBufferPtr++;
 		}
 
@@ -483,6 +490,10 @@ namespace DeeDeeEngine {
 
 		m_Data.QuadIndexCount += 6;
 		m_Data.Stats.QuadCount++;
+	}
+	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID)
+	{
+		DrawQuad(transform, src.Color, entityID);
 	}
 	Renderer2D::Statistics Renderer2D::GetStats()
 	{

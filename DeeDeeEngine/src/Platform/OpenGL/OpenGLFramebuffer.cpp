@@ -21,16 +21,16 @@ namespace DeeDeeEngine {
 			glBindTexture(TextureTarget(multisampled), id);
 		}
 
-		static void AttachColorTexture(uint32_t id, int samples, GLenum format, uint32_t width, uint32_t height, int index)
+		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index)
 		{
 			bool multisampled = samples > 1;
 			if (multisampled)
 			{
-				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_FALSE);
 			}
 			else
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -71,6 +71,18 @@ namespace DeeDeeEngine {
 			}
 
 			return false;
+		}
+
+		static GLenum HazelFBTextureFormatToGL(FramebufferTextureFormat format)
+		{
+			switch (format)
+			{
+			case FramebufferTextureFormat::RGBA8:       return GL_RGBA8;
+			case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+			}
+
+			DEE_CORE_ASSERT(false);
+			return 0;
 		}
 
 	}
@@ -123,7 +135,10 @@ namespace DeeDeeEngine {
 				switch (m_ColorAttachmentSpecifications[i].TextureFormat)
 				{
 				case FramebufferTextureFormat::RGBA8: // 如果是RGBA8格式
-					Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_RGBA8, m_Specification.Width, m_Specification.Height, i); // 将纹理作为颜色附件
+					Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i); // 将纹理作为颜色附件
+					break;
+				case FramebufferTextureFormat::RED_INTEGER:
+					Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
 					break;
 				}
 			}
@@ -179,4 +194,30 @@ namespace DeeDeeEngine {
 		m_Specification.Height = height;
 		Invalidate();
 	}
+	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+	{
+		DEE_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
+
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		int pixelData;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+		return pixelData;
+		//在一个典型的场景中，每个可选择的实体在渲染到帧缓冲区时会被赋予一个唯一的ID。
+		//这个ID会被编码为像素的颜色值，通常是在不可见的颜色附件中。当用户点击屏幕时，
+		// 你可以使用鼠标的屏幕坐标来读取该位置的像素值，然后解码这个值来确定哪个实体被选择了。
+
+		//例如，如果场景中有多个实体，每个实体都有一个唯一的ID（比如1, 2, 3等），
+		//这些ID可以被渲染到一个颜色附件中。当用户点击屏幕时，ReadPixel 函数会被调用来读取鼠标位置的像素值，
+		// 这个值就对应于被点击实体的ID。如果读取的值是 - 1，则表示没有实体被选中。
+
+	}
+	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+	{
+		DEE_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size());
+
+		auto& spec = m_ColorAttachmentSpecifications[attachmentIndex];
+		glClearTexImage(m_ColorAttachments[attachmentIndex], 0,
+			Utils::HazelFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
+	}
+
 }

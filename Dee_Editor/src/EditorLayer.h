@@ -39,9 +39,12 @@ namespace DeeDeeEngine {
 		uint32_t m_MapWidth, m_MapHeight;
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = {0.0f,0.0f};
+		glm::vec2 m_ViewportBounds[2];
 		Entity m_SquareEntity;
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
+
+		Entity m_HoveredEntity;
 
 		bool m_PrimaryCamera = true;
 		EditorCamera m_EditorCamera;
