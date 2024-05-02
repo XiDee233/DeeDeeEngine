@@ -42,6 +42,7 @@ namespace DeeDeeEngine {
 		m_SpriteSheet = DeeDeeEngine::Texture2D::Create("assets/textures/rpg.png");
 
 		DeeDeeEngine::FramebufferSpecification fbSpec;
+		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		m_Framebuffer = DeeDeeEngine::Framebuffer::Create(fbSpec);
