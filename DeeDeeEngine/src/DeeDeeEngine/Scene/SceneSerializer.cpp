@@ -179,12 +179,18 @@ namespace DeeDeeEngine {
 
 	bool SceneSerializer::Deserialize(const std::string& filepath)
 	{
-		std::ifstream stream(filepath);
-		std::stringstream strStream;
-		strStream << stream.rdbuf();
+		YAML::Node data;
+		try
+		{
+			data = YAML::LoadFile(filepath);
+		}
+		catch (YAML::ParserException e)
+		{
+			return false;
+		}
 
-		YAML::Node data = YAML::Load(strStream.str());// 解析文件内容为 YAML 节点
-		if (!data["Scene"])//检查是否存在名为 "Scene" 的字段
+
+		if (!data["Scene"])
 			return false;
 
 		std::string sceneName = data["Scene"].as<std::string>();
