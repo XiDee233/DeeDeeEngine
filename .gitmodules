@@ -16,3 +16,6 @@
 [submodule "DeeDeeEngine/vendor/imguizmo"]
 	path = DeeDeeEngine/vendor/imguizmo
 	url = https://github.com/thecherno/imguizmo
+[submodule "DeeDeeEngine/vendor/box2d"]
+	path = DeeDeeEngine/vendor/box2d
+	url = https://github.com/thecherno/box2d

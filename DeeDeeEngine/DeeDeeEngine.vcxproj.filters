@@ -19,6 +19,9 @@
     <Filter Include="src\DeeDeeEngine\ImGui">
       <UniqueIdentifier>{5839E1A0-4433-0AF3-2DA0-A0031939705F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DeeDeeEngine\Math">
+      <UniqueIdentifier>{475B18DE-B3C7-D3D8-7CBB-6B36E8E6F540}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\DeeDeeEngine\Renderer">
       <UniqueIdentifier>{14C1F660-8083-2AEB-C933-B977353503C9}</UniqueIdentifier>
     </Filter>
@@ -120,10 +123,16 @@
     <ClInclude Include="src\DeeDeeEngine\ImGui\ImGuiLayer.h">
       <Filter>src\DeeDeeEngine\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Math\Math.h">
+      <Filter>src\DeeDeeEngine\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Buffer.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Camera.h">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DeeDeeEngine\Renderer\EditorCamera.h">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\DeeDeeEngine\Renderer\Framebuffer.h">
@@ -1464,8 +1473,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\DeeDeeEngine\Math\Math.h" />
-    <ClInclude Include="src\DeeDeeEngine\Renderer\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeeDeeEngine\Core\Application.cpp">
@@ -1486,7 +1493,13 @@
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp">
       <Filter>src\DeeDeeEngine\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Math\Math.cpp">
+      <Filter>src\DeeDeeEngine\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Buffer.cpp">
+      <Filter>src\DeeDeeEngine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DeeDeeEngine\Renderer\EditorCamera.cpp">
       <Filter>src\DeeDeeEngine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\DeeDeeEngine\Renderer\Framebuffer.cpp">
@@ -1573,7 +1586,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\DeeDeeEngine\Math\Math.cpp" />
-    <ClCompile Include="src\DeeDeeEngine\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

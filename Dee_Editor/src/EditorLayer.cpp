@@ -475,7 +475,7 @@ namespace DeeDeeEngine {
 	void EditorLayer::OpenScene(const std::filesystem::path& path)
 	{
 
-		if (path.extension().string() != ".hazel")
+		if (path.extension().string() != ".dee")
 		{
 			DEE_WARN("Could not load {0} - not a scene file", path.filename().string());
 			return;
@@ -504,11 +504,13 @@ namespace DeeDeeEngine {
 	void EditorLayer::OnScenePlay()
 	{
 		m_SceneState = SceneState::Play;
+		m_ActiveScene->OnRuntimeStart();
 	}
 
 	void EditorLayer::OnSceneStop()
 	{
 		m_SceneState = SceneState::Edit;
+		m_ActiveScene->OnRuntimeStop();
 
 	}
 }

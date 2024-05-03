@@ -17,11 +17,13 @@ IncludeDir["entt"] = "DeeDeeEngine/vendor/entt/include"
 IncludeDir["stb_image"] = "DeeDeeEngine/vendor/stb_image"
 IncludeDir["yaml_cpp"] ="DeeDeeEngine/vendor/yaml-cpp/include"
 IncludeDir["ImGuizmo"] = "DeeDeeEngine/vendor/imguizmo"
+IncludeDir["box2d"] = "DeeDeeEngine/vendor/box2d/include"
 
 include "DeeDeeEngine/vendor/GLFW"
 include "DeeDeeEngine/vendor/GLAD"
 include "DeeDeeEngine/vendor/ImGui"
 include "DeeDeeEngine/vendor/yaml-cpp"
+include "DeeDeeEngine/vendor/box2d"
 
 project "DeeDeeEngine"
     location "DeeDeeEngine"
@@ -58,7 +60,8 @@ includedirs
     "%{IncludeDir.stb_image}",
     "%{IncludeDir.entt}",
     "%{IncludeDir.yaml_cpp}",
-    "%{IncludeDir.ImGuizmo}"
+    "%{IncludeDir.ImGuizmo}",
+    "%{IncludeDir.box2d}"
 
 }
 
@@ -68,7 +71,8 @@ links
     "GLAD",
     "ImGui",
     "yaml-cpp",
-    "opengl32.lib"
+    "opengl32.lib",
+    "box2d"
     
 }
 

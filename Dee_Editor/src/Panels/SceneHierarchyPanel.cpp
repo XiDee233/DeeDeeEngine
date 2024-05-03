@@ -170,17 +170,39 @@ namespace DeeDeeEngine {
 
 		if (ImGui::BeginPopup("AddComponent"))
 		{
-			if (ImGui::MenuItem(u8"相机"))
+			if (!m_SelectionContext.HasComponent<CameraComponent>())
 			{
-				m_SelectionContext.AddComponent<CameraComponent>();
-				ImGui::CloseCurrentPopup();
+				if (ImGui::MenuItem(u8"相机"))
+				{
+					m_SelectionContext.AddComponent<CameraComponent>();
+					ImGui::CloseCurrentPopup();
+				}
 			}
 
-			if (ImGui::MenuItem(u8"精灵图渲染器"))
-			{
-				m_SelectionContext.AddComponent<SpriteRendererComponent>();
-				ImGui::CloseCurrentPopup();
+			if (!m_SelectionContext.HasComponent<SpriteRendererComponent>()) {
+				if (ImGui::MenuItem(u8"精灵图渲染器"))
+				{
+					m_SelectionContext.AddComponent<SpriteRendererComponent>();
+					ImGui::CloseCurrentPopup();
 
+				}
+			}
+			if (!m_SelectionContext.HasComponent<Rigidbody2DComponent>())
+			{
+				if (ImGui::MenuItem(u8"刚体2D"))
+				{
+					m_SelectionContext.AddComponent<Rigidbody2DComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+
+			if (!m_SelectionContext.HasComponent<BoxCollider2DComponent>())
+			{
+				if (ImGui::MenuItem(u8"盒子碰撞体2D"))
+				{
+					m_SelectionContext.AddComponent<BoxCollider2DComponent>();
+					ImGui::CloseCurrentPopup();
+				}
 			}
 			ImGui::EndPopup();
 		}
@@ -220,41 +242,41 @@ namespace DeeDeeEngine {
 					ImGui::EndCombo();
 				}
 
-				
-			
-
-			if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perspective)
-			{
-				float perspectiveVerticalFov = glm::degrees(camera.GetPerspectiveVerticalFOV());
-				if (ImGui::DragFloat(u8"视野", &perspectiveVerticalFov))
-					camera.SetPerspectiveVerticalFOV(glm::radians(perspectiveVerticalFov));
-
-				float perspectiveNear = camera.GetPerspectiveNearClip();
-				if (ImGui::DragFloat(u8"近", &perspectiveNear))
-					camera.SetPerspectiveNearClip(perspectiveNear);
 
 
-				float perspectiveFar = camera.GetPerspectiveFarClip();
-				if (ImGui::DragFloat(u8"远", &perspectiveFar))
-					camera.SetPerspectiveFarClip(perspectiveFar);
-			}
-			if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orthographic)
-			{
-				float orthoSize = camera.GetOrthographicSize();
-				if (ImGui::DragFloat(u8"尺寸", &orthoSize))
-					camera.SetOrthographicSize(orthoSize);
 
-				float orthoNear = camera.GetOrthographicNearClip();
-				if (ImGui::DragFloat(u8"近", &orthoNear))
-					camera.SetOrthographicNearClip(orthoNear);
+				if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perspective)
+				{
+					float perspectiveVerticalFov = glm::degrees(camera.GetPerspectiveVerticalFOV());
+					if (ImGui::DragFloat(u8"视野", &perspectiveVerticalFov))
+						camera.SetPerspectiveVerticalFOV(glm::radians(perspectiveVerticalFov));
 
-				float orthoFar = camera.GetOrthographicFarClip();
-				if (ImGui::DragFloat(u8"远", &orthoFar))
-					camera.SetOrthographicFarClip(orthoFar);
+					float perspectiveNear = camera.GetPerspectiveNearClip();
+					if (ImGui::DragFloat(u8"近", &perspectiveNear))
+						camera.SetPerspectiveNearClip(perspectiveNear);
 
-				ImGui::Checkbox(u8"锁定视口比例", &component.FixedAspectRatio);
-			}
-	});
+
+					float perspectiveFar = camera.GetPerspectiveFarClip();
+					if (ImGui::DragFloat(u8"远", &perspectiveFar))
+						camera.SetPerspectiveFarClip(perspectiveFar);
+				}
+				if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orthographic)
+				{
+					float orthoSize = camera.GetOrthographicSize();
+					if (ImGui::DragFloat(u8"尺寸", &orthoSize))
+						camera.SetOrthographicSize(orthoSize);
+
+					float orthoNear = camera.GetOrthographicNearClip();
+					if (ImGui::DragFloat(u8"近", &orthoNear))
+						camera.SetOrthographicNearClip(orthoNear);
+
+					float orthoFar = camera.GetOrthographicFarClip();
+					if (ImGui::DragFloat(u8"远", &orthoFar))
+						camera.SetOrthographicFarClip(orthoFar);
+
+					ImGui::Checkbox(u8"锁定视口比例", &component.FixedAspectRatio);
+				}
+			});
 
 		DrawComponent<SpriteRendererComponent>(u8"精灵图渲染器", entity, [](auto& component)
 			{
@@ -278,6 +300,40 @@ namespace DeeDeeEngine {
 				ImGui::DragFloat(u8"瓦片系数", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 			});
 
+		DrawComponent<Rigidbody2DComponent>("Rigidbody 2D", entity, [](auto& component)
+			{
+				const char* bodyTypeStrings[] = { "Static", "Dynamic", "Kinematic" };
+				const char* currentBodyTypeString = bodyTypeStrings[(int)component.Type];
+				if (ImGui::BeginCombo("Body Type", currentBodyTypeString))
+				{
+					for (int i = 0; i < 2; i++)
+					{
+						bool isSelected = currentBodyTypeString == bodyTypeStrings[i];
+						if (ImGui::Selectable(bodyTypeStrings[i], isSelected))
+						{
+							currentBodyTypeString = bodyTypeStrings[i];
+							component.Type = (Rigidbody2DComponent::BodyType)i;
+						}
+
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+
+					ImGui::EndCombo();
+				}
+
+				ImGui::Checkbox(u8"固定旋转", &component.FixedRotation);
+			});
+
+		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component)
+			{
+				ImGui::DragFloat2(u8"偏移", glm::value_ptr(component.Offset));
+				ImGui::DragFloat2(u8"尺寸", glm::value_ptr(component.Offset));
+				ImGui::DragFloat(u8"密度", &component.Density, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat(u8"摩擦力", &component.Friction, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat(u8"弹性", &component.Restitution, 0.01f, 0.0f, 1.0f);
+				ImGui::DragFloat(u8"弹性阈值", &component.RestitutionThreshold, 0.01f, 0.0f);
+			});
 
 
 	}
@@ -324,5 +380,5 @@ namespace DeeDeeEngine {
 
 	}
 
-	
+
 }
