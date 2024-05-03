@@ -24,21 +24,24 @@ namespace DeeDeeEngine {
 	{
 		ImGui::Begin(u8"场景结构");
 
-		m_Context->m_Registry.each([&](auto entityID)
-			{
-				Entity entity{ entityID , m_Context.get() };
-				DrawEntityNode(entity);
-			});
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-			m_SelectionContext = {};
-
-		// Right-click on blank space
-		if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+		if (m_Context)
 		{
-			if (ImGui::MenuItem(u8"创建空实体"))
-				m_Context->CreateEntity(u8"空实体");
+			m_Context->m_Registry.each([&](auto entityID)
+				{
+					Entity entity{ entityID , m_Context.get() };
+					DrawEntityNode(entity);
+				});
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+				m_SelectionContext = {};
 
-			ImGui::EndPopup();
+			// Right-click on blank space
+			if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+			{
+				if (ImGui::MenuItem(u8"创建空实体"))
+					m_Context->CreateEntity(u8"空实体");
+
+				ImGui::EndPopup();
+			}
 		}
 
 		ImGui::End();
@@ -328,7 +331,7 @@ namespace DeeDeeEngine {
 		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component)
 			{
 				ImGui::DragFloat2(u8"偏移", glm::value_ptr(component.Offset));
-				ImGui::DragFloat2(u8"尺寸", glm::value_ptr(component.Offset));
+				ImGui::DragFloat2(u8"尺寸", glm::value_ptr(component.Size));
 				ImGui::DragFloat(u8"密度", &component.Density, 0.01f, 0.0f, 1.0f);
 				ImGui::DragFloat(u8"摩擦力", &component.Friction, 0.01f, 0.0f, 1.0f);
 				ImGui::DragFloat(u8"弹性", &component.Restitution, 0.01f, 0.0f, 1.0f);
