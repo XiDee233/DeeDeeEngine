@@ -148,6 +148,7 @@
     <ClInclude Include="src\DeeDeeEngine\Core\LayerStack.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Log.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Timestep.h" />
+    <ClInclude Include="src\DeeDeeEngine\Core\UUID.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\Window.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\input.h" />
     <ClInclude Include="src\DeeDeeEngine\Core\keyCode.h" />
@@ -614,6 +615,7 @@
     <ClCompile Include="src\DeeDeeEngine\Core\Layer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Core\LayerStack.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Core\Log.cpp" />
+    <ClCompile Include="src\DeeDeeEngine\Core\UUID.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\DeeDeeEngine\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\DeeDeeEngine\Math\Math.cpp" />

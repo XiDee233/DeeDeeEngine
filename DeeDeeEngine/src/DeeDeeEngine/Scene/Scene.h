@@ -1,5 +1,6 @@
 #pragma once
 #include "DeeDeeEngine/Renderer/EditorCamera.h"
+#include "DeeDeeEngine\Core\UUID.h"
 #include "entt.hpp"
 #include "DeeDeeEngine/Core/Timestep.h"
 
@@ -14,6 +15,7 @@ namespace DeeDeeEngine {
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
 		void OnRuntimeStart();

@@ -6,11 +6,18 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "SceneCamera.h"
-#include "ScriptableEntity.h"
+#include "DeeDeeEngine\Core\UUID.h"
 #include "DeeDeeEngine/Renderer/Texture.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace DeeDeeEngine {
+	struct IDComponent
+	{
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+	};
 
 	struct MeshComponent {
 		bool data;
@@ -66,6 +73,7 @@ namespace DeeDeeEngine {
 		CameraComponent(const CameraComponent&) = default;
 		
 	};
+	class ScriptableEntity;
 	//用于存储和管理脚本实例及其生命周期函数。
 	struct NativeScriptComponent {
 		ScriptableEntity* Instance = nullptr;

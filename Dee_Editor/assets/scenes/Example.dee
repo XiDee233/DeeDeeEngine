@@ -1,6 +1,6 @@
 Scene: Untitled
 Entities:
-  - Entity: 12837192831273
+  - Entity: 8475297442861823730
     TagComponent:
       Tag: SecondCamera
     TransformComponent:
@@ -18,7 +18,7 @@ Entities:
         OrthographicFar: 1
       Primary: false
       FixedAspectRatio: false
-  - Entity: 12837192831273
+  - Entity: 12989872390090745620
     TagComponent:
       Tag: MainCamera
     TransformComponent:
@@ -36,17 +36,17 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 12837192831273
+  - Entity: 11274974972879148413
     TagComponent:
       Tag: Red Square
     TransformComponent:
-      Translation: [0.800000012, -1.29999995, 0]
-      Rotation: [0, 0, 0]
+      Translation: [0.300000012, 1.0150001, 0]
+      Rotation: [0, 0, -3.08748895e-06]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 0, 0, 1]
     Rigidbody2DComponent:
-      BodyType: Static
+      BodyType: Dynamic
       FixedRotation: false
     BoxCollider2DComponent:
       Offset: [0, 0]
@@ -55,18 +55,18 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
-  - Entity: 12837192831273
+  - Entity: 4189669885053370394
     TagComponent:
       Tag: Hello Entity
     TransformComponent:
-      Translation: [0.0595619082, -0.0417413414, 0]
-      Rotation: [0, 0, 1.5467726]
-      Scale: [0.99999994, 0.99999994, 1]
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [0, 1, 0, 1]
     Rigidbody2DComponent:
-      BodyType: Dynamic
-      FixedRotation: true
+      BodyType: Static
+      FixedRotation: false
     BoxCollider2DComponent:
       Offset: [0, 0]
       Size: [0.5, 0.5]
