@@ -5,10 +5,13 @@
 #include "DeeDeeEngine/Core/Timestep.h"
 
 class b2World;
+
 namespace DeeDeeEngine {
+	
 	//前向声明（Forward Declaration）是一种声明类、函数或变量的方式，而不提供其定义。在DeeDeeEngine命名空间中的class Entity;就是一个前向声明。
 	//它告诉编译器Entity是一个类，但是它的定义将在后面给出。这样做的目的是为了解决循环依赖问题，或者是为了减少编译依赖性，从而加快编译速度。
 	class Entity;
+	class MyContactListener;
 	class Scene {
 	public:
 		Scene();
@@ -36,9 +39,9 @@ namespace DeeDeeEngine {
 	private:
 		entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
-
+		// 在你的场景类中添加一个成员变量
 		b2World* m_PhysicsWorld = nullptr;
-
+		MyContactListener* m_ContactListener =nullptr;
 		friend class Entity;
 		friend class SceneSerializer;
 		friend class SceneHierarchyPanel;

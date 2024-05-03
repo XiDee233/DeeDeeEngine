@@ -13,6 +13,21 @@
 #include "Entity.h"
 namespace DeeDeeEngine {
 
+	class MyContactListener : public b2ContactListener {
+	public:
+		void BeginContact(b2Contact* contact) override {
+			// 当两个碰撞体开始接触时调用
+			std::cout << "Collision Started!" << std::endl;
+			// 这里可以添加你的碰撞逻辑
+		}
+
+		void EndContact(b2Contact* contact) override {
+			// 当两个碰撞体结束接触时调用
+			// 这里可以添加你的碰撞结束逻辑
+		}
+	};
+
+
 	static b2BodyType Rigidbody2DTypeToBox2DBody(Rigidbody2DComponent::BodyType bodyType)
 	{
 		switch (bodyType)
@@ -28,7 +43,7 @@ namespace DeeDeeEngine {
 	
 	Scene::Scene()
 	{
-
+		
 
 	}
 
@@ -225,6 +240,10 @@ namespace DeeDeeEngine {
 	void Scene::OnRuntimeStart()
 	{
 		m_PhysicsWorld = new b2World({ 0.0f, -9.8f });
+		
+		m_ContactListener = new MyContactListener(); // 分配内存并初始化监听器
+		// 在你的场景初始化或构造函数中
+		m_PhysicsWorld->SetContactListener(m_ContactListener);
 
 		auto view = m_Registry.view<Rigidbody2DComponent>();
 		for (auto e : view)
