@@ -4,6 +4,7 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/ContentBrowserPanel.h"
 #include "DeeDeeEngine\Renderer\EditorCamera.h"
+#include <filesystem>
 namespace DeeDeeEngine {
 	class EditorLayer :public Layer
 	{

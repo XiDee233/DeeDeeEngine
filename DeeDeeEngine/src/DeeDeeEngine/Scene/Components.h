@@ -7,6 +7,7 @@
 
 #include "SceneCamera.h"
 #include "ScriptableEntity.h"
+#include "DeeDeeEngine/Renderer/Texture.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace DeeDeeEngine {
@@ -49,6 +50,8 @@ namespace DeeDeeEngine {
 	struct SpriteRendererComponent
 	{
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
+		Ref<Texture2D> Texture;
+		float TilingFactor = 1.0f;
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;

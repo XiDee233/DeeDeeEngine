@@ -4,8 +4,10 @@
 #include <imgui/imgui_internal.h>
 #include <glm/gtc/type_ptr.hpp>
 #include "DeeDeeEngine/Scene/Components.h"
+#include <filesystem>
 
 namespace DeeDeeEngine {
+	extern const std::filesystem::path g_AssetPath;
 
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
@@ -257,6 +259,21 @@ namespace DeeDeeEngine {
 		DrawComponent<SpriteRendererComponent>(u8"精灵图渲染器", entity, [](auto& component)
 			{
 				ImGui::ColorEdit4(u8"颜色", glm::value_ptr(component.Color));
+				ImGui::Button(u8"贴图", ImVec2(100.0f, 0.0f));
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						const wchar_t* path = (const wchar_t*)payload->Data;
+						std::filesystem::path texturePath = std::filesystem::path(g_AssetPath) / path;
+						component.Texture = Texture2D::Create(texturePath.string());
+					}
+					ImGui::EndDragDropTarget();
+				}
+
+
+
+				ImGui::DragFloat(u8"瓦片系数", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 			});
 
 
