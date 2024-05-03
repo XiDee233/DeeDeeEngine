@@ -233,6 +233,7 @@ namespace DeeDeeEngine {
 			ImGui::EndMenuBar();
 		}
 		m_SceneHierarchyPanel.OnImGuiRender();
+		m_ContentBrowserPanel.OnImGuiRender();
 		ImGui::Begin(u8"״̬");
 
 		std::string name = "None";

@@ -2,6 +2,7 @@
 
 #include "Dee.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 #include "DeeDeeEngine\Renderer\EditorCamera.h"
 namespace DeeDeeEngine {
 	class EditorLayer :public Layer
@@ -54,6 +55,7 @@ namespace DeeDeeEngine {
 		int m_GizmoType = -1;
 
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 	};
 
 }
