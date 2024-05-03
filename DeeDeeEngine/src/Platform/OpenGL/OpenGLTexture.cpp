@@ -27,6 +27,7 @@ namespace DeeDeeEngine {
 	}
 	// 构造函数，用于创建一个OpenGLTexture2D对象
 	DeeDeeEngine::OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
+		:m_Path(path)
 	{
 		DEE_PROFILE_FUNCTION();
 
