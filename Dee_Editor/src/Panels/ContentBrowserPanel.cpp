@@ -69,8 +69,8 @@ namespace DeeDeeEngine {
 		}
 		ImGui::Columns(1);
 
-		ImGui::SliderFloat(u8"ËõÂÔÍ¼³ß´ç", &thumbnailSize, 16, 512);
-		ImGui::SliderFloat(u8"Ìî³ä³ß´ç", &padding, 0, 32);
+		//ImGui::SliderFloat(u8"ËõÂÔÍ¼³ß´ç", &thumbnailSize, 16, 512);
+		//ImGui::SliderFloat(u8"Ìî³ä³ß´ç", &padding, 0, 32);
 
 		ImGui::End();
 	}

@@ -19,7 +19,7 @@ namespace DeeDeeEngine {
 	};
 	struct Renderer2DData {
 
-		static const uint32_t MaxQuads = 100;
+		static const uint32_t MaxQuads = 10000;
 		static const uint32_t MaxVertices = MaxQuads * 4;
 		static const uint32_t MaxIndices = MaxQuads * 6;
 		static const uint32_t MaxTextureSlots = 32;
