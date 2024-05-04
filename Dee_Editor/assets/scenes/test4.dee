@@ -1,12 +1,13 @@
 Scene: Untitled
 Entities:
-  - Entity: 18334431882010461423
+  - Entity: 15623445197073473025
     TagComponent:
       Tag: 空实体
     TransformComponent:
-      Translation: [0, 1, 0]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
+      TexturePath: assets\textures\cjy.png
       TilingFactor: 1

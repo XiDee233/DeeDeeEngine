@@ -284,7 +284,21 @@ namespace DeeDeeEngine {
 		DrawComponent<SpriteRendererComponent>(u8"精灵图渲染器", entity, [](auto& component)
 			{
 				ImGui::ColorEdit4(u8"颜色", glm::value_ptr(component.Color));
-				ImGui::Button(u8"贴图", ImVec2(100.0f, 0.0f));
+				// 检查是否有纹理
+				if (component.Texture)
+				{
+					// 获取纹理ID
+					uint32_t textureID = component.Texture->GetRendererID();
+					ImGui::Image((void*)(intptr_t)textureID, ImVec2(50.0f, 50.0f), ImVec2{ 0,1 }, ImVec2{ 1,0 });
+				}
+				else
+				{
+					// 如果没有纹理，显示一个按钮来提示用户拖拽纹理
+					if (ImGui::Button(u8"纹理", ImVec2(50.0f, 50.0f)))
+					{
+						// 可以在这里处理按钮点击事件
+					}
+				}
 				if (ImGui::BeginDragDropTarget())
 				{
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
