@@ -164,12 +164,12 @@ namespace DeeDeeEngine {
 				auto& transform = entity.GetComponent<TransformComponent>();
 				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 
-				b2Body* body = (b2Body*)rb2d.RuntimeBody;// 从2D刚体组件中获取Box2D物理体
-				const auto& position = body->GetPosition();
+				b2Body& body = *rb2d.RuntimeBody;// 从2D刚体组件中获取Box2D物理体
+				const auto& position = body.GetPosition();
 				// 更新实体的变换组件，使其与物理体的位置和旋转同步
 				transform.Translation.x = position.x;
 				transform.Translation.y = position.y;
-				transform.Rotation.z = body->GetAngle();
+				transform.Rotation.z = body.GetAngle();
 			}
 		}
 
@@ -268,6 +268,11 @@ namespace DeeDeeEngine {
 
 	void Scene::DestroyEntity(Entity entity)
 	{
+		m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) {
+			if (nsc.Instance) {
+				nsc.Instance->OnDestroy();
+			}
+			});
 		m_Registry.destroy(entity);
 	}
 	void Scene::OnRuntimeStart()

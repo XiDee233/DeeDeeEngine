@@ -11,6 +11,11 @@ namespace DeeDeeEngine {
 		{
 			return m_Entity.GetComponent<T>();
 		}
+		template<typename T>
+		T& AddComponent() {
+			return m_Entity.AddComponent<T>();
+		}
+		virtual Entity& GetEntity() { return m_Entity; }
 
 		virtual void OnCollision(Entity* a, Entity* b) {}
 	protected:

@@ -97,7 +97,7 @@ namespace DeeDeeEngine {
 		bool FixedRotation = false;
 
 		// Storage for runtime
-		void* RuntimeBody = nullptr;
+		b2Body* RuntimeBody = nullptr;
 
 		void AddForce(const b2Vec2& vec2) {
 			if (RuntimeBody == nullptr) {
@@ -106,14 +106,7 @@ namespace DeeDeeEngine {
 				return;
 			}
 
-			b2Body* body = static_cast<b2Body*>(RuntimeBody);
-			if (body == nullptr) {
-				// 处理错误或返回
-				std::cerr << "Invalid body pointer." << std::endl;
-				return;
-			}
-
-			body->ApplyForceToCenter(vec2, true);
+			RuntimeBody->ApplyForceToCenter(vec2, true);
 		}
 
 		void SetDynamic() {

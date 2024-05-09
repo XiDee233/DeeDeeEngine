@@ -11,9 +11,9 @@
 #include "DeeDeeEngine\Scene\ScriptableEntity.h"
 #include "DeeDeeEngine\Scene\SceneSerializer.h"
 #include "DeeDeeEngine\Utils\PlatformUtils.h"
+#include "../GameMain.h"
 
 namespace DeeDeeEngine {
-	class GameMain;
 
 	static const uint32_t s_MapWidth = 23;
 	static const char* s_MapTiles =
@@ -501,14 +501,15 @@ namespace DeeDeeEngine {
 		SceneSerializer serializer(scene);
 		serializer.Serialize(path.string());
 	}
-
+	class GameMain;
 
 	void EditorLayer::OnScenePlay()
 	{
 		m_SceneState = SceneState::Play;
-		m_ActiveScene = Scene::Copy(m_EditorScene);
+		//m_ActiveScene = Scene::Copy(m_EditorScene);
 		m_ActiveScene->OnRuntimeStart();
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
 	}
 
 	void EditorLayer::OnSceneStop()

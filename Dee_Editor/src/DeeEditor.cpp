@@ -17,7 +17,8 @@ public:
 		//PushLayer(new GameLayer());
 		m_EditorLayer = new DeeDeeEngine::EditorLayer();
 		PushLayer(m_EditorLayer);
-		DeeDeeEngine::GameMain::Init(m_EditorLayer);
+		DeeDeeEngine::GameMain::GetInstance().Init(m_EditorLayer);
+
 
 	}
 	~DeeEditor() {

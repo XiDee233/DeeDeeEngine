@@ -58,6 +58,7 @@ namespace DeeDeeEngine {
 		{
 			return !(*this == other);
 		}
+		Scene* GetScene() { return m_Scene; }
 
 	private:
 		entt::entity m_EntityHandle{entt::null};

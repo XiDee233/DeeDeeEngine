@@ -3,9 +3,7 @@
 #include <Dee.h>
 #include <box2d\include\box2d\b2_math.h>
 namespace DeeDeeEngine {
-	EditorLayer* m_layer;
-	Entity m_player;
-	Entity m_Groud;
+	
 
 	class PlayerController;
 	
@@ -17,7 +15,7 @@ namespace DeeDeeEngine {
 		m_player = m_layer->m_ActiveScene->CreateEntity("Test01");
 		m_player.AddComponent<SpriteRendererComponent>(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 		m_player.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
-		m_player.AddComponent<Rigidbody2DComponent>();
+	    m_player.AddComponent<Rigidbody2DComponent>();
 		m_player.GetComponent<Rigidbody2DComponent>().SetDynamic();
 		m_player.AddComponent<BoxCollider2DComponent>();
 
@@ -31,30 +29,26 @@ namespace DeeDeeEngine {
 
 
 	class PlayerController :public ScriptableEntity {
+	private:
+		
+		Rigidbody2DComponent* rigidbody;
 	public:
 		void OnCreate() {
+			rigidbody = &GameMain::GetInstance().m_player.GetComponent<Rigidbody2DComponent>();
 
 		}
 
 		void OnUpdate(Timestep ts) {
-			auto body = GetComponent<Rigidbody2DComponent>();
-			float speed = 5.0f;
 			if (Input::IsKeyPressed(DEE_KEY_A))
 			{
-				body.AddForce(b2Vec2(-10.0f,0.0f));
+				rigidbody->AddForce(b2Vec2(-10.0f, 0.0f));
+				
 			}
 			if (Input::IsKeyPressed(DEE_KEY_D))
 			{
-				body.AddForce(b2Vec2(10.0f, 0.0f));
+				rigidbody->AddForce(b2Vec2(10.0f, 0.0f));
 			}
-		/*	if (Input::IsKeyPressed(DEE_KEY_W))
-			{
-				body.AddForce(b2Vec2(0.0f, 10.0f));
-			}
-			if (Input::IsKeyPressed(DEE_KEY_S))
-			{
-				body.AddForce(b2Vec2(0.0f, -10.0f));
-			}*/
+	
 		}
 
 		void OnEvent(Event& e) {
@@ -64,22 +58,51 @@ namespace DeeDeeEngine {
 		}
 
 		bool OnKeyPressed(KeyPressedEvent& e) {
-			auto& body = GetComponent<Rigidbody2DComponent>();
 
 			switch (e.GetKeyCode()) {
 			case DEE_KEY_SPACE:
 				if (!e.IsRepeat())
 				{
-					body.AddForce(b2Vec2(0.0f, 500.0f));
+					rigidbody->AddForce(b2Vec2(0.0f, 500.0f));
+					
 				}
+				break;
+			case DEE_KEY_ENTER:
+				if (!e.IsRepeat()) {
+					ShootBullets();
+				}
+				break;
 			}
+			
 			return false;
+		}
+
+		void ShootBullets() {
+
+			auto b = GetEntity().GetScene()->CreateEntity("bullet");
+			b.AddComponent<NativeScriptComponent>().Bind<Bullet>();
 		}
 
 		void OnCollision(Entity* a, Entity* b) {
 			std::cout << "Collision between: " << a->GetName() << " and " << b->GetName() << std::endl;
 		}
+
+		class Bullet :public ScriptableEntity {
+			void OnCreate() {
+ 				auto& transform = GetComponent<TransformComponent>();
+				transform.Translation.x = GameMain::GetInstance().m_player.GetComponent<TransformComponent>().Translation.x + 0.5f;
+				AddComponent<Rigidbody2DComponent>();
+				AddComponent<BoxCollider2DComponent>();
+				auto& pic = AddComponent<SpriteRendererComponent>();
+				transform.Scale = glm::vec3(0.2f, 0.2f, 1.0f);
+				auto& rigidbody = GetComponent<Rigidbody2DComponent>();
+				rigidbody.AddForce(b2Vec2(500, 0));
+				rigidbody.SetDynamic();
+			}
+		};
 	};
+
+	
 
 	
 }
