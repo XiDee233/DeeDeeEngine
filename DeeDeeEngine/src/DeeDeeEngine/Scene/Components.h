@@ -9,6 +9,7 @@
 #include "DeeDeeEngine\Core\UUID.h"
 #include "DeeDeeEngine/Renderer/Texture.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "../box2d/include/box2d/box2d.h"
 
 namespace DeeDeeEngine {
 	struct IDComponent
@@ -71,7 +72,7 @@ namespace DeeDeeEngine {
 		bool FixedAspectRatio = false;
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		
+
 	};
 	class ScriptableEntity;
 	//用于存储和管理脚本实例及其生命周期函数。
@@ -97,6 +98,28 @@ namespace DeeDeeEngine {
 
 		// Storage for runtime
 		void* RuntimeBody = nullptr;
+
+		void AddForce(const b2Vec2& vec2) {
+			if (RuntimeBody == nullptr) {
+				// 处理错误或返回
+				std::cerr << "RuntimeBody is a null pointer." << std::endl;
+				return;
+			}
+
+			b2Body* body = static_cast<b2Body*>(RuntimeBody);
+			if (body == nullptr) {
+				// 处理错误或返回
+				std::cerr << "Invalid body pointer." << std::endl;
+				return;
+			}
+
+			body->ApplyForceToCenter(vec2, true);
+		}
+
+		void SetDynamic() {
+			Type = BodyType::Dynamic;
+		}
+
 
 		Rigidbody2DComponent() = default;
 		Rigidbody2DComponent(const Rigidbody2DComponent&) = default;

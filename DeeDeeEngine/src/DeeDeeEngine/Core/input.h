@@ -7,6 +7,10 @@ namespace DeeDeeEngine {
 	public:
 		static bool IsKeyPressed(int keycode);
 
+		static bool IsKeyRelease(int keycode);
+
+		static bool IsKeyRepeat(int keycode);
+
 		static bool IsMouseButtonPressed(int button);
 		static float GetMouseX();
 		static float GetMouseY();

@@ -4,6 +4,9 @@
     <Filter Include="Panels">
       <UniqueIdentifier>{A80D95C9-94AF-BF9F-7D6A-D3F369AB46F0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameMain">
+      <UniqueIdentifier>{4512a3c8-3194-4391-a2fe-d39045dc6596}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EditorLayer.h" />
@@ -12,6 +15,9 @@
     </ClInclude>
     <ClInclude Include="src\Panels\SceneHierarchyPanel.h">
       <Filter>Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain.h">
+      <Filter>GameMain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -22,6 +28,9 @@
     </ClCompile>
     <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp">
       <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMain.cpp">
+      <Filter>GameMain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

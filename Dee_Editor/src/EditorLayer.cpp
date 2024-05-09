@@ -13,6 +13,7 @@
 #include "DeeDeeEngine\Utils\PlatformUtils.h"
 
 namespace DeeDeeEngine {
+	class GameMain;
 
 	static const uint32_t s_MapWidth = 23;
 	static const char* s_MapTiles =
@@ -63,7 +64,6 @@ namespace DeeDeeEngine {
 		m_ActiveScene = m_EditorScene;
 		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 		
-
 	}
 
 	void EditorLayer::OnDetach()
@@ -363,6 +363,7 @@ namespace DeeDeeEngine {
 
 		m_CameraController.OnEvent(e);
 		m_EditorCamera.OnEvent(e);
+		m_ActiveScene->OnEvent(&e);
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(DEE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 		dispatcher.Dispatch<MouseButtonPressedEvent>(DEE_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
@@ -425,7 +426,9 @@ namespace DeeDeeEngine {
 		case DEE_KEY_R:
 			m_GizmoType = ImGuizmo::OPERATION::SCALE;
 			break;
+
 		}
+
 	}
 
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)

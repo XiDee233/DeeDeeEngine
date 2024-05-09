@@ -9,16 +9,38 @@
 #include "box2d/b2_body.h"
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
+#include "box2d\b2_contact.h"
 
 #include "Entity.h"
 namespace DeeDeeEngine {
+
+	struct EntityUserData {
+		Entity entity;
+		Scene* context;
+	};
 
 	class MyContactListener : public b2ContactListener {
 	public:
 		void BeginContact(b2Contact* contact) override {
 			// 当两个碰撞体开始接触时调用
 			std::cout << "Collision Started!" << std::endl;
-			// 这里可以添加你的碰撞逻辑
+			// 获取碰撞的两个物体
+			b2Fixture* fixtureA = contact->GetFixtureA();
+			b2Fixture* fixtureB = contact->GetFixtureB();
+
+
+			// 获取物体的用户数据
+			b2BodyUserData dataA = static_cast<b2BodyUserData>(fixtureA->GetBody()->GetUserData());
+			b2BodyUserData dataB = static_cast<b2BodyUserData>(fixtureB->GetBody()->GetUserData());
+
+			// 将uintptr_t类型的pointer转换回Entity*类型
+			DeeDeeEngine::EntityUserData* entityA = reinterpret_cast<DeeDeeEngine::EntityUserData*>(dataA.pointer);
+			DeeDeeEngine::EntityUserData* entityB = reinterpret_cast<DeeDeeEngine::EntityUserData*>(dataB.pointer);
+			Entity eA = { entityA->entity,entityA->context };
+			Entity eB = { entityB->entity,entityB->context };
+			if (eA.HasComponent<NativeScriptComponent>()) {
+				eA.GetComponent<NativeScriptComponent>().Instance->OnCollision(&eA, &eB);
+			}
 		}
 
 		void EndContact(b2Contact* contact) override {
@@ -40,10 +62,10 @@ namespace DeeDeeEngine {
 		DEE_CORE_ASSERT(false, "Unknown body type");
 		return b2_staticBody;
 	}
-	
+
 	Scene::Scene()
 	{
-		
+
 
 	}
 
@@ -102,6 +124,17 @@ namespace DeeDeeEngine {
 
 		return newScene;
 	}
+	void Scene::OnEvent(Event* e) {
+		m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) {
+			if (!nsc.Instance) {
+				nsc.Instance = nsc.InstantiateScript();
+				nsc.Instance->m_Entity = Entity{ entity, this };
+				nsc.Instance->OnCreate();
+			}
+			nsc.Instance->OnEvent(*e);
+			});
+	}
+
 	void Scene::OnUpdateRuntime(Timestep ts) {
 
 		{
@@ -217,21 +250,21 @@ namespace DeeDeeEngine {
 		}
 	}
 
-	
+
 
 	Entity Scene::CreateEntity(const std::string& name) {
 		return CreateEntityWithUUID(UUID(), name);
 	}
 
-    Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)
-    {
+	Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)
+	{
 		Entity entity = { m_Registry.create(), this };
 		entity.AddComponent<IDComponent>(uuid);
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
 		return entity;
-    }
+	}
 
 	void Scene::DestroyEntity(Entity entity)
 	{
@@ -240,7 +273,7 @@ namespace DeeDeeEngine {
 	void Scene::OnRuntimeStart()
 	{
 		m_PhysicsWorld = new b2World({ 0.0f, -9.8f });
-		
+
 		m_ContactListener = new MyContactListener(); // 分配内存并初始化监听器
 		// 在你的场景初始化或构造函数中
 		m_PhysicsWorld->SetContactListener(m_ContactListener);
@@ -257,9 +290,21 @@ namespace DeeDeeEngine {
 			bodyDef.position.Set(transform.Translation.x, transform.Translation.y);
 			bodyDef.angle = transform.Rotation.z;
 
+
+
+			// 创建新的用户数据结构体并赋值
+			auto userData = new EntityUserData();
+			userData->entity = entity;
+			userData->context = this;
+
+			auto data = new b2BodyUserData();
+			data->pointer = reinterpret_cast<uintptr_t>(userData);
+			bodyDef.userData = *data;
+
 			b2Body* body = m_PhysicsWorld->CreateBody(&bodyDef);
 			body->SetFixedRotation(rb2d.FixedRotation);
 			rb2d.RuntimeBody = body;
+
 
 			if (entity.HasComponent<BoxCollider2DComponent>())
 			{
